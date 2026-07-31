@@ -9,6 +9,7 @@ on:
     paths:
       - 'docs/**'
       - 'build/**'
+      - 'files/**'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
@@ -34,12 +35,15 @@ jobs:
 
       - name: Commit if changed
         run: |
-          if [[ -z "$(git status --porcelain knowledge/index.html courses/index.html)" ]]; then
+          # Every page build.py writes, not just the two tree pages. A page whose
+          # HTML is regenerated but never committed looks like a silent no-op:
+          # the run goes green and the site never changes.
+          if [[ -z "$(git status --porcelain -- '*.html')" ]]; then
             echo "No change to the generated viewers."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add knowledge/index.html courses/index.html
+          git add -- '*.html'
           git commit -m "build: regenerate viewers from docs/ [skip ci]"
           git push

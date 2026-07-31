@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Coursework — Ihtiram Ullah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --disp:'Space Grotesk',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --rail:26px; --ease:cubic-bezier(.22,1,.36,1);
+}
+/* ── drafting paper (default) ── */
+[data-theme="paper"]{
+  --bg:#EDF1F7; --bg2:#E3EAF3; --panel:#FFFFFF; --panel2:#F4F8FC;
+  --ink:#16222F; --dim:#4E617A; --faint:#8496AB;
+  --line:rgba(28,58,98,.13); --line2:rgba(28,58,98,.22);
+  --grid:rgba(40,90,160,.07); --shadow:0 1px 2px rgba(20,45,80,.06),0 6px 18px rgba(20,45,80,.05);
+  --mark:#FFE08A; --markink:#3D2C00;
+}
+/* ── ink navy (alternate) ── */
+[data-theme="ink"]{
+  --bg:#0F1B2B; --bg2:#132234; --panel:#17273B; --panel2:#1D3049;
+  --ink:#E7EFF9; --dim:#9DB0C6; --faint:#7A8DA6;
+  --line:rgba(140,180,230,.13); --line2:rgba(140,180,230,.24);
+  --grid:rgba(120,170,235,.06); --shadow:0 1px 2px rgba(0,0,0,.25);
+  --mark:rgba(255,214,102,.32); --markink:#FFEDB8;
+}
+html,body{margin:0;padding:0}
+body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:15px;
+  line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  transition:background .35s var(--ease), color .35s var(--ease)}
+body::before{content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 130% 90% at 50% 0%,#000 15%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 130% 90% at 50% 0%,#000 15%,transparent 80%)}
+.wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 18px 120px}
+
+/* HERO */
+header.hero{padding:50px 0 26px}
+.eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--faint); margin-bottom:15px; display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:currentColor;
+  color:var(--a40); box-shadow:0 0 9px currentColor; animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-family:var(--disp); font-weight:700; font-size:clamp(32px,6.8vw,58px); line-height:1;
+  letter-spacing:-.032em; margin:0 0 12px}
+h1 .thin{display:block; font-weight:400; color:var(--dim); font-size:clamp(16px,3vw,24px);
+  letter-spacing:-.01em; margin-top:10px}
+.lede{color:var(--dim); max-width:62ch; font-size:14.5px; margin:0 0 8px}
+.lede b{color:var(--ink); font-weight:600}
+.figs{display:flex; gap:22px; flex-wrap:wrap; margin:22px 0 4px; font-family:var(--mono)}
+.fig b{display:block; font-size:21px; font-weight:700; color:var(--ink); line-height:1.15}
+.fig span{font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--faint)}
+
+/* STRANDS */
+.strands{display:flex; gap:3px; height:50px; margin:24px 0 6px; border-radius:6px;
+  overflow:hidden; border:1px solid var(--line); background:var(--panel); box-shadow:var(--shadow)}
+.strand{flex:1; position:relative; cursor:pointer; background:transparent; border:0;
+  transition:flex .45s var(--ease); overflow:hidden; padding:0}
+.strand::before{content:''; position:absolute; inset:0 0 auto 0; height:4px; background:var(--c)}
+.strand::after{content:''; position:absolute; left:0;right:0;top:4px;bottom:0;
+  background:linear-gradient(to bottom,var(--c),transparent); opacity:.12; transition:opacity .25s}
+.strand:hover::after,.strand.on::after{opacity:.3}
+.strand:hover,.strand.on{flex:1.7}
+.strand em{position:absolute; top:12px; left:0; right:0; text-align:center; font-family:var(--mono);
+  font-size:10.5px; font-style:normal; font-weight:700; color:var(--c)}
+.strand span{position:absolute; bottom:6px; left:0; right:0; text-align:center; font-family:var(--mono);
+  font-size:9px; color:var(--dim); opacity:0; transition:opacity .3s; white-space:nowrap}
+.strand:hover span,.strand.on span{opacity:1}
+
+/* TOOLBAR */
+.bar{position:sticky; top:0; z-index:40; margin:20px -18px 0; padding:11px 18px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+.searchrow{display:flex; gap:8px; align-items:center}
+.search{flex:1; display:flex; align-items:center; gap:9px; background:var(--panel);
+  border:1px solid var(--line2); border-radius:9px; padding:9px 13px; transition:border-color .2s,box-shadow .2s}
+.search:focus-within{border-color:var(--a40); box-shadow:0 0 0 3px color-mix(in srgb,var(--a40) 18%,transparent)}
+.search svg{flex:none; opacity:.5}
+.search input{flex:1; background:none; border:0; outline:none; color:var(--ink);
+  font-family:var(--body); font-size:15px; min-width:0}
+.search input::placeholder{color:var(--faint)}
+.btn{font-family:var(--mono); font-size:10.5px; letter-spacing:.07em; text-transform:uppercase;
+  background:var(--panel); color:var(--dim); border:1px solid var(--line2); padding:10px 12px;
+  border-radius:8px; cursor:pointer; white-space:nowrap; transition:all .18s}
+.btn:hover{color:var(--ink); background:var(--panel2)}
+.chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; align-items:center}
+.chiplabel{font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); margin-right:2px}
+.chip{font-family:var(--mono); font-size:10.5px; padding:5px 10px; border-radius:20px;
+  border:1px solid var(--line2); background:var(--panel); color:var(--dim); cursor:pointer;
+  transition:all .18s; white-space:nowrap}
+.chip:hover{color:var(--ink)}
+.chip.on{background:var(--ink); color:var(--bg); border-color:var(--ink); font-weight:700}
+.chip.t-C.on{background:var(--tc);border-color:var(--tc);color:#fff}
+.chip.t-X.on{background:var(--tx);border-color:var(--tx);color:#fff}
+.chip.t-T.on{background:var(--tt);border-color:var(--tt);color:#fff}
+.chip.t-R.on{background:var(--tr);border-color:var(--tr);color:#fff}
+.stats{display:flex; gap:15px; flex-wrap:wrap; margin-top:10px; padding-top:10px; border-top:1px solid var(--line)}
+.stat{font-family:var(--mono); font-size:10.5px; color:var(--faint); letter-spacing:.03em}
+.stat b{color:var(--ink); font-weight:700; font-size:12.5px}
+.lvbar{display:flex; height:5px; flex:1; min-width:120px; border-radius:3px; overflow:hidden;
+  background:var(--panel); align-self:center; border:1px solid var(--line)}
+.lvbar i{display:block; height:100%; transition:width .5s var(--ease)}
+
+/* AREAS */
+.area{margin-top:42px; opacity:0; transform:translateY(14px); animation:rise .55s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.ahead{display:flex; align-items:baseline; gap:12px; padding-bottom:12px;
+  border-bottom:1px solid var(--line); margin-bottom:4px; flex-wrap:wrap}
+.anum{font-family:var(--mono); font-weight:700; font-size:13px; color:var(--c); letter-spacing:.04em;
+  padding:3px 8px; border:1px solid var(--c); border-radius:5px;
+  background:color-mix(in srgb,var(--c) 10%,transparent)}
+.atitle{font-family:var(--disp); font-weight:600; font-size:clamp(17px,3.2vw,22px);
+  letter-spacing:-.015em; margin:0}
+.acount{font-family:var(--mono); font-size:10.5px; color:var(--faint); margin-left:auto}
+.cats{position:relative; padding-left:var(--rail)}
+.cats::before{content:''; position:absolute; left:9px; top:0; bottom:0; width:2px;
+  background:linear-gradient(to bottom,var(--c),color-mix(in srgb,var(--c) 20%,transparent));
+  border-radius:2px; transform-origin:top; animation:draw .8s var(--ease) forwards}
+@keyframes draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.cat{position:relative; border-bottom:1px solid var(--line)}
+.cat::before{content:''; position:absolute; left:calc(-1*var(--rail) + 11px); top:23px;
+  width:13px; height:2px; background:var(--c); opacity:.45}
+.cat::after{content:''; position:absolute; left:calc(-1*var(--rail) + 6px); top:20px; width:8px;
+  height:8px; border-radius:50%; background:var(--bg); border:2px solid var(--c);
+  transition:box-shadow .25s,background .25s}
+.cat.open::after{background:var(--c); box-shadow:0 0 10px var(--c)}
+.chead{display:flex; align-items:center; gap:10px; padding:13px 4px; cursor:pointer;
+  user-select:none; transition:padding-left .22s var(--ease)}
+.chead:hover{padding-left:8px}
+.cnum{font-family:var(--mono); font-size:12px; font-weight:700; color:var(--c); flex:none}
+.ctitle{font-family:var(--disp); font-weight:500; font-size:15.5px}
+.cn{font-family:var(--mono); font-size:10px; color:var(--faint); flex:none}
+.ctags{display:flex; gap:4px; flex-wrap:wrap; margin-left:auto; align-items:center}
+.ctag{font-family:var(--mono); font-size:9px; padding:2.5px 6px; border-radius:4px;
+  background:var(--panel2); color:var(--faint); border:1px solid var(--line); white-space:nowrap}
+.ctag.field{color:var(--c); border-color:color-mix(in srgb,var(--c) 40%,transparent);
+  background:color-mix(in srgb,var(--c) 9%,transparent); font-weight:700}
+.caret{flex:none; width:15px; height:15px; color:var(--faint); transition:transform .32s var(--ease)}
+.cat.open>.chead .caret{transform:rotate(90deg); color:var(--c)}
+.body{display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s var(--ease)}
+.cat.open>.body{grid-template-rows:1fr}
+.bodyin{overflow:hidden; min-height:0}
+.topics{padding:2px 0 14px}
+
+/* TOPIC */
+.topic{border-radius:8px; transition:background .16s}
+.topic:hover{background:var(--panel)}
+.topic.flash{animation:flash 1.7s var(--ease)}
+@keyframes flash{0%,60%{background:color-mix(in srgb,var(--c) 22%,transparent)}100%{background:transparent}}
+.trow{display:flex; align-items:center; gap:9px; padding:7px 10px 7px 8px}
+.tcaret{flex:none; width:14px; height:14px; color:var(--faint); transition:transform .3s var(--ease); cursor:pointer}
+.topic.open .tcaret{transform:rotate(90deg); color:var(--c)}
+.tcaret.ghost{opacity:0; pointer-events:none}
+.tid{font-family:var(--mono); font-size:10.5px; color:var(--faint); flex:none; width:44px}
+.tname{flex:1; font-size:14px; min-width:0}
+.ty{font-family:var(--mono); font-size:9.5px; font-weight:700; width:18px; height:18px;
+  display:grid; place-items:center; border-radius:4px; flex:none; border:1px solid}
+.ty-C{color:var(--tc);border-color:color-mix(in srgb,var(--tc) 42%,transparent);background:color-mix(in srgb,var(--tc) 10%,transparent)}
+.ty-X{color:var(--tx);border-color:color-mix(in srgb,var(--tx) 42%,transparent);background:color-mix(in srgb,var(--tx) 10%,transparent)}
+.ty-T{color:var(--tt);border-color:color-mix(in srgb,var(--tt) 42%,transparent);background:color-mix(in srgb,var(--tt) 10%,transparent)}
+.ty-R{color:var(--tr);border-color:color-mix(in srgb,var(--tr) 42%,transparent);background:color-mix(in srgb,var(--tr) 10%,transparent)}
+.sn{font-family:var(--mono); font-size:9px; color:var(--faint); flex:none;
+  padding:1.5px 5px; border-radius:9px; background:var(--panel2); border:1px solid var(--line)}
+.lv{font-family:var(--mono); font-size:9.5px; font-weight:700; flex:none; min-width:31px; height:20px;
+  display:grid; place-items:center; border-radius:5px; cursor:pointer; border:1px dashed var(--line2);
+  color:var(--faint); background:transparent; transition:all .2s}
+.lv:hover{border-color:var(--dim); color:var(--dim)}
+.lv.set{border-style:solid}
+.lv[data-v="0"]{color:#D64545;border-color:#D6454588;background:#D6454518}
+.lv[data-v="1"]{color:#D97A1F;border-color:#D97A1F88;background:#D97A1F18}
+.lv[data-v="2"]{color:#B08900;border-color:#B0890088;background:#B0890018}
+.lv[data-v="3"]{color:#12855C;border-color:#12855C88;background:#12855C18}
+.lv[data-v="4"]{color:#0C7C93;border-color:#0C7C93;background:#0C7C9322;
+  box-shadow:0 0 8px color-mix(in srgb,#0C7C93 35%,transparent)}
+[data-theme="ink"] .lv[data-v="0"]{color:#FF7B7B;border-color:#FF7B7B88;background:#FF7B7B1A}
+[data-theme="ink"] .lv[data-v="1"]{color:#FFB067;border-color:#FFB06788;background:#FFB0671A}
+[data-theme="ink"] .lv[data-v="2"]{color:#F0CE5A;border-color:#F0CE5A88;background:#F0CE5A1A}
+[data-theme="ink"] .lv[data-v="3"]{color:#4ADFA6;border-color:#4ADFA688;background:#4ADFA61A}
+[data-theme="ink"] .lv[data-v="4"]{color:#3FD9F0;border-color:#3FD9F0;background:#3FD9F026}
+@keyframes bump{50%{transform:scale(1.2)}}
+.lv.bumped{animation:bump .3s var(--ease)}
+.refs{display:flex; gap:4px; flex-wrap:wrap; flex:none}
+.ref{font-family:var(--mono); font-size:9px; padding:2px 6px; border-radius:4px; cursor:pointer;
+  border:1px solid var(--line2); background:var(--panel2); color:var(--dim); transition:all .18s}
+.ref:hover{background:var(--c); color:#fff; border-color:var(--c)}
+
+/* SUBTOPICS */
+.subs{display:grid; grid-template-rows:0fr; transition:grid-template-rows .34s var(--ease)}
+.topic.open .subs{grid-template-rows:1fr}
+.subsin{overflow:hidden; min-height:0}
+.sublist{padding:2px 0 9px 62px; position:relative}
+.sublist::before{content:''; position:absolute; left:50px; top:2px; bottom:11px; width:1px;
+  background:color-mix(in srgb,var(--c) 32%,transparent)}
+.sub{display:flex; align-items:baseline; gap:9px; padding:4px 8px; border-radius:6px; position:relative}
+.sub::before{content:''; position:absolute; left:-12px; top:12px; width:9px; height:1px;
+  background:color-mix(in srgb,var(--c) 32%,transparent)}
+.sub:hover{background:var(--panel2)}
+.sid{font-family:var(--mono); font-size:9.5px; color:var(--faint); flex:none; min-width:48px}
+.sname{font-size:13.2px; color:var(--dim)}
+.sub:hover .sname{color:var(--ink)}
+
+/* SEARCH RESULTS */
+#results{display:none; margin-top:26px}
+#results.on{display:block}
+.rhead{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); padding-bottom:9px; border-bottom:1px solid var(--line); margin-bottom:4px}
+.rgroup{margin-top:20px}
+.rgtitle{display:flex; align-items:center; gap:9px; margin-bottom:7px}
+.rgtitle .anum{font-size:11px}
+.rgtitle h3{font-family:var(--disp); font-weight:600; font-size:14.5px; margin:0}
+.rgtitle .n{font-family:var(--mono); font-size:10px; color:var(--faint); margin-left:auto}
+.hit{display:flex; align-items:flex-start; gap:10px; padding:9px 11px; border-radius:8px;
+  cursor:pointer; border:1px solid transparent; transition:all .16s; background:var(--panel);
+  margin-bottom:4px; box-shadow:var(--shadow)}
+.hit:hover{border-color:var(--c); transform:translateX(3px)}
+.hit .crumb{font-family:var(--mono); font-size:9.5px; color:var(--faint); margin-bottom:3px}
+.hit .crumb b{color:var(--c); font-weight:700}
+.hit .txt{font-size:14px; line-height:1.4}
+.hit .mid{flex:1; min-width:0}
+.hit .kind{font-family:var(--mono); font-size:8.5px; letter-spacing:.09em; text-transform:uppercase;
+  padding:2px 6px; border-radius:4px; border:1px solid var(--line2); color:var(--faint); flex:none}
+mark{background:var(--mark); color:var(--markink); border-radius:3px; padding:0 2px; font-weight:600}
+.hide{display:none !important}
+.empty{text-align:center; padding:70px 20px; color:var(--faint)}
+.empty h3{font-family:var(--disp); color:var(--dim); font-weight:500; margin:0 0 7px; font-size:19px}
+footer{margin-top:64px; padding-top:24px; border-top:1px solid var(--line);
+  font-family:var(--mono); font-size:10.5px; color:var(--faint); line-height:2}
+footer b{color:var(--dim)}
+@media(max-width:640px){
+  .wrap{padding:0 13px 100px}
+  :root{--rail:20px}
+  .bar{margin-left:-13px;margin-right:-13px;padding-left:13px;padding-right:13px}
+  .strands{height:42px}
+  .strand em{font-size:9px;top:9px}
+  .strand span{display:none}
+  .ctags{width:100%;margin-left:0;order:3;padding-left:23px}
+  .chead{flex-wrap:wrap;gap:8px;padding:15px 4px}
+  .acount{width:100%;margin-left:0}
+  .tid{width:38px;font-size:10px}
+  .tname{font-size:13.5px}
+  .chip{padding:8px 12px;font-size:11px}
+  .trow{padding:10px 8px}
+  .lv{min-width:38px;height:28px;font-size:10.5px}
+  .ty{width:22px;height:22px;font-size:10px}
+  .btn{padding:12px 13px}
+  .sublist{padding-left:44px}
+  .sublist::before{left:33px}
+  .sid{min-width:44px}
+  /* let the toolbar buttons drop to their own row */
+  .searchrow{flex-wrap:wrap}
+  .search{flex:1 1 100%}
+  .searchrow .btn{flex:1}
+  /* reference chips get their own line instead of pushing type+level off-screen */
+  .trow{flex-wrap:wrap}
+  .tname{flex:1 1 45%}
+  .refs{order:9; width:100%; padding-left:52px; margin-top:1px}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+:focus-visible{outline:2px solid var(--a40); outline-offset:2px; border-radius:4px}
+
+.tbar{display:flex;justify-content:space-between;gap:8px;margin-bottom:20px}
+.tbar .btn{text-decoration:none;display:inline-block}
+.grp{margin-top:44px;opacity:0;transform:translateY(14px);animation:rise .55s var(--ease) forwards}
+.grph{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.grph h2{font-family:var(--disp);font-weight:600;font-size:clamp(16px,3vw,21px);margin:0;letter-spacing:-.015em}
+.grph .gm{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.grph .n{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:auto}
+.ginfo{font-size:13.5px;color:var(--dim);margin:11px 0 0;padding:10px 13px;border-radius:8px;
+  background:var(--panel);border-left:3px solid var(--c)}
+.ginfo b{color:var(--ink)}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:13px;margin-top:15px}
+.kc{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px 17px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .24s var(--ease),border-color .2s}
+.kc::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:var(--kc,var(--c))}
+.kc:hover{transform:translateY(-3px);border-color:var(--kc,var(--c))}
+.kc h3{font-family:var(--disp);font-weight:600;font-size:15.5px;margin:5px 0 4px;letter-spacing:-.01em}
+.kc .cm{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-bottom:10px}
+.kc .rows2{display:flex;flex-direction:column;gap:5px;margin:10px 0}
+.kc .r2{display:flex;gap:9px;font-size:13px;align-items:baseline}
+.kc .r2 .k{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);flex:none;width:64px;padding-top:2px}
+.kc .r2 .v{flex:1;color:var(--dim)}
+.kc .r2.status .v{color:var(--kc,var(--ink));font-weight:600}
+.kc .r2.action .v,.kc .r2.deadline .v{color:#C42A36;font-weight:500}
+[data-theme="ink"] .kc .r2.action .v,[data-theme="ink"] .kc .r2.deadline .v{color:#FF7B7B}
+.kc ul{margin:9px 0 0;padding-left:17px}
+.kc li{font-size:13.2px;color:var(--dim);margin-bottom:4px;line-height:1.5}
+.kc li::marker{color:var(--kc,var(--c))}
+.kc .lnk{display:flex;gap:4px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.kc .lnk a{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;text-decoration:none;
+  border:1px solid var(--line2);background:var(--panel2);color:var(--dim);transition:all .16s}
+.kc .lnk a:hover{background:var(--kc,var(--c));color:#fff;border-color:var(--kc,var(--c))}
+@media(max-width:640px){.cardgrid{grid-template-columns:1fr}.kc .r2 .k{width:56px}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="hero">
+  <div class="tbar"><a class="btn" href="../index.html">&larr; Home</a><button class="btn" id="themeBtn">Paper</button></div>
+  <div class="eyebrow"><span class="dot"></span> Index 06 · by class</div>
+  <h1>My Coursework<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
+  <p class="lede">What the classroom notebooks actually contain, class by class. CCTV transcribed in full from the Corvit handwritten notes.</p>
+  <div class="figs"><div class="fig"><b>13</b><span>areas</span></div><div class="fig"><b>79</b><span>topics</span></div><div class="fig"><b>295</b><span>details</span></div></div>
+</header>
+<div class="bar">
+  <div class="searchrow">
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search — dvr, nvr, bnc, onvif, poe, privacy mask…" autocomplete="off" spellcheck="false">
+    </label>
+  </div>
+  <div class="chips" id="grpChips"><span class="chiplabel">Section</span></div>
+  <div class="stats"><span class="stat"><b id="sShown">0</b> shown</span></div>
+</div>
+<main id="root"></main>
+<div class="empty hide" id="empty"><h3>Nothing matches</h3><p>Clear the search or turn a section back on.</p></div>
+<footer><b>Source</b> &nbsp; the CCTV entries are transcribed from 43 scanned pages of handwritten Corvit class notes, classes 01–21, 17 Oct – 16 Nov 2023. Wording is normalised, content is not added.</footer>
+</div>
+<script>
+const D = {"meta":{"title":"My Coursework","groups":13,"cards":79,"items":295},"groups":[{"title":"CCTV · Fundamentals","meta":["Corvit Systems","classes 01–03"],"info":{"summary":"What CCTV is, where it came from, and the shopping list for a working network."},"cards":[{"title":"What CCTV means","meta":["class 01 · 17 Oct 2023"],"rows":[],"bullets":["CCTV stands for closed circuit television","Television is a Greek word — *tele* means far, *vision* means view","Two types of television: OCTV and CCTV","OCTV — open circuit television: television set, wires and antenna, watched over a free or paid video network, used for entertainment","CCTV — closed circuit television: DVR/NVR, wires and connectors, watching is limited and restricted, used for security"],"links":["90"],"tone":null},{"title":"History of CCTV","meta":["class 01 · 17 Oct 2023"],"rows":[],"bullets":["Introduced by German scientist Walter Bruch in 1942","First use was to capture the scene of a rocket launch","First commercial use was traffic monitoring","Now used in homes, shops, offices, restaurants, schools"],"links":["90"],"tone":null},{"title":"Surveillance systems","meta":["class 01 · 17 Oct 2023"],"rows":[],"bullets":["Surveillance is a French word meaning monitoring","Observing or monitoring an area or object is called a surveillance system","Other types of surveillance: computer, mobile, telephone, surveillance cameras, biometric, social network"],"links":["90"],"tone":null},{"title":"Requirements for creating a CCTV network","meta":["class 01 · 17 Oct 2023"],"rows":[],"bullets":["DVR or NVR","Cameras","Cables — coaxial, coaxial + power, CCTV cable, ethernet","Connectors — BNC connectors and BNC leads","RCA cable","LCD screen","Hard disk","DC 12 volt adapter","Access point and internet","CCTV tester"],"links":["90","94"],"tone":null},{"title":"Network and CCTV tester","meta":["class 03 · 19 Oct 2023"],"rows":[],"bullets":["Network — connectivity of two or more devices so they communicate with each other","CCTV tester — a device used to adjust the covering area of analog cameras","Internet — connect DVR/NVR to the internet to reach it from anywhere in the world"],"links":["92"],"tone":null}],"tone":0},{"title":"CCTV · Recorders, cameras & cabling","meta":["Corvit Systems","classes 02–03"],"info":{"summary":"The hardware layer — what each box does, what plugs into it, and which cable goes where."},"cards":[{"title":"What is a DVR","meta":["class 02 · 18 Oct 2023"],"rows":[],"bullets":["DVR stands for digital video recorder","The central or main device in a CCTV network — all cameras connect to it","A channel is a port used for camera connectivity on the DVR","Available in 4, 8, 16, 32 and 64 channel models","By default a DVR has no storage — a hard disk must be installed","Without a hard disk you can only view cameras on screen, not record","With a DVR you can view footage, store video, search video, do event-based recording and scheduled recording","Only analog cameras can connect to a DVR"],"links":["91"],"tone":null},{"title":"What is an NVR","meta":["class 02 · 18 Oct 2023"],"rows":[],"bullets":["NVR stands for network video recorder","The central or main device for IP cameras","Connect the NVR to a switch, and connect all cameras to that switch","All DVR features are available in an NVR"],"links":["91"],"tone":null},{"title":"Cameras","meta":["class 02 · 18 Oct 2023"],"rows":[],"bullets":["CCTV cameras are also known as surveillance cameras","They capture image and video and forward it to the DVR or NVR","Two types — analog cameras, and digital or IP cameras"],"links":["90"],"tone":null},{"title":"Wires and cables","meta":["class 02 · 18 Oct 2023"],"rows":[],"bullets":["Wire is the heart of a CCTV network","Coaxial cable, coaxial + power cable and CCTV cable run between DVR and analog cameras","Ethernet cable runs between NVR and IP cameras"],"links":["94"],"tone":null},{"title":"Connectors","meta":["class 02 · 18 Oct 2023"],"rows":[],"bullets":["BNC connectors — used at the start and end of coaxial, coaxial + power and CCTV cable","RJ-45 connectors — used at the start and end of ethernet cable","BNC leads — can be used instead of BNC connectors at either end","Hard disk — by default there is none in the DVR, it must be installed"],"links":["94"],"tone":null},{"title":"RCA cable and display","meta":["class 03 · 19 Oct 2023"],"rows":[],"bullets":["RCA stands for Radio Corporation of America","RCA cable connects DVR to a television screen to view the CCTV setup","Also used for older-version voice cameras","LCD screen connects to DVR/NVR through VGA or HDMI cable","VGA stands for Video Graphics Array","HDMI stands for High Definition Multimedia Interface","VGA carries video only; HDMI carries both video and audio"],"links":["94"],"tone":null},{"title":"Power and access","meta":["class 03 · 19 Oct 2023"],"rows":[],"bullets":["DC 12 volt adapter powers the DVR, NVR and cameras","Access point — connect it to the DVR/NVR to reach the setup from mobile or laptop over signal without internet"],"links":["94"],"tone":null}],"tone":1},{"title":"CCTV · DVR ports & physical structure","meta":["Corvit Systems","class 03"],"info":{"summary":"Every port on the back of the box and what it is for."},"cards":[{"title":"DVR rear panel layout","meta":["class 03 · 19 Oct 2023"],"rows":[],"bullets":["Channels — ch-1, ch-2, ch-3, ch-4","V-out and A-out","VGA and HDMI","Audio in","RJ-45","USB-1 and USB-2","Power button","DC 12 volt","RS-485"],"links":["91"],"tone":null},{"title":"What each port does","meta":["class 03 · 19 Oct 2023"],"rows":[],"bullets":["Channel — a port used for camera connectivity in the DVR","V-out — video out, used to view cameras on a television screen","A-out — audio out, used to connect a speaker to the DVR for listening","VGA and HDMI — used to view the CCTV setup on an LCD screen","Audio-in — connects audio devices or audio cameras to the DVR","RJ-45 — connects the DVR to an access point or the internet","USB — universal serial bus, connects mouse and keyboard, and takes video off the DVR","Power button — on/off button of the DVR","DC-12 volt — powers the DVR","RS-485 — connects sensors and alarms to the DVR"],"links":["91"],"tone":null}],"tone":2},{"title":"CCTV · Cable termination","meta":["Corvit Systems","classes 04–05"],"info":{"summary":"Making up coaxial and coaxial + power cable by hand, step by step."},"cards":[{"title":"Configuring coaxial cable and connectors","meta":["class 04 · 20 Oct 2023"],"rows":[],"bullets":["Requirements — coaxial cable (RG-6 or RG-7), BNC connector, screwdriver, cutter","Step 1 — remove the coat or cover from the coaxial cable; underneath are two conductors, the copper wire and the mesh","Step 2 — attach the main copper wire (the video wire) under the screw of the BNC connector, then tighten the screw onto it","Step 3 — attach the mesh to the external side of the BNC connector","Step 4 — attach one side of the cable to the DVR and the other side to the camera"],"links":["94"],"tone":null},{"title":"Configuring coaxial + power cable, RG-59","meta":["class 05 · 23 Oct 2023"],"rows":[],"bullets":["Requirements — RG-59 cable, BNC connector or BNC lead, DC 12 volt adaptor, cutter","Step 1 — remove the coat and cover from the coaxial wire","Step 2 — attach the BNC connector or lead to the coaxial wire","Step 3 — cut the DC 12 volt adapter wire at the centre; it contains two wires","Step 4 — attach the DC 12 volt wire to the red wire of the RG-59 cable, and attach the second wire to the black wire, at both ends"],"links":["94"],"tone":null}],"tone":3},{"title":"CCTV · DVR first configuration","meta":["Corvit Systems","classes 05–07"],"info":{"summary":"Bringing a new DVR up, then the housekeeping settings that follow."},"cards":[{"title":"Configuring a new DVR","meta":["class 05 · 23 Oct 2023"],"rows":[],"bullets":["Connect the SATA signal wire between the motherboard and the HDD, and connect the power wire (4 wires) from the DVR motherboard to the hard disk","Power on the DVR","Set the admin password","Set the pattern","Provide a valid email, then answer the security questions, then save","Check licence, then Next","Select overwrite in front of HDD full","Select customized in front of auto-delete old files, write 1 days ago, then OK, Next, Finish"],"links":["91"],"tone":null},{"title":"Auto logout and 1 minute logout","meta":["classes 05–06"],"rows":[],"bullets":["Auto logout — right-click on screen → Main menu → Shutdown → Logout","1 minute logout — right-click → Main menu → System under Setting → General tab → General sub tab → write 1 in front of Auto logout → Save"],"links":["91"],"tone":null},{"title":"Date and time, and NTP","meta":["classes 05–06"],"rows":[],"bullets":["Date and time — right-click → Main menu → System under Settings → General → Date & time sub tab → set date and time → set +5:00 Pakistan GMT → Save","NTP stands for Network Time Protocol; it configures the correct date and time on the DVR","The DVR must be connected to the internet for NTP to work","NTP setting — right-click → Main menu → System under Setting → General → Date & time sub tab → check NTP → write time.windows.com → Apply → Save"],"links":["92"],"tone":null},{"title":"HDD overwrite, format and health","meta":["classes 05–06"],"rows":[],"bullets":["Overwrite — right-click → Main menu → Storage → Basic → select overwrite in front of HDD full → select customized in front of auto delete old file → select 1 days ago → Save","Format — Main menu → Storage → HDD manage → tick SATA → Format → OK → Save → the DVR restarts","Health check — right-click → Main menu → Storage → HDD Detect → select Quick start for fast checking, or Global Detect for deep checking of every cluster → check SATA → Start"],"links":["91"],"tone":null},{"title":"Change admin password and hide cameras on logout","meta":["class 06 · 24 Oct 2023"],"rows":[],"bullets":["Change password — right-click → Main menu → System under setting → Account → select admin → Modify → Modify password → provide old password → set new password","Change pattern — click Unlock pattern → draw the new pattern → Save","Hide active cameras at logout — right-click → Main menu → System under setting → General → General sub tab → Monitor channel when logout → remove check all → Save"],"links":["91"],"tone":null},{"title":"Camera colour and rename","meta":["class 07 · 26 Oct 2023"],"rows":[],"bullets":["Colour setting — right-click → Main menu → Setting → Camera → Image → select channel 1, 2, 3 → click Default","Rename — right-click → Main menu → Camera → Camera name → set all channel names → Save → OK"],"links":["90"],"tone":null}],"tone":4},{"title":"CCTV · Recording, playback & backup","meta":["Corvit Systems","classes 07–10"],"info":{"summary":"Getting footage recorded, finding it again, and getting it off the box."},"cards":[{"title":"Instant playback","meta":["class 07 · 26 Oct 2023"],"rows":[],"bullets":["Instant playback plays the last few minutes of recording on any channel","Default instant playback time is 5 minutes, and it can be raised to a maximum of 60 minutes","To play — move the mouse cursor to the top of the channel → click instant play → the last 5 minutes of saved recording plays on screen","To change the time — right-click → Main menu → System under setting → General → General sub tab → write the instant playback time between 5 and 60 minutes → Save"],"links":["91"],"tone":null},{"title":"Checking saved recordings","meta":["class 07 · 26 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → Search → select Date → click time → for maximising click 2 hour, 1 hour or 30 minutes","All cameras' recordings can be seen on screen here"],"links":["96"],"tone":null},{"title":"Copying recordings to USB or external disk","meta":["classes 07–08"],"rows":[],"bullets":["Right-click → Main menu → Search → click Date","To copy channel 4 — click single camera and select channel 4","Click on time and maximize the time to 30 min or 1 hour","Select the start time and click the scissor icon → click the end time and click the scissor again","Backup folder → Backup → Start","After the copy completes, click OK"],"links":["96"],"tone":null},{"title":"Enabling audio","meta":["class 10 · 30 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → Camera → Encode → Encode sub tab → select channel 1 → check Audio/Video on both sides → Save"],"links":["90"],"tone":null},{"title":"Motion recording","meta":["class 10 · 30 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → Storage → Schedule → select the channel → click all → click the rubber → check MD (motion detection) → draw the area","Default a channel — right-click → Main menu → Storage → Schedule → select channel 2 → Default → Save → OK"],"links":["91"],"tone":null},{"title":"Continuous plus motion recording in one step","meta":["class 10 · 30 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → Storage → Schedule → select any channel → click all","Erase 0 to 8 am and erase 5 to 24","Check MD and draw 0–8 and 16–24 → Apply → OK"],"links":["91"],"tone":null},{"title":"Stop recording on a specific camera","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → Storage → Record → check Stop under channel 2 → Save","Channel 2 recording is then not saved or stored on the DVR"],"links":["91"],"tone":null}],"tone":5},{"title":"CCTV · Users, privacy & password recovery","meta":["Corvit Systems","classes 08–11"],"info":{"summary":"Who can see what, and how to get back in when the password is gone."},"cards":[{"title":"Assigning user rights","meta":["class 08 · 27 Oct 2023"],"rows":[],"bullets":["Right-click → Main menu → System under settings → Account → select the user → Modify → select admin in front of group → click specific Rights → Save"],"links":["95"],"tone":null},{"title":"Privacy mask","meta":["class 08 · 27 Oct 2023"],"rows":[],"bullets":["Privacy mask hides a specific area of a camera from preview as well as from recording","Configure — right-click → Main menu → Camera → Encode → Overlay sub tab → select the camera → check Preview and Record → click 1 → click Set → move the mask to the desired area → Save"],"links":["95"],"tone":null},{"title":"Restore DVR password by security question","meta":["class 10 · 30 Oct 2023"],"rows":[],"bullets":["Power on the password-protected DVR","Click Switch user → Switch user → Forgot password → OK","Select security question in front of Reset password","Provide answers → Next → provide new password → Save → OK"],"links":["95"],"tone":null},{"title":"Restore DVR password by email","meta":["class 11 · 31 Oct 2023"],"rows":[],"bullets":["Power on the password-protected DVR","Right-click → Main menu → Switch user → Forgot password → OK","Select QR code in front of Reset type","Open a QR barcode scanner on mobile → scan the DVR barcode → Share → select Gmail → write to the vendor support address → Send","Open the email address fed into the DVR, where the code is received","Provide that code on the DVR → Next → provide new password → OK"],"links":["95"],"tone":null},{"title":"Hard reset a DVR","meta":["class 11 · 31 Oct 2023"],"rows":[],"bullets":["Power off the DVR → remove the cover","Press and hold the reset button on the motherboard","Power on the DVR, release the reset button after 20 seconds","Power off the DVR, then power on again — it is now hard reset"],"links":["91"],"tone":null}],"tone":6},{"title":"CCTV · Display, screen & maintenance","meta":["Corvit Systems","classes 09–10"],"info":{"summary":"What appears on the monitor, and keeping the box healthy on its own."},"cards":[{"title":"Display camera name, date and time","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["System under Setting → Display → Display sub tab → check Date → check Channel Display"],"links":["91"],"tone":null},{"title":"DVR resolution","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["System under Setting → Display → sub tab → set resolution according to need"],"links":["91"],"tone":null},{"title":"Camera tour","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["Camera tour auto-rotates the cameras on screen","System under Setting → Display → Tour sub tab → check Enable → Save"],"links":["91"],"tone":null},{"title":"Auto restart","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["System under Setting → Auto maintain → select every day → select the time, e.g. 5pm → Save"],"links":["91"],"tone":null},{"title":"Vendor camera types and megapixels","meta":["class 09 · 25 Oct 2023"],"rows":[],"bullets":["Display different vendors' cameras — right-click → Main menu → Camera → Channel type → check Auto → Save","Check megapixels — right-click → Main menu → System under Info → Channel type — connected cameras' megapixels are shown here","720 pixel means 1 megapixel or 0.9 megapixel; 1080 pixel means 2 megapixel"],"links":["90"],"tone":null}],"tone":7},{"title":"CCTV · Networking & remote access","meta":["Corvit Systems","classes 08–14"],"info":{"summary":"Getting the DVR onto the network, then onto a phone, a browser and the internet."},"cards":[{"title":"Access CCTV from mobile","meta":["class 08 · 27 Oct 2023"],"rows":[],"bullets":["Network under Setting → click P2P → check Enable → Save","For access, download the DMSS software on mobile"],"links":["92"],"tone":null},{"title":"Connect DVR to the internet","meta":["class 12 · 02 Nov 2023"],"rows":[],"bullets":["Right-click → Main menu → Network under setting → TCP/IP → click DHCP → Save"],"links":["92"],"tone":null},{"title":"Set a permanent IP","meta":["class 12 · 02 Nov 2023"],"rows":[],"bullets":["Right-click → Main menu → Network under setting → TCP/IP → check Static → Save"],"links":["92"],"tone":null},{"title":"Check currently connected users","meta":["class 12 · 02 Nov 2023"],"rows":[],"bullets":["Right-click → Main menu → Network under Info → Online users","Shows the users currently connected to the DVR, from the network and from mobile"],"links":["92"],"tone":null},{"title":"Access the DVR from a computer","meta":["classes 12–13"],"rows":[],"bullets":["Open any browser and write the DVR IP","Install, Run, then click Run again to install the DVR software","Provide credentials, then log in"],"links":["93"],"tone":null},{"title":"Lab setup","meta":["class 13 · 03 Nov 2023"],"rows":[],"bullets":["DVR 192.168.1.241 connected to a switch","PC-2 192.168.1.12, PC-3 192.168.1.25, PC-4 192.168.1.13, PC-5 192.168.1.16, PC-6 192.168.1.15, PC-7 192.168.1.50","Check DVR connectivity from a PC or laptop — Run → cmd → ping 192.168.1.241","Ping checks that the destination is reachable or not"],"links":["92"],"tone":null},{"title":"Block and allow DVR access by IP","meta":["class 13 · 03 Nov 2023"],"rows":[],"bullets":["Block a PC — right-click → Main menu → System under setting → Security → Access right sub tab → Enable → select Blocked sites → select blocked site in type → write the IP, e.g. 192.168.1.16 → Add IP address → Save","Allow only specific computers — right-click → Main menu → System under setting → Security → enable Access right → select Trusted sites → write the IP → Save","Except those specific IPs, all others will be blocked"],"links":["95"],"tone":null},{"title":"Zero channel","meta":["class 14 · 06 Nov 2023"],"rows":[],"bullets":["Zero channel lets you view or watch all cameras of the DVR in a single channel","Enable — right-click → Main menu → System under setting → Display → Zero channel sub tab → check Enable","Access via zero channel — open Internet Explorer → write the DVR IP → Enter → provide DVR username and password → Login → click the grid icon → click 1-4 and all cameras are visible on channel 1"],"links":["93"],"tone":null}],"tone":8},{"title":"CCTV · XVR and IP migration","meta":["Corvit Systems","class 14"],"info":{"summary":"Turning an analog recorder into a hybrid one, and adding IP cameras to it."},"cards":[{"title":"What is XVR / HVR","meta":["class 14 · 06 Nov 2023"],"rows":[],"bullets":["The type of DVR in which both analog and IP cameras can be added"],"links":["91"],"tone":null},{"title":"Convert a DVR to an XVR","meta":["class 14 · 06 Nov 2023"],"rows":[],"bullets":["Right-click → Main menu → Camera → Channel type → click Add IP cam → OK","The DVR restarts automatically, and after restarting it is called an XVR"],"links":["91"],"tone":null},{"title":"Add an IP camera in an XVR","meta":["class 14 · 06 Nov 2023"],"rows":[],"bullets":["Right-click → View-6 → click the + sign in an empty channel → Manual add → select Dahua in front of manufacturer, because the camera and DVR are both Dahua","If they are different companies, write ONVIF in manufacturer","Write the camera IP, e.g. 192.168.1.90, username admin and the password → OK"],"links":["92"],"tone":null},{"title":"Convert an XVR back to a DVR","meta":["class 14 · 06 Nov 2023"],"rows":[],"bullets":["Right-click → Main menu → Camera → Channel type → cancel the IP cameras → OK → the XVR restarts"],"links":["91"],"tone":null}],"tone":9},{"title":"CCTV · NVR and IP cameras","meta":["Corvit Systems","classes 15–19"],"info":{"summary":"The IP side of the course — NVR hardware, first setup, and managing added cameras."},"cards":[{"title":"What is an NVR","meta":["class 15 · 07 Nov 2023"],"rows":[],"bullets":["NVR stands for network video recorder","It is the central device in an IP camera network","Connect all IP cameras to a simple switch or a PoE switch","Connect the NVR and the switch to each other","A unique IP address must be assigned to each IP camera and also to the NVR","Every camera must be added manually in the NVR","By default an NVR has no storage — a SATA hard disk must be installed","Like DVR and XVR, all features are available in an NVR"],"links":["91"],"tone":null},{"title":"Physical structure of an NVR","meta":["class 15 · 07 Nov 2023"],"rows":[],"bullets":["RJ-45, also called the LAN port — connects the NVR and switch to each other","Audio-in — connects an audio device","Audio-out — connects external speakers","HDMI and VGA — video display and output ports","VGA carries video only, HDMI carries both audio and video","USB port — used for NVR configuration with mouse and keyboard, and to take video recordings onto USB from the NVR","DC-12 volt — gives power to the NVR","On/off button"],"links":["91"],"tone":null},{"title":"Installing a hard disk in an NVR","meta":["class 16 · 08 Nov 2023"],"rows":[],"bullets":["Remove the external screws of the NVR, then remove the cover","Connect the SATA wire (the video wire) and the power wire between the hard disk and the NVR motherboard","Fix the cover back on the NVR and tighten the screws"],"links":["91"],"tone":null},{"title":"Configure a fresh NVR","meta":["class 16 · 08 Nov 2023"],"rows":[],"bullets":["Power on the NVR → select language, English → Apply → click Yes on the resolution notification","Set the admin password → Activate → set a valid email → Apply","Click Security question → provide answers → Apply","Manual configure → draw the admin pattern","Set date and time → Next → give the IP address, static or DHCP → Next","Check the installed hard disk → click Init (initialize) → OK — the hard disk is formatted and status changes from abnormal to R/W","Check the cameras and select all → Add all","Click Edit on those cameras which are in disable state → provide the password, because the camera is another vendor → OK → status goes green → Next → Finish"],"links":["91"],"tone":null},{"title":"NVR resolution, default and password prompt","meta":["class 16 · 08 Nov 2023"],"rows":[],"bullets":["Restore to vendor default — right-click → Menu → Maintenance icon → Factory default → OK → the NVR reboots and is restored","Set resolution — right-click → Menu → Setting → System → General sub tab → set resolution → Apply","Enable or disable password asking — right-click → Menu → Setting → tab → General sub tab → enable or disable lock screen password on Basic setting → Apply"],"links":["91"],"tone":null},{"title":"Add, delete and activate cameras in an NVR","meta":["class 17 · 09 Nov 2023"],"rows":[],"bullets":["Delete a camera — right-click → Menu → Setting → Camera → Camera sub tab → click on the camera → click the delete icon","Add an IP camera — Setting → Camera → Camera sub tab → click Edit in front of IP/operation → provide the camera password → OK","Camera activation password, when an added camera is not showing on screen — Setting → Camera → on that camera click Edit under operation → check Use camera activation at the bottom → OK","Format the hard disk — Setting → Record → Storage → select HDD → click Init (initialize) → OK — status changes from abnormal to RW (read and write)"],"links":["91"],"tone":null},{"title":"Manage added cameras","meta":["class 18 · 10 Nov 2023"],"rows":[],"bullets":["Check an added camera's password — Setting → Camera → Camera sub tab → Show password → provide the NVR admin password → OK — passwords appear under the security column","Change IP address and password of an added camera — Setting → Camera → Camera sub tab → click the IP address of the added camera → click the setting icon → change IP and password → Apply","Hide an active camera on screen — Setting → Camera → Live view → View sub tab → click the cross icon inside the channel → Apply → OK","Bring a hidden camera back — Setting → Camera → Live view → View → click inside the channel → Apply"],"links":["90"],"tone":null},{"title":"Camera name, OSD and NVR users","meta":["class 19 · 13 Nov 2023"],"rows":[],"bullets":["Change a camera name — Setting → Camera → Display → select the camera → set the new name → Apply","Display date, time, camera name and colour — Setting → Camera → Display → select the camera → click OSD (on screen display) → enable Display name and Display date → click Image setting → adjust brightness, contrast and saturation; by default 50, 50, 50","Change NVR admin password — Setting → System → User sub tab → click the edit icon under operation → give the old password → give the new password → confirm → OK","Create a user in an NVR — Setting → System → User → Add → provide the admin password → give the username, password and confirm → OK"],"links":["95"],"tone":null},{"title":"NVR logout, auto switch and network","meta":["class 19 · 13 Nov 2023"],"rows":[],"bullets":["Auto logout — Setting → System → General → More setting sub tab → select 1m, 5m or Never in front of lock screen → Apply","Auto switch or camera tour auto-rotates the NVR cameras on screen","Configure auto switch — Setting → System → Live view → General sub tab → select the time in front of Auto switch interval → Apply","Stop auto switch — right-click on screen → Stop/Start auto switch","Static IP — Setting → Network → TCP/IP → Done","Connect the NVR to the internet — Setting → Network → TCP/IP → enable DHCP → Done"],"links":["92"],"tone":null}],"tone":0},{"title":"CCTV · Site design, PoE and CMS","meta":["Corvit Systems","classes 20–21"],"info":{"summary":"Planning a real installation, powering cameras over the data cable, and running everything from one console."},"cards":[{"title":"PoE switch","meta":["class 20 · 15 Nov 2023"],"rows":[],"bullets":["PoE stands for Power over Ethernet","The type of switch that can connect a device and also give power to it","A camera on a PoE switch needs no adapter"],"links":["94"],"tone":null},{"title":"IP camera site survey","meta":["class 20 · 15 Nov 2023"],"rows":[],"bullets":["A site means a physical location or area","Six IP cameras needed on a site, with each camera's distance from the LED screen recorded","cam-1 — 200 metre","cam-2 — 120 metre","cam-3 — 130 metre","cam-4 — 140 metre","cam-5 — 240 metre","cam-6 — 15 metre"],"links":["94"],"tone":null},{"title":"Surveillance room layout","meta":["class 20 · 15 Nov 2023"],"rows":[],"bullets":["LCD and NVR in the surveillance room","NVR connects to switch-1","switch-1 carries cam-1, cam-2 and cam-3","switch-2 hangs off switch-1 and carries cam-4 and cam-5"],"links":["94"],"tone":null},{"title":"Accessing an NVR or DVR from mobile","meta":["class 20 · 15 Nov 2023"],"rows":[],"bullets":["Bring the NVR online from Setting","Download and install the app, then connect","Add the NVR/DVR setup in mobile","Access an online DVR — right-click → Menu → Setting → Network → Platform Access → Enable → check on, leave the rest → OK → a verification code is shown"],"links":["93"],"tone":null},{"title":"What is CMS","meta":["class 21 · 16 Nov 2023"],"rows":[],"bullets":["CMS stands for Central Management System","A global software used to access a DVR or NVR from a computer","The machine on which CMS is installed is known as a computer-based DVR/NVR"],"links":["93"],"tone":null},{"title":"Install CMS and add a recorder","meta":["class 21 · 16 Nov 2023"],"rows":[],"bullets":["Download CMS from the website","Install it in English language","Default username is *super* and the password is null","Set a password on CMS — System → Account → User → Modify → give password → OK","Add a DVR/NVR for Dahua — open CMS → provide password → Login","Click System → Device manager → Add Area → give the name in Zone → OK","Select the added area → Add device → click IP search → select the DVR IP → provide the DVR password → OK"],"links":["93"],"tone":null}],"tone":1},{"title":"Other coursework","meta":["13 courses","status from index 02"],"info":{"summary":"Every other course on record. Only CCTV has been transcribed to class level so far — the rest carry their real status and are detailed in the Course Syllabus Index."},"cards":[{"title":"CCNA — Implementing and Administering Cisco Solutions","meta":["Cisco"],"rows":[{"k":"status","v":"CERTIFIED"},{"k":"note","v":"200-301 v1.1 — the one exam actually passed"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":"#0B7D55"},{"title":"CompTIA A+","meta":["CompTIA"],"rows":[{"k":"status","v":"CERTIFIED — OLDER VERSION"},{"k":"note","v":"current blueprint is 220-1201 / 220-1202 (V15)"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":"#0B7D55"},{"title":"CCNP ENCOR — Enterprise Network Core","meta":["Cisco"],"rows":[{"k":"status","v":"COURSEWORK ONLY"},{"k":"note","v":"350-401 v1.1 — coursework complete, exam not sat"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":"#C55A0C"},{"title":"CCNP ENARSI — Advanced Routing and Services","meta":["Cisco"],"rows":[{"k":"status","v":"COURSEWORK ONLY"},{"k":"note","v":"300-410 v1.1 — coursework complete, exam not sat"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":"#C55A0C"},{"title":"Microsoft Azure Administrator","meta":["Microsoft"],"rows":[{"k":"status","v":"COURSEWORK ONLY"},{"k":"note","v":"AZ-104"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":"#C55A0C"},{"title":"MCSE: Server Infrastructure","meta":["Microsoft"],"rows":[{"k":"status","v":"⚠ RECORD CONFLICT"},{"k":"note","v":"syllabus is Windows Server 2012, 70-410 → 70-414; Microsoft retired those exams in January 2021"}],"bullets":["Not to be relabelled until the record is resolved","Full module and topic breakdown lives in index 02"],"links":[],"tone":"#C42A36"},{"title":"LPIC-1 / Linux Administration","meta":["LPI"],"rows":[{"k":"status","v":"SELF-STUDY"},{"k":"note","v":"101 + 102"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"CCNP SCOR — Security Core Technologies","meta":["Cisco"],"rows":[{"k":"status","v":"PLANNED"},{"k":"note","v":"350-701 v1.1"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"CCNP SNCF — Securing Networks with Cisco Firepower","meta":["Cisco"],"rows":[{"k":"status","v":"PLANNED"},{"k":"note","v":"300-710"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"CompTIA Network+","meta":["CompTIA"],"rows":[{"k":"status","v":"NOT TAKEN"},{"k":"note","v":"N10-009 (V9)"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"CompTIA Linux+","meta":["CompTIA"],"rows":[{"k":"status","v":"NOT TAKEN"},{"k":"note","v":"XK0-006 (V8)"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"Cisco Certified Support Technician — Networking","meta":["Cisco"],"rows":[{"k":"status","v":"REFERENCE"},{"k":"note","v":"CCST"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null},{"title":"CompTIA ITF+ — IT Fundamentals","meta":["CompTIA"],"rows":[{"k":"status","v":"BELOW LEVEL"},{"k":"note","v":"FC0-U61 (V5)"}],"bullets":["Full module and topic breakdown lives in index 02"],"links":[],"tone":null}],"tone":2}]};
+const G = D.groups;
+const ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'};
+const esc=s=>String(s).replace(/[&<>"]/g,m=>ESC[m]);
+const PAL=[['#8494AB','#56697F'],['#FF7A1A','#C55A0C'],['#34D399','#0B7D55'],['#22D3EE','#0C7F99'],
+           ['#4C8DFF','#1B57C4'],['#A97BFF','#6E35C9'],['#FF5A5F','#C42A36'],['#FF7AC6','#B8367F'],
+           ['#F5C542','#8A6800'],['#C98B5E','#7E5129']];
+const T={paper:{l:'Paper',tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
+         ink:{l:'Ink',tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
+let th='paper';
+function ap(t){th=t;document.documentElement.dataset.theme=t;const v=T[t],r=document.documentElement.style;
+  r.setProperty('--tc',v.tc);r.setProperty('--tx',v.tx);r.setProperty('--tt',v.tt);
+  r.setProperty('--tr',v.tr);r.setProperty('--a40',v.a);
+  document.getElementById('themeBtn').textContent=v.l;
+  document.querySelectorAll('[data-tone]').forEach(el=>el.style.setProperty('--c',PAL[+el.dataset.tone][t==='paper'?1:0]));
+  try{window.storage.set('kb-theme',t);}catch(e){}}
+document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
+
+const root=document.getElementById('root');
+G.forEach((g,gi)=>{
+  const sec=document.createElement('section');
+  sec.className='grp'; sec.dataset.tone=g.tone; sec.dataset.g=gi;
+  sec.style.animationDelay=(gi*55)+'ms';
+  const info=g.info&&Object.keys(g.info).length
+    ? `<div class="ginfo">${g.info.role?`<b>${esc(g.info.role)}</b><br>`:''}${esc(g.info.summary||'')}</div>` : '';
+  const cardsHtml=g.cards.map(c=>{
+    const rows=c.rows.map(r=>`<div class="r2 ${esc(r.k)}"><span class="k">${esc(r.k)}</span><span class="v">${esc(r.v)}</span></div>`).join('');
+    const bl=c.bullets.length?`<ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:'';
+    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Master Knowledge Index category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
+    const meta=c.meta.length?`<div class="cm">${c.meta.map(esc).join(' &nbsp;&middot;&nbsp; ')}</div>`:'';
+    const tone=c.tone?`style="--kc:${c.tone}"`:'';
+    const hay=esc((c.title+' '+c.meta.join(' ')+' '+c.rows.map(r=>r.k+' '+r.v).join(' ')+' '+c.bullets.join(' ')).toLowerCase());
+    return `<article class="kc" ${tone} data-s="${hay}"><h3>${esc(c.title)}</h3>${meta}
+      <div class="rows2">${rows}</div>${bl}${lk}</article>`;}).join('');
+  sec.innerHTML=`<div class="grph"><h2>${esc(g.title)}</h2>
+    ${g.meta.map(x=>`<span class="gm">${esc(x)}</span>`).join('')}
+    <span class="n">${g.cards.length}</span></div>${info}
+    <div class="cardgrid">${cardsHtml}</div>`;
+  root.appendChild(sec);
+});
+
+const chips=document.getElementById('grpChips');
+G.forEach((g,gi)=>{const b=document.createElement('button');b.className='chip';b.dataset.g=gi;
+  b.textContent=g.title.length>26?g.title.slice(0,24)+'\u2026':g.title;
+  b.onclick=()=>{b.classList.toggle('on');apply();};chips.appendChild(b);});
+
+const q=document.getElementById('q');
+let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(apply,110);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';apply();}
+  if(e.key==='/'&&document.activeElement.id!=='q'){e.preventDefault();q.focus();}});
+function apply(){
+  const term=q.value.trim().toLowerCase();
+  const on=[...document.querySelectorAll('#grpChips .chip.on')].map(c=>c.dataset.g);
+  let shown=0,any=false;
+  document.querySelectorAll('.grp').forEach(sec=>{
+    if(on.length&&!on.includes(sec.dataset.g)){sec.classList.add('hide');return;}
+    let has=false;
+    sec.querySelectorAll('.kc').forEach(c=>{
+      const ok=!term||c.dataset.s.includes(term);
+      c.classList.toggle('hide',!ok); if(ok){has=true;shown++;}});
+    sec.classList.toggle('hide',!has); if(has)any=true;});
+  document.getElementById('empty').classList.toggle('hide',any);
+  document.getElementById('sShown').textContent=shown;
+}
+(async()=>{try{const r=await window.storage.get('kb-theme');if(r&&r.value)th=r.value;}catch(e){}ap(th);apply();})();
+</script>
+</body></html>

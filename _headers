@@ -1,0 +1,11 @@
+/*
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+
+/docs/*
+  Content-Type: text/plain; charset=utf-8
+
+/files/*
+  Content-Disposition: attachment

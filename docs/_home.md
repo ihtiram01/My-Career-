@@ -5,9 +5,10 @@ location: Riyadh, Kingdom of Saudi Arabia
 tagline: Networks, infrastructure and surveillance systems — studied, built and documented.
 about: Network and IT infrastructure engineer based in Riyadh. CCNA and CompTIA A+ certified, with CCNP-level coursework in enterprise routing and switching, Azure administration and virtualisation. Field work across metro transit, telecom IP core, enterprise IT and CCTV surveillance. This site is the working record behind that — every course, every lab, every project, with the gaps marked honestly.
 email: ihtirammmd01@gmail.com
-whatsapp:
-linkedin:
-tiktok:
+whatsapp: +966 50 881 7993
+linkedin: https://www.linkedin.com/in/ihtiram-ullah-1978532a8
+tiktok: @gulf_networking
+youtube:
 phone:
 ---
 
@@ -24,21 +25,25 @@ After editing, run `python3 build/build.py`.
 
 Each contact field becomes one button, in the order listed above. **A field left
 blank produces no button at all** — no dead link, no greyed-out placeholder. That
-is why only Email shows right now: the others have never been filled in.
+is why no YouTube button shows yet — that link has not been supplied.
 
-Fill them like this — any of these forms works:
+Any of these forms works:
 
-    whatsapp: +966 5X XXX XXXX          number in any format; spaces and
-                                        dashes are stripped automatically
+    whatsapp: +966 5X XXX XXXX          number in any format; spaces,
+                                        dashes and a leading 00 are handled
 
-    linkedin: ihtiram-ullah             bare handle, or in/ihtiram-ullah,
+    linkedin: ihtiram-ullah-1978532a8   bare handle, in/handle, or the
+                                        full https:// URL
+
+    tiktok:   @gulf_networking          handle with or without the @,
                                         or the full https:// URL
 
-    tiktok:   @ihtiramullah             handle with or without the @,
-                                        or the full https:// URL
+    youtube:  @yourchannel              handle, /channel/UC…, /c/…, a
+                                        youtu.be link, or the full URL
 
-    phone:    +966 5X XXX XXXX          only if you want a dial button
-                                        separate from WhatsApp
+    phone:    +966 5X XXX XXXX          only if a dial button is wanted
+                                        separately. Blank because WhatsApp
+                                        already uses the same number.
 
 WhatsApp becomes a `wa.me` link that opens a chat straight to that number.
 Phone becomes a `tel:` link that dials.

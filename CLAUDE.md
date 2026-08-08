@@ -13,11 +13,14 @@ Read this before changing anything.
 **Markdown is the source. HTML is disposable output.**
 
 ```
-docs/*.md  ──[ build/build.py ]──>  knowledge/index.html
+docs/*.md  ──[ build/build.py ]──>  index.html          (landing page)
+                                    knowledge/index.html
                                     courses/index.html
+                                    exams/  experience/
+                                    labs/   coursework/
 ```
 
-Never hand-edit `knowledge/index.html` or `courses/index.html`. The next build
+Never hand-edit **any** `index.html`, the landing page included. The next build
 overwrites them without warning. If you find yourself editing HTML to change
 content, stop — the change belongs in `docs/`.
 
@@ -38,10 +41,16 @@ comes back short, which is the signal that a markdown format got broken.
 ## Layout
 
 ```
-index.html              landing page (hand-written, safe to edit)
+index.html              GENERATED — landing page, built by build_home()
 knowledge/index.html    GENERATED — do not edit
 courses/index.html      GENERATED — do not edit
+exams/ experience/      GENERATED — do not edit
+labs/ coursework/       GENERATED — do not edit
 docs/
+  _home.md                     landing-page config: name, role, tagline,
+                               about paragraph, contact fields. Leading
+                               underscore keeps it from becoming a page.
+                               Blank contact fields are simply not rendered.
   master-knowledge-index.md    source of truth, technology index
   course-syllabus-index.md     source of truth, course index
 build/

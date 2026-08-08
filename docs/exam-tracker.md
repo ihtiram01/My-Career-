@@ -1,9 +1,9 @@
 ---
-title: Certification & Exam Tracker
+title: Certifications & Roadmap
 page: exams
-order: 3
+order: 2
 colour: green
-kicker: Index 03 · status
+kicker: Section 02 · status
 summary: Passed versus coursework, what each exam costs, and what expires when.
 placeholder: Search — encor, az-800, cost, deadline…
 unit_group: sections

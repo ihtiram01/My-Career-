@@ -35,16 +35,16 @@ FILES = ROOT / "files"
 TREE_PAGES = {
     "master-knowledge-index.md": dict(
         page="knowledge", tpl="knowledge.tpl", kind="knowledge",
-        kicker="Index 01 · by technology", colour="#1B57C4",
+        kicker="Section 05 · by technology", colour="#1B57C4",
         title="Master Knowledge Index",
         summary="Ten layers, copper up to CCTV. One home per concept, cross-referenced.",
-        order=1),
+        order=5),
     "course-syllabus-index.md": dict(
         page="courses", tpl="courses.tpl", kind="courses",
-        kicker="Index 02 · by course", colour="#C55A0C",
+        kicker="Section 03 · by course", colour="#C55A0C",
         title="Course Syllabus Index",
-        summary="What each syllabus covered, merged from 21 documents. Links back to index 01.",
-        order=2),
+        summary="What each syllabus covered, merged from 21 documents. Links back to the knowledge index.",
+        order=3),
 }
 
 NAMED_COLOURS = {
@@ -322,54 +322,84 @@ def list_files():
 
 
 # ── home ────────────────────────────────────────────────────────────────
+def esc(s):
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def home_config():
+    """Landing-page details, from docs/_home.md. Underscore keeps it off the site."""
+    path = DOCS / "_home.md"
+    fm = read_frontmatter(path) if path.exists() else {}
+    return {k: fm.get(k, "").strip() for k in
+            ("name", "role", "location", "tagline", "about", "email", "linkedin", "phone")}
+
+
+def contact_block(cfg):
+    """Only the contact fields that were actually filled in. No placeholders."""
+    items = []
+    if cfg["email"]:
+        items.append(("Email", f'<a href="mailto:{esc(cfg["email"])}">{esc(cfg["email"])}</a>'))
+    if cfg["linkedin"]:
+        label = re.sub(r"^https?://(www\.)?", "", cfg["linkedin"]).rstrip("/")
+        items.append(("LinkedIn", f'<a href="{esc(cfg["linkedin"])}" rel="noopener">{esc(label)}</a>'))
+    if cfg["phone"]:
+        tel = re.sub(r"[^\d+]", "", cfg["phone"])
+        items.append(("Phone", f'<a href="tel:{esc(tel)}">{esc(cfg["phone"])}</a>'))
+    if cfg["location"]:
+        items.append(("Based in", esc(cfg["location"])))
+    if not items:
+        return ""
+    rows = "".join(f'<div><span class="cl">{k}</span>{v}</div>' for k, v in items)
+    return f'<div class="ct">{rows}</div>'
+
+
 def build_home(css, head, tiles, docs_list, files_list):
-    cards_html = ""
-    for t in tiles:
-        nums = "".join(f'<div><b>{v}</b><span>{l}</span></div>' for v, l in t["nums"])
-        cards_html += (
-            f'<a class="card" href="./{t["page"]}/index.html" style="--c:{t["colour"]}">'
-            f'<div class="kicker">{t["kicker"]}</div><h3>{t["title"]}</h3>'
-            f'<p>{t["summary"]}</p><div class="nums">{nums}</div>'
-            '<svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" '
+    cfg = home_config()
+
+    rows_html = ""
+    for i, t in enumerate(tiles, 1):
+        stat = " &middot; ".join(f'{v} {l}' for v, l in t["nums"][:2])
+        rows_html += (
+            f'<a class="ir" href="./{t["page"]}/index.html" style="--c:{t["colour"]}">'
+            f'<span class="n">{i:02d}</span>'
+            f'<span class="b"><h3>{esc(t["title"])}</h3><p>{esc(t["summary"])}</p></span>'
+            f'<span class="st">{stat}</span>'
+            '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" '
             'stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
             'stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>')
 
-    doc_rows = "".join(
-        f'<a class="row" href="./docs/{d["name"]}"><span class="ic">MD</span>'
-        f'<span class="t"><b>{d["name"]}</b><span>{d["title"]}</span></span>'
-        f'<span class="sz">{d["size"]}</span></a>' for d in docs_list)
-
+    # Documents only when there is something to show — an empty box is clutter.
+    docs_section = ""
     if files_list:
         file_rows = "".join(
             f'<a class="row" href="./files/{f["name"]}"><span class="ic ic-f">{f["ext"]}</span>'
             f'<span class="t"><b>{f["name"]}</b>'
             f'<span>{"TOO LARGE FOR PAGES — over 25 MB" if f["big"] else "document"}</span>'
             f'</span><span class="sz">{f["size"]}</span></a>' for f in files_list)
-    else:
-        file_rows = ('<div class="empt">Drop PDFs, certificates or your CV into the '
-                     '<code>files/</code> folder and rebuild — they appear here '
-                     'automatically.<br>Anything over <b>25 MB</b> will not deploy '
-                     'to Cloudflare Pages.</div>')
+        docs_section = (
+            '<section class="sec"><div class="sech"><h2>Documents</h2>'
+            '<span>certificates · CV · PDFs</span></div>' + file_rows + '</section>')
+
+    about = f'<p class="ab">{esc(cfg["about"])}</p>' if cfg["about"] else ""
+    profile = (f'<section class="prof">{about}{contact_block(cfg)}</section>'
+               if about or contact_block(cfg) else "")
 
     body = f'''<div class="wrap">
 <header class="hero">
   <div class="tbar"><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> Personal knowledge base <span style="opacity:.4">/</span> Riyadh, KSA</div>
-  <h1>Knowledge Base<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
-  <p class="lede">Everything studied and everything built. Each index is searchable and works offline once loaded.</p>
+  <div class="eyebrow"><span class="dot"></span> {esc(cfg["role"] or "Personal knowledge base")} <span style="opacity:.4">/</span> {esc(cfg["location"])}</div>
+  <h1>{esc(cfg["name"] or "Knowledge Base")}<span class="thin">{esc(cfg["tagline"])}</span></h1>
 </header>
-<div class="cards">{cards_html}</div>
-<section class="sec">
-  <div class="sech"><h2>Source files</h2><span>markdown · edit these, not the pages</span></div>
-  {doc_rows}
+{profile}
+<section class="sec idxsec">
+  <div class="sech"><h2>Contents</h2><span>{len(tiles)} sections</span></div>
+  <nav class="idx">{rows_html}</nav>
 </section>
-<section class="sec">
-  <div class="sech"><h2>Documents</h2><span>certificates · CV · PDFs</span></div>
-  {file_rows}
-</section>
+{docs_section}
 <footer>
-  <b>Add a page</b> &nbsp; copy <code>docs/_TEMPLATE.md</code>, write it, run <code>python3 build/build.py</code>. A card appears here on its own.<br>
-  <b>Private</b> &nbsp; marked noindex. It names employers and states which exams are unsat — not for search engines.
+  <b>Edit</b> &nbsp; every page is generated from the markdown in <code>docs/</code>. Change the markdown, never the HTML.<br>
+  <b>Note</b> &nbsp; marked noindex. It names employers and states which exams are unsat.
 </footer>
 </div>
 <script>
@@ -385,8 +415,10 @@ document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
 (async()=>{{try{{const r=await window.storage.get('kb-theme');if(r&&r.value)th=r.value;}}catch(e){{}}ap(th);}})();
 </script>
 </body></html>'''
+    title = cfg["name"] or "Knowledge Base"
     html = (head.replace("__CSS__", css + cards.HOME_CSS)
-                .replace("__TITLETAG__", "Knowledge Base — Ihtiram Ullah") + body)
+                .replace("__TITLETAG__", f'{title} — {cfg["role"]}' if cfg["role"] else title)
+            + body)
     (ROOT / "index.html").write_text(html, encoding="utf-8")
     return len(html.encode()) / 1024
 

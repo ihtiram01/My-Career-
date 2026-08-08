@@ -1,10 +1,10 @@
 ---
-title: Field Experience & Projects
+title: Career & Projects
 page: experience
-order: 4
+order: 1
 colour: violet
-kicker: Index 04 · evidence
-summary: Five employers, the real projects, the technologies you actually touched.
+kicker: Section 01 · career
+summary: Roles and projects across metro transit, telecom IP core, enterprise IT and CCTV — the technologies actually touched in production.
 placeholder: Search — huawei, zabbix, eaps, cctv…
 unit_group: employers
 unit_card: projects

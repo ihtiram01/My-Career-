@@ -179,6 +179,40 @@ HOME_CSS = r"""
 .card .go{position:absolute;right:19px;bottom:19px;color:var(--c);opacity:0;transform:translateX(-6px);transition:all .28s var(--ease)}
 .card:hover .go{opacity:1;transform:none}
 .tbar{display:flex;justify-content:flex-end;margin-bottom:16px}
+
+/* profile — about text plus whichever contact fields were filled in */
+.prof{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin-top:30px;padding:26px 24px;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.prof .ab{flex:1 1 300px;margin:0;font-size:14.2px;line-height:1.7;color:var(--dim)}
+.ct{flex:0 1 250px;display:flex;flex-direction:column;gap:11px;font-family:var(--mono);font-size:12.4px}
+.ct .cl{display:block;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+.ct a{color:var(--a40);text-decoration:none;word-break:break-word}
+.ct a:hover{text-decoration:underline}
+
+/* numbered contents list */
+.idxsec{margin-top:40px}
+.idx{margin-top:4px;border-top:1px solid var(--line)}
+.ir{display:flex;align-items:center;gap:18px;padding:19px 14px;border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;position:relative;
+  transition:background .16s,padding-left .22s var(--ease)}
+.ir::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);
+  opacity:0;transition:opacity .22s}
+.ir:hover{background:var(--panel);padding-left:20px}
+.ir:hover::before{opacity:1}
+.ir .n{flex:none;width:30px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--c);letter-spacing:.04em}
+.ir .b{flex:1;min-width:0}
+.ir .b h3{font-family:var(--disp);font-weight:600;font-size:16.5px;margin:0 0 4px;letter-spacing:-.015em}
+.ir .b p{margin:0;font-size:13px;line-height:1.55;color:var(--dim)}
+.ir .st{flex:none;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+.ir .go{flex:none;color:var(--c);opacity:0;transform:translateX(-5px);transition:all .22s var(--ease)}
+.ir:hover .go{opacity:1;transform:none}
+@media(max-width:620px){
+  .ir{flex-wrap:wrap;gap:10px}
+  .ir .b{flex:1 1 100%;order:2}
+  .ir .st{order:3;text-align:left;flex:1 1 100%}
+  .ir .go{order:1;margin-left:auto}
+}
+
 .sec{margin-top:48px}
 .sech{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .sech h2{font-family:var(--disp);font-weight:600;font-size:18px;margin:0;letter-spacing:-.015em}

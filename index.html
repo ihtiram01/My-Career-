@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Knowledge Base — Ihtiram Ullah</title>
+<title>Ihtiram Ullah — Network & IT Infrastructure Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -284,6 +284,40 @@ footer b{color:var(--dim)}
 .card .go{position:absolute;right:19px;bottom:19px;color:var(--c);opacity:0;transform:translateX(-6px);transition:all .28s var(--ease)}
 .card:hover .go{opacity:1;transform:none}
 .tbar{display:flex;justify-content:flex-end;margin-bottom:16px}
+
+/* profile — about text plus whichever contact fields were filled in */
+.prof{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin-top:30px;padding:26px 24px;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.prof .ab{flex:1 1 300px;margin:0;font-size:14.2px;line-height:1.7;color:var(--dim)}
+.ct{flex:0 1 250px;display:flex;flex-direction:column;gap:11px;font-family:var(--mono);font-size:12.4px}
+.ct .cl{display:block;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+.ct a{color:var(--a40);text-decoration:none;word-break:break-word}
+.ct a:hover{text-decoration:underline}
+
+/* numbered contents list */
+.idxsec{margin-top:40px}
+.idx{margin-top:4px;border-top:1px solid var(--line)}
+.ir{display:flex;align-items:center;gap:18px;padding:19px 14px;border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;position:relative;
+  transition:background .16s,padding-left .22s var(--ease)}
+.ir::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);
+  opacity:0;transition:opacity .22s}
+.ir:hover{background:var(--panel);padding-left:20px}
+.ir:hover::before{opacity:1}
+.ir .n{flex:none;width:30px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--c);letter-spacing:.04em}
+.ir .b{flex:1;min-width:0}
+.ir .b h3{font-family:var(--disp);font-weight:600;font-size:16.5px;margin:0 0 4px;letter-spacing:-.015em}
+.ir .b p{margin:0;font-size:13px;line-height:1.55;color:var(--dim)}
+.ir .st{flex:none;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+.ir .go{flex:none;color:var(--c);opacity:0;transform:translateX(-5px);transition:all .22s var(--ease)}
+.ir:hover .go{opacity:1;transform:none}
+@media(max-width:620px){
+  .ir{flex-wrap:wrap;gap:10px}
+  .ir .b{flex:1 1 100%;order:2}
+  .ir .st{order:3;text-align:left;flex:1 1 100%}
+  .ir .go{order:1;margin-left:auto}
+}
+
 .sec{margin-top:48px}
 .sech{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .sech h2{font-family:var(--disp);font-weight:600;font-size:18px;margin:0;letter-spacing:-.015em}
@@ -309,22 +343,18 @@ footer b{color:var(--dim)}
 <div class="wrap">
 <header class="hero">
   <div class="tbar"><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> Personal knowledge base <span style="opacity:.4">/</span> Riyadh, KSA</div>
-  <h1>Knowledge Base<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
-  <p class="lede">Everything studied and everything built. Each index is searchable and works offline once loaded.</p>
+  <div class="eyebrow"><span class="dot"></span> Network &amp; IT Infrastructure Engineer <span style="opacity:.4">/</span> Riyadh, Kingdom of Saudi Arabia</div>
+  <h1>Ihtiram Ullah<span class="thin">Networks, infrastructure and surveillance systems — studied, built and documented.</span></h1>
 </header>
-<div class="cards"><a class="card" href="./knowledge/index.html" style="--c:#1B57C4"><div class="kicker">Index 01 · by technology</div><h3>Master Knowledge Index</h3><p>Ten layers, copper up to CCTV. One home per concept, cross-referenced.</p><div class="nums"><div><b>77</b><span>categories</span></div><div><b>741</b><span>topics</span></div><div><b>562</b><span>subtopics</span></div><div><b>132</b><span>cross-refs</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="card" href="./courses/index.html" style="--c:#C55A0C"><div class="kicker">Index 02 · by course</div><h3>Course Syllabus Index</h3><p>What each syllabus covered, merged from 21 documents. Links back to index 01.</p><div class="nums"><div><b>13</b><span>courses</span></div><div><b>69</b><span>modules</span></div><div><b>445</b><span>topics</span></div><div><b>951</b><span>subtopics</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="card" href="./exams/index.html" style="--c:#0B7D55"><div class="kicker">Index 03 · status</div><h3>Certification & Exam Tracker</h3><p>Passed versus coursework, what each exam costs, and what expires when.</p><div class="nums"><div><b>4</b><span>sections</span></div><div><b>17</b><span>items</span></div><div><b>53</b><span>details</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="card" href="./experience/index.html" style="--c:#6E35C9"><div class="kicker">Index 04 · evidence</div><h3>Field Experience & Projects</h3><p>Five employers, the real projects, the technologies you actually touched.</p><div class="nums"><div><b>8</b><span>employers</span></div><div><b>23</b><span>projects</span></div><div><b>59</b><span>details</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="card" href="./labs/index.html" style="--c:#0C7F99"><div class="kicker">Index 05 · practice</div><h3>Lab & Practice Log</h3><p>EVE-NG topologies built and what each one proved. Lab time is the gap between coursework and a pass.</p><div class="nums"><div><b>3</b><span>tracks</span></div><div><b>7</b><span>labs</span></div><div><b>13</b><span>details</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="card" href="./coursework/index.html" style="--c:#7E5129"><div class="kicker">Index 06 · by class</div><h3>My Coursework</h3><p>What the classroom notebooks actually contain, class by class. CCTV transcribed in full from the Corvit handwritten notes.</p><div class="nums"><div><b>13</b><span>areas</span></div><div><b>79</b><span>topics</span></div><div><b>295</b><span>details</span></div></div><svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-<section class="sec">
-  <div class="sech"><h2>Source files</h2><span>markdown · edit these, not the pages</span></div>
-  <a class="row" href="./docs/master-knowledge-index.md"><span class="ic">MD</span><span class="t"><b>master-knowledge-index.md</b><span>Master Knowledge Index</span></span><span class="sz">81 KB</span></a><a class="row" href="./docs/course-syllabus-index.md"><span class="ic">MD</span><span class="t"><b>course-syllabus-index.md</b><span>Course Syllabus Index</span></span><span class="sz">85 KB</span></a><a class="row" href="./docs/exam-tracker.md"><span class="ic">MD</span><span class="t"><b>exam-tracker.md</b><span>Certification & Exam Tracker</span></span><span class="sz">4 KB</span></a><a class="row" href="./docs/field-experience.md"><span class="ic">MD</span><span class="t"><b>field-experience.md</b><span>Field Experience & Projects</span></span><span class="sz">6 KB</span></a><a class="row" href="./docs/lab-log.md"><span class="ic">MD</span><span class="t"><b>lab-log.md</b><span>Lab & Practice Log</span></span><span class="sz">1 KB</span></a><a class="row" href="./docs/my-coursework.md"><span class="ic">MD</span><span class="t"><b>my-coursework.md</b><span>My Coursework</span></span><span class="sz">29 KB</span></a>
+<section class="prof"><p class="ab">Network and IT infrastructure engineer based in Riyadh. CCNA and CompTIA A+ certified, with CCNP-level coursework in enterprise routing and switching, Azure administration and virtualisation. Field work across metro transit, telecom IP core, enterprise IT and CCTV surveillance. This site is the working record behind that — every course, every lab, every project, with the gaps marked honestly.</p><div class="ct"><div><span class="cl">Email</span><a href="mailto:ihtirammmd01@gmail.com">ihtirammmd01@gmail.com</a></div><div><span class="cl">Based in</span>Riyadh, Kingdom of Saudi Arabia</div></div></section>
+<section class="sec idxsec">
+  <div class="sech"><h2>Contents</h2><span>6 sections</span></div>
+  <nav class="idx"><a class="ir" href="./experience/index.html" style="--c:#6E35C9"><span class="n">01</span><span class="b"><h3>Career &amp; Projects</h3><p>Roles and projects across metro transit, telecom IP core, enterprise IT and CCTV — the technologies actually touched in production.</p></span><span class="st">8 employers &middot; 23 projects</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="ir" href="./exams/index.html" style="--c:#0B7D55"><span class="n">02</span><span class="b"><h3>Certifications &amp; Roadmap</h3><p>Passed versus coursework, what each exam costs, and what expires when.</p></span><span class="st">4 sections &middot; 17 items</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="ir" href="./courses/index.html" style="--c:#C55A0C"><span class="n">03</span><span class="b"><h3>Course Syllabus Index</h3><p>What each syllabus covered, merged from 21 documents. Links back to the knowledge index.</p></span><span class="st">13 courses &middot; 69 modules</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="ir" href="./coursework/index.html" style="--c:#7E5129"><span class="n">04</span><span class="b"><h3>Coursework Notes</h3><p>What the classroom notebooks actually contain, class by class. CCTV transcribed in full from the Corvit handwritten notes.</p></span><span class="st">13 areas &middot; 79 topics</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="ir" href="./knowledge/index.html" style="--c:#1B57C4"><span class="n">05</span><span class="b"><h3>Master Knowledge Index</h3><p>Ten layers, copper up to CCTV. One home per concept, cross-referenced.</p></span><span class="st">77 categories &middot; 741 topics</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="ir" href="./labs/index.html" style="--c:#0C7F99"><span class="n">06</span><span class="b"><h3>Labs &amp; Practice</h3><p>EVE-NG topologies built and what each one proved. Lab time is the gap between coursework and a pass.</p></span><span class="st">3 tracks &middot; 7 labs</span><svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></nav>
 </section>
-<section class="sec">
-  <div class="sech"><h2>Documents</h2><span>certificates · CV · PDFs</span></div>
-  <div class="empt">Drop PDFs, certificates or your CV into the <code>files/</code> folder and rebuild — they appear here automatically.<br>Anything over <b>25 MB</b> will not deploy to Cloudflare Pages.</div>
-</section>
+
 <footer>
-  <b>Add a page</b> &nbsp; copy <code>docs/_TEMPLATE.md</code>, write it, run <code>python3 build/build.py</code>. A card appears here on its own.<br>
-  <b>Private</b> &nbsp; marked noindex. It names employers and states which exams are unsat — not for search engines.
+  <b>Edit</b> &nbsp; every page is generated from the markdown in <code>docs/</code>. Change the markdown, never the HTML.<br>
+  <b>Note</b> &nbsp; marked noindex. It names employers and states which exams are unsat.
 </footer>
 </div>
 <script>

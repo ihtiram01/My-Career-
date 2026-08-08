@@ -23,6 +23,7 @@ STATUS_COLOUR = {
 }
 GROUP_TONE = {  # index into the fiber palette
     'PASSED': 2, 'COURSEWORK ONLY': 1, 'NEXT': 4, 'NOT CERTIFICATIONS': 5,
+    'EXAMS TO SIT': 4, 'LABS TO BUILD': 3, 'RECORD AND DOCUMENTATION GAPS': 6,
 }
 PAL = [('#8494AB', '#56697F'), ('#FF7A1A', '#C55A0C'), ('#34D399', '#0B7D55'),
        ('#22D3EE', '#0C7F99'), ('#4C8DFF', '#1B57C4'), ('#A97BFF', '#6E35C9'),
@@ -180,6 +181,14 @@ HOME_CSS = r"""
 .card:hover .go{opacity:1;transform:none}
 .tbar{display:flex;justify-content:flex-end;margin-bottom:16px}
 
+/* headline figures */
+.hl{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding:22px 24px;
+  border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+.hl div{min-width:76px}
+.hl b{display:block;font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.05;
+  color:var(--ink);letter-spacing:-.02em}
+.hl span{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+
 /* profile — about text plus whichever contact fields were filled in */
 .prof{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin-top:30px;padding:26px 24px;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
@@ -264,7 +273,7 @@ G.forEach((g,gi)=>{
   const cardsHtml=g.cards.map(c=>{
     const rows=c.rows.map(r=>`<div class="r2 ${esc(r.k)}"><span class="k">${esc(r.k)}</span><span class="v">${esc(r.v)}</span></div>`).join('');
     const bl=c.bullets.length?`<ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:'';
-    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Master Knowledge Index category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
+    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Knowledge by Layer category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
     const meta=c.meta.length?`<div class="cm">${c.meta.map(esc).join(' &nbsp;&middot;&nbsp; ')}</div>`:'';
     const tone=c.tone?`style="--kc:${c.tone}"`:'';
     const hay=esc((c.title+' '+c.meta.join(' ')+' '+c.rows.map(r=>r.k+' '+r.v).join(' ')+' '+c.bullets.join(' ')).toLowerCase());

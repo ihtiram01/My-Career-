@@ -42,10 +42,28 @@ comes back short, which is the signal that a markdown format got broken.
 
 ```
 index.html              GENERATED — landing page, built by build_home()
-knowledge/index.html    GENERATED — do not edit
-courses/index.html      GENERATED — do not edit
-exams/ experience/      GENERATED — do not edit
-labs/ coursework/       GENERATED — do not edit
+*/index.html            GENERATED — every section page. Do not edit any of them.
+
+The landing page is a numbered index of seven sections. The number is the
+page's `order:`; the heading is its `title:`. Both live in frontmatter, so
+resequencing is a frontmatter edit, never a code edit.
+
+  01 experience/   Career & Projects     docs/field-experience.md
+  02 exams/        Certifications        docs/exam-tracker.md
+  03 roadmap/      Roadmap               docs/roadmap.md
+  04 courses/      Course Content        docs/course-syllabus-index.md
+  05 coursework/   My Class Notes        docs/my-coursework.md
+  06 knowledge/    Knowledge by Layer    docs/master-knowledge-index.md
+  07 labs/         Labs & Practice       docs/lab-log.md
+
+Slugs are frozen — they are what published links point at. Rename the
+`title:`, never the `page:`.
+
+02 and 03 are deliberately separate: what is held versus what is next.
+04, 05 and 06 are three different things and must not be renamed into each
+other — 04 is the vendor's official syllabus, 05 is his own class notes,
+06 is the technology reference organised by layer, not by course.
+
 docs/
   _home.md                     landing-page config: name, role, tagline,
                                about paragraph, contact fields. Leading

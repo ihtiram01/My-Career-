@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Master Knowledge Index — Ihtiram Ullah</title>
+<title>Knowledge by Layer — Ihtiram Ullah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -273,7 +273,7 @@ footer b{color:var(--dim)}
 <div class="wrap">
 <header class="hero">
   <div class="eyebrow"><span class="dot"></span> Personal knowledge map <span style="opacity:.4">/</span> v2.0 <span style="opacity:.4">/</span> July 2026</div>
-  <h1>Master Knowledge Index<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
+  <h1>Knowledge by Layer<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
   <p class="lede">Four levels deep: <b>area → category → topic → subtopic</b>. Colours follow the <b>TIA-598 fiber code</b>, one strand per layer. Search returns every place a term appears, with its full path. Cross-references link topics that depend on each other.</p>
   <div class="figs">
     <div class="fig"><b>77</b><span>categories</span></div>
@@ -570,7 +570,7 @@ document.getElementById('themeBtn').onclick=()=>applyTheme(theme==='paper'?'ink'
 
 /* export */
 document.getElementById('exportBtn').onclick=()=>{
-  let out='# Levels — Master Knowledge Index\n# id  level  topic\n\n';
+  let out='# Levels — Knowledge by Layer\n# id  level  topic\n\n';
   AREAS.forEach(a=>a.cats.forEach(c=>c.topics.forEach(t=>{
     if(levels[t.id]!==undefined) out+=`${t.id}  L${levels[t.id]}  ${t.name}\n`;
   })));

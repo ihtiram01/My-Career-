@@ -308,7 +308,7 @@ footer b{color:var(--dim)}
 <div class="wrap">
 <header class="hero">
   <div class="tbar"><a class="btn" href="../index.html">&larr; Home</a><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> Section 06 · practice</div>
+  <div class="eyebrow"><span class="dot"></span> Section 07 · practice</div>
   <h1>Labs & Practice<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
   <p class="lede">EVE-NG topologies built and what each one proved. Lab time is the gap between coursework and a pass.</p>
   <div class="figs"><div class="fig"><b>3</b><span>tracks</span></div><div class="fig"><b>7</b><span>labs</span></div><div class="fig"><b>13</b><span>details</span></div></div>
@@ -356,7 +356,7 @@ G.forEach((g,gi)=>{
   const cardsHtml=g.cards.map(c=>{
     const rows=c.rows.map(r=>`<div class="r2 ${esc(r.k)}"><span class="k">${esc(r.k)}</span><span class="v">${esc(r.v)}</span></div>`).join('');
     const bl=c.bullets.length?`<ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:'';
-    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Master Knowledge Index category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
+    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Knowledge by Layer category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
     const meta=c.meta.length?`<div class="cm">${c.meta.map(esc).join(' &nbsp;&middot;&nbsp; ')}</div>`:'';
     const tone=c.tone?`style="--kc:${c.tone}"`:'';
     const hay=esc((c.title+' '+c.meta.join(' ')+' '+c.rows.map(r=>r.k+' '+r.v).join(' ')+' '+c.bullets.join(' ')).toLowerCase());

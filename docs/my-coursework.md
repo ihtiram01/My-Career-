@@ -1,9 +1,9 @@
 ---
-title: Coursework Notes
+title: My Class Notes
 page: coursework
-order: 4
+order: 5
 colour: bronze
-kicker: Section 04 · class notes
+kicker: Section 05 · class notes
 summary: What the classroom notebooks actually contain, class by class. CCTV transcribed in full from the Corvit handwritten notes.
 placeholder: Search — dvr, nvr, bnc, onvif, poe, privacy mask…
 unit_group: areas

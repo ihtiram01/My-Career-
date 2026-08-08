@@ -35,16 +35,16 @@ FILES = ROOT / "files"
 TREE_PAGES = {
     "master-knowledge-index.md": dict(
         page="knowledge", tpl="knowledge.tpl", kind="knowledge",
-        kicker="Section 05 · by technology", colour="#1B57C4",
-        title="Master Knowledge Index",
+        kicker="Section 06 · by layer", colour="#1B57C4",
+        title="Knowledge by Layer",
         summary="Ten layers, copper up to CCTV. One home per concept, cross-referenced.",
-        order=5),
+        order=6),
     "course-syllabus-index.md": dict(
         page="courses", tpl="courses.tpl", kind="courses",
-        kicker="Section 03 · by course", colour="#C55A0C",
-        title="Course Syllabus Index",
+        kicker="Section 04 · by course", colour="#C55A0C",
+        title="Course Content",
         summary="What each syllabus covered, merged from 21 documents. Links back to the knowledge index.",
-        order=3),
+        order=4),
 }
 
 NAMED_COLOURS = {
@@ -381,9 +381,20 @@ def build_home(css, head, tiles, docs_list, files_list):
             '<section class="sec"><div class="sech"><h2>Documents</h2>'
             '<span>certificates · CV · PDFs</span></div>' + file_rows + '</section>')
 
+    # Headline figures, taken straight from the parsed pages so they cannot
+    # drift. (page slug, which of that page's figures) — missing pages are skipped.
+    by_page = {t["page"]: t for t in tiles}
+    hl = ""
+    for page, i in (("experience", 0), ("experience", 1), ("courses", 0), ("knowledge", 1)):
+        t = by_page.get(page)
+        if t and len(t["nums"]) > i:
+            v, l = t["nums"][i]
+            hl += f'<div><b>{v}</b><span>{esc(l)}</span></div>'
+    hl = f'<div class="hl">{hl}</div>' if hl else ""
+
     about = f'<p class="ab">{esc(cfg["about"])}</p>' if cfg["about"] else ""
-    profile = (f'<section class="prof">{about}{contact_block(cfg)}</section>'
-               if about or contact_block(cfg) else "")
+    contact = contact_block(cfg)
+    profile = f'<section class="prof">{about}{contact}</section>' if about or contact else ""
 
     body = f'''<div class="wrap">
 <header class="hero">
@@ -391,6 +402,7 @@ def build_home(css, head, tiles, docs_list, files_list):
   <div class="eyebrow"><span class="dot"></span> {esc(cfg["role"] or "Personal knowledge base")} <span style="opacity:.4">/</span> {esc(cfg["location"])}</div>
   <h1>{esc(cfg["name"] or "Knowledge Base")}<span class="thin">{esc(cfg["tagline"])}</span></h1>
 </header>
+{hl}
 {profile}
 <section class="sec idxsec">
   <div class="sech"><h2>Contents</h2><span>{len(tiles)} sections</span></div>

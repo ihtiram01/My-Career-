@@ -1,9 +1,9 @@
 ---
 title: Labs & Practice
 page: labs
-order: 6
+order: 7
 colour: aqua
-kicker: Section 06 · practice
+kicker: Section 07 · practice
 summary: EVE-NG topologies built and what each one proved. Lab time is the gap between coursework and a pass.
 placeholder: Search — ospf, bgp, mpls, vlan…
 unit_group: tracks

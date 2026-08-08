@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Course Syllabus Index — Ihtiram Ullah</title>
+<title>Course Content — Ihtiram Ullah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -306,9 +306,9 @@ footer b{color:var(--dim)}
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="eyebrow"><span class="dot"></span> Course syllabus index <span style="opacity:.4">/</span> v1.0 <span style="opacity:.4">/</span> 2026-07-30</div>
-  <h1>Course Syllabus Index<span class="thin">What each course actually covered — merged from 21 source documents</span></h1>
-  <p class="lede">Four levels: <b>course → module → topic → subtopic</b>. Search returns every course a term appears in, with its full path — so “IP” surfaces in CCNA, ENCOR, Network+, AZ-104 and A+ at once. <b>→ 44</b> markers link back to the Master Knowledge Index.</p>
+  <div class="eyebrow"><span class="dot"></span> Course content <span style="opacity:.4">/</span> v1.0 <span style="opacity:.4">/</span> 2026-07-30</div>
+  <h1>Course Content<span class="thin">What each course actually covered — merged from 21 source documents</span></h1>
+  <p class="lede">Four levels: <b>course → module → topic → subtopic</b>. Search returns every course a term appears in, with its full path — so “IP” surfaces in CCNA, ENCOR, Network+, AZ-104 and A+ at once. <b>→ 44</b> markers link back to the Knowledge by Layer.</p>
   <div class="figs">
     <div class="fig"><b>13</b><span>courses</span></div>
     <div class="fig"><b>69</b><span>modules</span></div>
@@ -342,7 +342,7 @@ footer b{color:var(--dim)}
 <footer>
   <b>Status</b> &nbsp; certified &nbsp;·&nbsp; coursework only (exam not sat) &nbsp;·&nbsp; planned &nbsp;·&nbsp; not taken &nbsp;·&nbsp; record conflict<br>
   <b>Level</b> &nbsp; 0 heard of it &nbsp;·&nbsp; 1 can explain &nbsp;·&nbsp; 2 studied / labbed &nbsp;·&nbsp; 3 production &nbsp;·&nbsp; 4 own it<br>
-  <b>→ 44</b> &nbsp; maps to that category in the Master Knowledge Index
+  <b>→ 44</b> &nbsp; maps to that category in the Knowledge by Layer
 </footer>
 </div>
 <script>
@@ -401,7 +401,7 @@ CS.forEach((c,ci)=>{
     const topics=m.topics.map(t=>{
       const has=t.subs.length>0;
       const subs=t.subs.map((s,i)=>`<div class="sub" data-id="${c.key}:${t.num}.${i+1}"><span class="sid">${t.num}.${i+1}</span><span class="sname">${esc(s)}</span></div>`).join('');
-      const links=(t.links||[]).map(x=>`<span class="mlink" title="Master Knowledge Index category ${x}">→<b>${x}</b></span>`).join('');
+      const links=(t.links||[]).map(x=>`<span class="mlink" title="Knowledge by Layer category ${x}">→<b>${x}</b></span>`).join('');
       const merged=(t.src&&t.src!=='primary')?`<span class="mergedtag">${esc(t.src)}</span>`:'';
       return `<div class="topic" id="t-${c.key}-${t.num}" data-id="${c.key}:${t.num}">
         <div class="trow">
@@ -537,7 +537,7 @@ document.getElementById('toggleAll').onclick=function(){
   this.textContent=allOpen?'Collapse':'Expand';};
 document.getElementById('themeBtn').onclick=()=>applyTheme(theme==='paper'?'ink':'paper');
 document.getElementById('exportBtn').onclick=()=>{
-  let out='# Levels — Course Syllabus Index\n# course  id  level  topic\n\n';
+  let out='# Levels — Course Content\n# course  id  level  topic\n\n';
   CS.forEach(c=>c.modules.forEach(m=>m.topics.forEach(t=>{
     const k=c.key+':'+t.num;
     if(levels[k]!==undefined)out+=`${c.code}  ${t.num}  L${levels[k]}  ${t.title}\n`;})));

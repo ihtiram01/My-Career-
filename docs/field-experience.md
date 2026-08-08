@@ -6,7 +6,7 @@ colour: violet
 kicker: Section 01 · career
 summary: Roles and projects across metro transit, telecom IP core, enterprise IT and CCTV — the technologies actually touched in production.
 placeholder: Search — huawei, zabbix, eaps, cctv…
-unit_group: employers
+unit_group: roles
 unit_card: projects
 footer: <b>Interview rule</b> &nbsp; a story from here beats a topic from the index every time. Lead with what broke and what you did.
 ---

@@ -203,13 +203,39 @@ HOME_CSS = r"""
 [dir="rtl"] .hero h1,[dir="rtl"] .eyebrow{text-align:right}
 @media(max-width:620px){[dir="rtl"] .ir .st{text-align:right}}
 
-/* headline figures */
-.hl{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding:22px 24px;
-  border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
-.hl div{min-width:76px}
+/* headline figures — @keyframes rise comes from the shared shell stylesheet */
+.hl{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding:22px 24px;position:relative;
+  border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow);
+  overflow:hidden}
+.hl::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;
+  background:linear-gradient(90deg,#1B57C4,#0C7F99,#0B7D55,#8A6800,#C55A0C,#7E5129)}
+.hl div{min-width:76px;opacity:0;transform:translateY(10px);animation:rise .5s var(--ease) forwards}
+.hl div:nth-child(1){animation-delay:.05s}.hl div:nth-child(2){animation-delay:.13s}
+.hl div:nth-child(3){animation-delay:.21s}.hl div:nth-child(4){animation-delay:.29s}
 .hl b{display:block;font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.05;
-  color:var(--ink);letter-spacing:-.02em}
+  color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .hl span{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+
+/* hero — gradient name and a soft colour wash behind it */
+.hero{position:relative;isolation:isolate}
+.hero::before{content:'';position:absolute;z-index:-1;inset:-70px -30px -10px;pointer-events:none;
+  background:
+    radial-gradient(46% 100% at 10% 0%,color-mix(in srgb,var(--a40) 15%,transparent),transparent 68%),
+    radial-gradient(40% 90% at 82% 8%,color-mix(in srgb,#C55A0C 11%,transparent),transparent 70%)}
+.hero h1 .nm{background:linear-gradient(102deg,var(--ink) 12%,var(--a40) 55%,#0C7F99 88%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.cbtn{opacity:0;transform:translateY(8px);animation:rise .45s var(--ease) forwards}
+.cbtn:nth-child(1){animation-delay:.04s}.cbtn:nth-child(2){animation-delay:.1s}
+.cbtn:nth-child(3){animation-delay:.16s}.cbtn:nth-child(4){animation-delay:.22s}
+.cbtn:nth-child(5){animation-delay:.28s}.cbtn:nth-child(6){animation-delay:.34s}
+
+/* Motion is decoration. Anyone who has asked the OS to stop it gets the
+   finished layout immediately, with no movement and nothing hidden. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;
+    animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .ir,.hl div,.cbtn{opacity:1 !important;transform:none !important}
+}
 
 /* profile — about text plus whichever contact fields were filled in */
 .prof{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin-top:30px;padding:26px 24px;
@@ -232,14 +258,28 @@ HOME_CSS = r"""
 .idxsec{margin-top:40px}
 .idx{margin-top:4px;border-top:1px solid var(--line)}
 .ir{display:flex;align-items:center;gap:18px;padding:19px 14px;border-bottom:1px solid var(--line);
-  text-decoration:none;color:inherit;position:relative;
-  transition:background .16s,padding-left .22s var(--ease)}
+  text-decoration:none;color:inherit;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(14px);animation:rise .55s var(--ease) forwards;
+  transition:background .2s,padding-left .24s var(--ease)}
 .ir::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);
-  opacity:0;transition:opacity .22s}
-.ir:hover{background:var(--panel);padding-left:20px}
-.ir:hover::before{opacity:1}
-.ir .n{flex:none;width:30px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--c);letter-spacing:.04em}
+  transform:scaleY(0);transform-origin:top;transition:transform .3s var(--ease)}
+/* colour wash that sweeps in from the leading edge on hover */
+.ir::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--c) 9%,transparent),transparent 62%);
+  opacity:0;transition:opacity .28s}
+.ir:hover{padding-left:20px}
+.ir:hover::before{transform:scaleY(1)}
+.ir:hover::after{opacity:1}
+.ir .n{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:10px;
+  font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--c);
+  background:color-mix(in srgb,var(--c) 11%,transparent);
+  border:1px solid color-mix(in srgb,var(--c) 26%,transparent);
+  transition:background .24s,color .24s,transform .3s var(--ease),box-shadow .24s}
+.ir:hover .n{background:var(--c);color:#fff;transform:scale(1.07) rotate(-3deg);
+  box-shadow:0 5px 16px color-mix(in srgb,var(--c) 42%,transparent)}
 .ir .b{flex:1;min-width:0}
+.ir .b h3{transition:color .2s}
+.ir:hover .b h3{color:var(--c)}
 .ir .b h3{font-family:var(--disp);font-weight:600;font-size:16.5px;margin:0 0 4px;letter-spacing:-.015em}
 .ir .b p{margin:0;font-size:13px;line-height:1.55;color:var(--dim)}
 .ir .st{flex:none;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}

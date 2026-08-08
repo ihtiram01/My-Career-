@@ -483,14 +483,14 @@ def build_home(css, head, tiles, docs_list, files_list):
         return out
 
     rows_html = "".join(
-        f'<a class="ir" href="{r["href"]}" style="--c:{r["c"]}">'
+        f'<a class="ir" href="{r["href"]}" style="--c:{r["c"]};animation-delay:{i*70}ms">'
         f'<span class="n">{r["n"]}</span>'
         f'<span class="b"><h3>{esc(r["t"])}</h3><p>{esc(r["s"])}</p></span>'
         f'<span class="st">{esc(r["st"])}</span>'
         '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" '
         'stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
         'stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
-        for r in row_data("en"))
+        for i, r in enumerate(row_data("en")))
 
     # Documents only when there is something to show — an empty box is clutter.
     docs_section = ""
@@ -541,7 +541,7 @@ def build_home(css, head, tiles, docs_list, files_list):
     <button class="btn" id="themeBtn">Paper</button>
   </div>
   <div class="eyebrow"><span class="dot"></span> <span id="hRole">{esc(cfg["role"] or "Personal knowledge base")}</span> <span style="opacity:.4">/</span> <span id="hLoc">{esc(cfg["location"])}</span></div>
-  <h1>{esc(cfg["name"] or "Knowledge Base")}<span class="thin" id="hTag">{esc(cfg["tagline"])}</span></h1>
+  <h1><span class="nm">{esc(cfg["name"] or "Knowledge Base")}</span><span class="thin" id="hTag">{esc(cfg["tagline"])}</span></h1>
 </header>
 {hl}
 {profile}
@@ -560,6 +560,22 @@ def build_home(css, head, tiles, docs_list, files_list):
 const I18N={json.dumps(i18n, ensure_ascii=False, separators=(",", ":"))};
 const DIR={json.dumps({c: d for c, _, d in LANGS})};
 let lang='en';
+const REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el,to){{
+  to=Number(to)||0;
+  if(REDUCED||to<=0){{el.textContent=to;return;}}
+  const t0=performance.now(),dur=Math.min(1100,420+to);
+  (function step(t){{
+    const p=Math.min(1,(t-t0)/dur);
+    el.textContent=Math.round(to*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(step);
+  }})(t0);
+}}
+function figures(D){{
+  const hl=document.getElementById('hl'); if(!hl)return;
+  const src=(D||I18N[lang]||I18N.en).hl;
+  hl.querySelectorAll('b').forEach((b,i)=>{{ if(src[i])countUp(b,src[i].v); }});
+}}
 function paint(l){{
   const D=I18N[l]||I18N.en; lang=l;
   const r=document.documentElement;
@@ -571,10 +587,13 @@ function paint(l){{
   document.getElementById('hCount').textContent=D.rows.length+' '+D.ui.sections;
   const w=document.getElementById('cWhere'); if(w) w.textContent=D.loc;
   const hl=document.getElementById('hl');
-  if(hl) hl.innerHTML=D.hl.map(x=>'<div><b>'+x.v+'</b><span>'+x.l+'</span></div>').join('');
+  if(hl){{
+    hl.innerHTML=D.hl.map(x=>'<div><b>'+x.v+'</b><span>'+x.l+'</span></div>').join('');
+    figures(D);
+  }}
   const esc=s=>String(s).replace(/[&<>"]/g,m=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[m]));
-  document.getElementById('idx').innerHTML=D.rows.map(x=>
-    '<a class="ir" href="'+x.href+'" style="--c:'+x.c+'">'+
+  document.getElementById('idx').innerHTML=D.rows.map((x,i)=>
+    '<a class="ir" href="'+x.href+'" style="--c:'+x.c+';animation-delay:'+(i*70)+'ms">'+
     '<span class="n">'+x.n+'</span><span class="b"><h3>'+esc(x.t)+'</h3><p>'+esc(x.s)+'</p></span>'+
     '<span class="st">'+esc(x.st)+'</span>'+
     '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
@@ -588,7 +607,12 @@ function paint(l){{
   try{{window.storage.set('kb-lang',l);}}catch(e){{}}
 }}
 document.querySelectorAll('.lbtn').forEach(b=>b.onclick=()=>paint(b.dataset.lang));
-(async()=>{{let l='en';try{{const r=await window.storage.get('kb-lang');if(r&&r.value&&I18N[r.value])l=r.value;}}catch(e){{}}if(l!=='en')paint(l);}})();
+(async()=>{{
+  let l='en';
+  try{{const r=await window.storage.get('kb-lang');if(r&&r.value&&I18N[r.value])l=r.value;}}catch(e){{}}
+  // English is already in the HTML, so only the figures need starting.
+  if(l!=='en')paint(l); else figures();
+}})();
 </script>
 <script>
 const T={{paper:{{l:'Paper',tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'}},

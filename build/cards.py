@@ -193,10 +193,18 @@ HOME_CSS = r"""
 .prof{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin-top:30px;padding:26px 24px;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
 .prof .ab{flex:1 1 300px;margin:0;font-size:14.2px;line-height:1.7;color:var(--dim)}
-.ct{flex:0 1 250px;display:flex;flex-direction:column;gap:11px;font-family:var(--mono);font-size:12.4px}
-.ct .cl{display:block;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
-.ct a{color:var(--a40);text-decoration:none;word-break:break-word}
-.ct a:hover{text-decoration:underline}
+.ct{flex:0 1 auto;display:flex;flex-direction:column;gap:12px}
+.cbtns{display:flex;flex-wrap:wrap;gap:9px}
+.cbtn{display:inline-flex;align-items:center;gap:8px;padding:9px 15px 9px 13px;border-radius:999px;
+  text-decoration:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+  color:var(--dim);background:var(--panel2);border:1px solid var(--line2);
+  transition:background .18s,color .18s,border-color .18s,transform .18s var(--ease)}
+.cbtn svg{color:var(--b);transition:color .18s}
+.cbtn:hover{background:var(--b);border-color:var(--b);color:#fff;transform:translateY(-2px)}
+.cbtn:hover svg{color:#fff}
+.cbtn:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.cwhere{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+@media(max-width:520px){.cbtn{flex:1 1 calc(50% - 9px);justify-content:center}}
 
 /* numbered contents list */
 .idxsec{margin-top:40px}

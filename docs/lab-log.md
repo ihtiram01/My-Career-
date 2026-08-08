@@ -9,6 +9,10 @@ placeholder: Search — ospf, bgp, mpls, vlan…
 unit_group: tracks
 unit_card: labs
 footer: <b>Rule</b> &nbsp; a lab you cannot rebuild from blank is a lab you have not learned.
+title_ar: المختبرات والتطبيق العملي
+title_ur: لیبز اور پریکٹس
+summary_ar: مخططات EVE-NG التي تم بناؤها وما أثبتته كل واحدة. وقت المختبر هو الفجوة بين الدراسة والنجاح.
+summary_ur: EVE-NG ٹوپولوجیز جو بنائی گئیں اور ہر ایک نے کیا ثابت کیا۔ لیب کا وقت کورس ورک اور کامیابی کے درمیان کا فرق ہے۔
 ---
 
 # LAB & PRACTICE LOG

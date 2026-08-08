@@ -9,6 +9,10 @@ placeholder: Search — ccna, encor, az-104, cost…
 unit_group: sections
 unit_card: entries
 footer: <b>Claim rule</b> &nbsp; only PASSED belongs on a CV. Coursework is &ldquo;training completed&rdquo;, never &ldquo;certified&rdquo;. What to sit next is in <a href="../roadmap/index.html">Roadmap</a>.
+title_ar: الشهادات
+title_ur: سرٹیفیکیشنز
+summary_ar: ما تم اجتيازه ويمكن إثباته في السيرة الذاتية، وما اكتمل تدريبه دون دخول الاختبار بعد.
+summary_ur: جو پاس ہو چکا اور سی وی پر ثابت کیا جا سکتا ہے، اور جس کی تربیت مکمل ہے مگر امتحان باقی ہے۔
 ---
 
 # CERTIFICATIONS

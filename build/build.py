@@ -38,12 +38,18 @@ TREE_PAGES = {
         kicker="Section 06 · by layer", colour="#1B57C4",
         title="Knowledge by Layer",
         summary="Ten layers, copper up to CCTV. One home per concept, cross-referenced.",
+        title_ar="المعرفة حسب الطبقات", title_ur="پرتوں کے لحاظ سے علم",
+        summary_ar="عشر طبقات، من الكابلات النحاسية إلى أنظمة المراقبة. مفهوم واحد في مكان واحد، مع إحالات مرجعية.",
+        summary_ur="دس پرتیں، کاپر سے سی سی ٹی وی تک۔ ہر تصور کا ایک ہی مقام، باہمی حوالوں کے ساتھ۔",
         order=6),
     "course-syllabus-index.md": dict(
         page="courses", tpl="courses.tpl", kind="courses",
         kicker="Section 04 · by course", colour="#C55A0C",
         title="Course Content",
         summary="What each syllabus covered, merged from 21 documents. Links back to the knowledge index.",
+        title_ar="محتوى الدورات", title_ur="کورس کا مواد",
+        summary_ar="ما غطته كل دورة، مدمجاً من ٢١ وثيقة، مع روابط إلى فهرس المعرفة.",
+        summary_ur="ہر کورس نے کیا احاطہ کیا، ۲۱ دستاویزات سے یکجا۔ نالج انڈیکس سے منسلک۔",
         order=4),
 }
 
@@ -292,6 +298,8 @@ def discover():
                        title=fm.get("title") or md.stem.replace("-", " ").title(),
                        kicker=fm.get("kicker", "Page"),
                        summary=fm.get("summary", ""),
+                       title_ar=fm.get("title_ar", ""), title_ur=fm.get("title_ur", ""),
+                       summary_ar=fm.get("summary_ar", ""), summary_ur=fm.get("summary_ur", ""),
                        placeholder=fm.get("placeholder", "Search this page…"),
                        footer=fm.get("footer", ""),
                        unit_group=fm.get("unit_group", "sections"),
@@ -345,12 +353,50 @@ ICONS = {
 BRAND = {"whatsapp": "#25D366", "linkedin": "#0A66C2", "tiktok": "#EE1D52",
          "youtube": "#FF0000", "email": "#C5221F", "phone": "#0B7D55"}
 
+# ── languages ───────────────────────────────────────────────────────────
+# Landing page only. The seven section pages are English; switching the
+# language says so rather than pretending otherwise.
+LANGS = [("en", "English", "ltr"), ("ar", "العربية", "rtl"), ("ur", "اردو", "rtl")]
+
+UI = {
+    "en": {"contents": "Contents", "sections": "sections", "based": "Based in",
+           "note": "Section pages are in English for now.",
+           "foot1": "Every page is generated from the markdown in docs/. Change the markdown, never the HTML.",
+           "foot2": "Marked noindex. It names employers and states which exams are unsat."},
+    "ar": {"contents": "المحتويات", "sections": "أقسام", "based": "المقر",
+           "note": "صفحات الأقسام باللغة الإنجليزية حالياً.",
+           "foot1": "كل صفحة يتم توليدها من ملفات markdown في مجلد docs/. عدّل الـ markdown، ولا تعدّل ملفات HTML.",
+           "foot2": "الموقع غير مُفهرس في محركات البحث. يذكر جهات العمل والاختبارات التي لم تُجتَز بعد."},
+    "ur": {"contents": "فہرست", "sections": "حصے", "based": "مقام",
+           "note": "سیکشن کے صفحات فی الحال انگریزی میں ہیں۔",
+           "foot1": "ہر صفحہ docs/ کے markdown سے بنتا ہے۔ markdown میں تبدیلی کریں، HTML میں کبھی نہیں۔",
+           "foot2": "سرچ انجن سے محفوظ۔ اس میں آجروں کے نام اور غیر منعقدہ امتحانات درج ہیں۔"},
+}
+
+# Words used in the figure strips, so "8 roles" reads correctly in each language.
+STAT_WORDS = {
+    "roles":      {"ar": "أدوار",    "ur": "کردار"},
+    "projects":   {"ar": "مشاريع",   "ur": "پروجیکٹس"},
+    "courses":    {"ar": "دورات",    "ur": "کورسز"},
+    "modules":    {"ar": "وحدات",    "ur": "ماڈیولز"},
+    "topics":     {"ar": "مواضيع",   "ur": "موضوعات"},
+    "categories": {"ar": "فئات",     "ur": "زمرے"},
+    "sections":   {"ar": "أقسام",    "ur": "حصے"},
+    "entries":    {"ar": "مدخلات",   "ur": "اندراجات"},
+    "tracks":     {"ar": "مسارات",   "ur": "ٹریکس"},
+    "actions":    {"ar": "إجراءات",  "ur": "اقدامات"},
+    "areas":      {"ar": "مجالات",   "ur": "شعبے"},
+    "labs":       {"ar": "مختبرات",  "ur": "لیبز"},
+}
+
 
 def home_config():
     """Landing-page details, from docs/_home.md. Underscore keeps it off the site."""
     path = DOCS / "_home.md"
     fm = read_frontmatter(path) if path.exists() else {}
-    keys = ("name", "role", "location", "tagline", "about") + CONTACT_FIELDS
+    keys = (("name", "role", "location", "tagline") +
+            tuple(f"{k}_{l}" for k in ("role", "location", "tagline")
+                  for l, _, _ in LANGS if l != "en") + CONTACT_FIELDS)
     return {k: fm.get(k, "").strip() for k in keys}
 
 
@@ -411,7 +457,7 @@ def contact_block(cfg):
             f'<span>{LABELS[kind]}</span></a>')
     if not btns:
         return ""
-    where = (f'<div class="cwhere">{esc(cfg["location"])}</div>'
+    where = (f'<div class="cwhere" id="cWhere">{esc(cfg["location"])}</div>'
              if cfg.get("location") else "")
     return f'<div class="ct"><div class="cbtns">{btns}</div>{where}</div>'
 
@@ -419,17 +465,32 @@ def contact_block(cfg):
 def build_home(css, head, tiles, docs_list, files_list):
     cfg = home_config()
 
-    rows_html = ""
-    for i, t in enumerate(tiles, 1):
-        stat = " &middot; ".join(f'{v} {l}' for v, l in t["nums"][:2])
-        rows_html += (
-            f'<a class="ir" href="./{t["page"]}/index.html" style="--c:{t["colour"]}">'
-            f'<span class="n">{i:02d}</span>'
-            f'<span class="b"><h3>{esc(t["title"])}</h3><p>{esc(t["summary"])}</p></span>'
-            f'<span class="st">{stat}</span>'
-            '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" '
-            'stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
-            'stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>')
+    def row_data(lang):
+        out = []
+        for i, t in enumerate(tiles, 1):
+            title = t.get(f"title_{lang}") or t["title"]
+            summ = t.get(f"summary_{lang}") or t["summary"]
+            # Arabic noun-number agreement changes with the count (dual, 3-10
+            # plural, 11+ singular accusative). Rather than encode all of that,
+            # use the noun-first form Arabic interfaces normally use, which is
+            # correct whatever the number.
+            stat = " · ".join(
+                (f'{STAT_WORDS.get(l, {}).get(lang, l)}: {v}' if lang == "ar"
+                 else f'{v} {STAT_WORDS.get(l, {}).get(lang, l)}')
+                for v, l in t["nums"][:2])
+            out.append({"n": f"{i:02d}", "href": f"./{t['page']}/index.html",
+                        "c": t["colour"], "t": title, "s": summ, "st": stat})
+        return out
+
+    rows_html = "".join(
+        f'<a class="ir" href="{r["href"]}" style="--c:{r["c"]}">'
+        f'<span class="n">{r["n"]}</span>'
+        f'<span class="b"><h3>{esc(r["t"])}</h3><p>{esc(r["s"])}</p></span>'
+        f'<span class="st">{esc(r["st"])}</span>'
+        '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" '
+        'stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
+        'stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
+        for r in row_data("en"))
 
     # Documents only when there is something to show — an empty box is clutter.
     docs_section = ""
@@ -446,36 +507,89 @@ def build_home(css, head, tiles, docs_list, files_list):
     # Headline figures, taken straight from the parsed pages so they cannot
     # drift. (page slug, which of that page's figures) — missing pages are skipped.
     by_page = {t["page"]: t for t in tiles}
-    hl = ""
+    hl_pairs = []
     for page, i in (("experience", 0), ("experience", 1), ("courses", 0), ("knowledge", 1)):
         t = by_page.get(page)
         if t and len(t["nums"]) > i:
-            v, l = t["nums"][i]
-            hl += f'<div><b>{v}</b><span>{esc(l)}</span></div>'
-    hl = f'<div class="hl">{hl}</div>' if hl else ""
+            hl_pairs.append(t["nums"][i])
+    hl = "".join(f'<div><b>{v}</b><span>{esc(l)}</span></div>' for v, l in hl_pairs)
+    hl = f'<div class="hl" id="hl">{hl}</div>' if hl else ""
 
-    about = f'<p class="ab">{esc(cfg["about"])}</p>' if cfg["about"] else ""
     contact = contact_block(cfg)
-    profile = f'<section class="prof">{about}{contact}</section>' if about or contact else ""
+    profile = f'<section class="prof">{contact}</section>' if contact else ""
+
+    # Everything the language switcher swaps, for every language.
+    i18n = {}
+    for lang, _, _ in LANGS:
+        u = dict(UI["en"], **UI.get(lang, {}))
+        i18n[lang] = {
+            "ui": u,
+            "role": cfg.get(f"role_{lang}") or cfg["role"],
+            "loc": cfg.get(f"location_{lang}") or cfg["location"],
+            "tag": cfg.get(f"tagline_{lang}") or cfg["tagline"],
+            "hl": [{"v": v, "l": STAT_WORDS.get(l, {}).get(lang, l)} for v, l in hl_pairs],
+            "rows": row_data(lang),
+        }
+    langbtns = "".join(
+        f'<button class="lbtn{" on" if code == "en" else ""}" data-lang="{code}" '
+        f'lang="{code}" type="button">{name}</button>' for code, name, _ in LANGS)
 
     body = f'''<div class="wrap">
 <header class="hero">
-  <div class="tbar"><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> {esc(cfg["role"] or "Personal knowledge base")} <span style="opacity:.4">/</span> {esc(cfg["location"])}</div>
-  <h1>{esc(cfg["name"] or "Knowledge Base")}<span class="thin">{esc(cfg["tagline"])}</span></h1>
+  <div class="tbar">
+    <div class="langs" role="group" aria-label="Language">{langbtns}</div>
+    <button class="btn" id="themeBtn">Paper</button>
+  </div>
+  <div class="eyebrow"><span class="dot"></span> <span id="hRole">{esc(cfg["role"] or "Personal knowledge base")}</span> <span style="opacity:.4">/</span> <span id="hLoc">{esc(cfg["location"])}</span></div>
+  <h1>{esc(cfg["name"] or "Knowledge Base")}<span class="thin" id="hTag">{esc(cfg["tagline"])}</span></h1>
 </header>
 {hl}
 {profile}
 <section class="sec idxsec">
-  <div class="sech"><h2>Contents</h2><span>{len(tiles)} sections</span></div>
-  <nav class="idx">{rows_html}</nav>
+  <div class="sech"><h2 id="hContents">Contents</h2><span id="hCount">{len(tiles)} sections</span></div>
+  <nav class="idx" id="idx">{rows_html}</nav>
 </section>
 {docs_section}
 <footer>
-  <b>Edit</b> &nbsp; every page is generated from the markdown in <code>docs/</code>. Change the markdown, never the HTML.<br>
-  <b>Note</b> &nbsp; marked noindex. It names employers and states which exams are unsat.
+  <span id="fNote" class="fnote hide"></span>
+  <span id="fOne">Every page is generated from the markdown in <code>docs/</code>. Change the markdown, never the HTML.</span><br>
+  <span id="fTwo">Marked noindex. It names employers and states which exams are unsat.</span>
 </footer>
 </div>
+<script>
+const I18N={json.dumps(i18n, ensure_ascii=False, separators=(",", ":"))};
+const DIR={json.dumps({c: d for c, _, d in LANGS})};
+let lang='en';
+function paint(l){{
+  const D=I18N[l]||I18N.en; lang=l;
+  const r=document.documentElement;
+  r.lang=l; r.dir=DIR[l]||'ltr';
+  document.getElementById('hRole').textContent=D.role;
+  document.getElementById('hLoc').textContent=D.loc;
+  document.getElementById('hTag').textContent=D.tag;
+  document.getElementById('hContents').textContent=D.ui.contents;
+  document.getElementById('hCount').textContent=D.rows.length+' '+D.ui.sections;
+  const w=document.getElementById('cWhere'); if(w) w.textContent=D.loc;
+  const hl=document.getElementById('hl');
+  if(hl) hl.innerHTML=D.hl.map(x=>'<div><b>'+x.v+'</b><span>'+x.l+'</span></div>').join('');
+  const esc=s=>String(s).replace(/[&<>"]/g,m=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[m]));
+  document.getElementById('idx').innerHTML=D.rows.map(x=>
+    '<a class="ir" href="'+x.href+'" style="--c:'+x.c+'">'+
+    '<span class="n">'+x.n+'</span><span class="b"><h3>'+esc(x.t)+'</h3><p>'+esc(x.s)+'</p></span>'+
+    '<span class="st">'+esc(x.st)+'</span>'+
+    '<svg class="go" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+    'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">'+
+    '<path d="M5 12h14M13 6l6 6-6 6"/></svg></a>').join('');
+  document.getElementById('fOne').textContent=D.ui.foot1;
+  document.getElementById('fTwo').textContent=D.ui.foot2;
+  const n=document.getElementById('fNote');
+  n.textContent=D.ui.note; n.classList.toggle('hide', l==='en');
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('on', b.dataset.lang===l));
+  try{{window.storage.set('kb-lang',l);}}catch(e){{}}
+}}
+document.querySelectorAll('.lbtn').forEach(b=>b.onclick=()=>paint(b.dataset.lang));
+(async()=>{{let l='en';try{{const r=await window.storage.get('kb-lang');if(r&&r.value&&I18N[r.value])l=r.value;}}catch(e){{}}if(l!=='en')paint(l);}})();
+</script>
 <script>
 const T={{paper:{{l:'Paper',tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'}},
          ink:{{l:'Ink',tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}}}};

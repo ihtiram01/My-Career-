@@ -9,6 +9,10 @@ placeholder: Search — dvr, nvr, bnc, onvif, poe, privacy mask…
 unit_group: areas
 unit_card: topics
 footer: <b>Source</b> &nbsp; the CCTV entries are transcribed from 43 scanned pages of handwritten Corvit class notes, classes 01–21, 17 Oct – 16 Nov 2023. Wording is normalised, content is not added.
+title_ar: ملاحظات الحصص
+title_ur: میرے کلاس نوٹس
+summary_ar: ما تحتويه دفاتر الحصص فعلياً، حصة بحصة. دورة المراقبة مُدوّنة بالكامل من الملاحظات المكتوبة بخط اليد.
+summary_ur: کلاس کی کاپیوں میں اصل میں کیا لکھا ہے، کلاس بہ کلاس۔ سی سی ٹی وی مکمل طور پر ہاتھ سے لکھے نوٹس سے نقل کیا گیا۔
 ---
 
 # MY COURSEWORK

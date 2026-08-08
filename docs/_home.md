@@ -3,13 +3,18 @@ name: Ihtiram Ullah
 role: Network & IT Infrastructure Engineer
 location: Riyadh, Kingdom of Saudi Arabia
 tagline: Networks, infrastructure and surveillance systems — studied, built and documented.
-about: Network and IT infrastructure engineer based in Riyadh. CCNA and CompTIA A+ certified, with CCNP-level coursework in enterprise routing and switching, Azure administration and virtualisation. Field work across metro transit, telecom IP core, enterprise IT and CCTV surveillance. This site is the working record behind that — every course, every lab, every project, with the gaps marked honestly.
 email: ihtirammmd01@gmail.com
 whatsapp: +966 50 881 7993
 linkedin: https://www.linkedin.com/in/ihtiram-ullah-1978532a8
 tiktok: @gulf_networking
 youtube:
 phone:
+role_ar: مهندس شبكات وبنية تحتية لتقنية المعلومات
+role_ur: نیٹ ورک اور آئی ٹی انفراسٹرکچر انجینئر
+location_ar: الرياض، المملكة العربية السعودية
+location_ur: ریاض، سعودی عرب
+tagline_ar: شبكات وبنية تحتية وأنظمة مراقبة — دراسة وتنفيذ وتوثيق.
+tagline_ur: نیٹ ورکس، انفراسٹرکچر اور سرویلنس سسٹمز — سیکھے، بنائے اور دستاویزی شکل دی۔
 ---
 
 # HOME

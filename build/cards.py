@@ -179,7 +179,29 @@ HOME_CSS = r"""
 .card .nums div span{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
 .card .go{position:absolute;right:19px;bottom:19px;color:var(--c);opacity:0;transform:translateX(-6px);transition:all .28s var(--ease)}
 .card:hover .go{opacity:1;transform:none}
-.tbar{display:flex;justify-content:flex-end;margin-bottom:16px}
+.tbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+
+/* language switcher */
+.langs{display:inline-flex;gap:2px;padding:3px;border-radius:999px;
+  background:var(--panel2);border:1px solid var(--line2)}
+.lbtn{appearance:none;border:0;cursor:pointer;border-radius:999px;padding:5px 13px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint);
+  background:transparent;transition:background .18s,color .18s}
+.lbtn:hover{color:var(--ink)}
+.lbtn.on{background:var(--a40);color:#fff}
+.lbtn[lang="ar"],.lbtn[lang="ur"]{font-family:var(--body);font-size:12.5px}
+.fnote{display:block;margin-bottom:7px;color:var(--faint);font-style:italic}
+.fnote.hide{display:none}
+
+/* right-to-left, for Arabic and Urdu */
+[dir="rtl"] .ir::before{left:auto;right:0}
+[dir="rtl"] .ir:hover{padding-left:14px;padding-right:20px}
+[dir="rtl"] .ir .go{transform:scaleX(-1) translateX(-5px)}
+[dir="rtl"] .ir:hover .go{transform:scaleX(-1)}
+[dir="rtl"] .ir .st{text-align:left}
+[dir="rtl"] .sech span{margin-left:0;margin-right:auto}
+[dir="rtl"] .hero h1,[dir="rtl"] .eyebrow{text-align:right}
+@media(max-width:620px){[dir="rtl"] .ir .st{text-align:right}}
 
 /* headline figures */
 .hl{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding:22px 24px;

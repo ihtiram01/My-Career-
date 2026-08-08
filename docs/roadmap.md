@@ -9,6 +9,10 @@ placeholder: Search — az-800, bgp, sce, deadline…
 unit_group: tracks
 unit_card: actions
 footer: <b>Ordering</b> &nbsp; priority is by what unlocks the most, not by what is easiest. Full detail on each exam lives in <a href="../exams/index.html">Certifications</a>; each lab in <a href="../labs/index.html">Labs &amp; Practice</a>.
+title_ar: خارطة الطريق
+title_ur: روڈ میپ
+summary_ar: ما يجب اجتيازه، وما يجب بناؤه، وما يجب إصلاحه — بترتيب الأولوية، بما في ذلك العوائق التي ليست اختبارات.
+summary_ur: کون سا امتحان دینا ہے، کیا بنانا ہے اور کیا ٹھیک کرنا ہے — ترجیح کے ساتھ، ان رکاوٹوں سمیت جو امتحان نہیں ہیں۔
 ---
 
 # ROADMAP

@@ -9,6 +9,10 @@ placeholder: Search — huawei, zabbix, eaps, cctv…
 unit_group: roles
 unit_card: projects
 footer: <b>Interview rule</b> &nbsp; a story from here beats a topic from the index every time. Lead with what broke and what you did.
+title_ar: المسيرة المهنية والمشاريع
+title_ur: کیریئر اور پروجیکٹس
+summary_ar: أدوار ومشاريع في قطاع النقل، والشبكات الأساسية للاتصالات، وتقنية المعلومات للمؤسسات، وأنظمة المراقبة — التقنيات التي تم العمل عليها فعلياً.
+summary_ur: میٹرو ٹرانزٹ، ٹیلی کام آئی پی کور، انٹرپرائز آئی ٹی اور سی سی ٹی وی میں کردار اور پروجیکٹس — وہ ٹیکنالوجیز جن پر عملی طور پر کام کیا گیا۔
 ---
 
 # FIELD EXPERIENCE & PROJECTS

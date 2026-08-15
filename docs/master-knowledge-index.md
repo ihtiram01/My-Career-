@@ -1114,6 +1114,19 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`63.11`** AAA on network devices  `X`  `L:_`  →  `35.03`
 - **`63.12`** MACsec  `C`  `L:_`
 - **`63.13`** Banners, logging & NTP for forensics  `X`  `L:_`
+- **`63.14`** SSH — Secure Shell  `X`  `L:_`  →  `37.07`, `63.11`, `28.01`, `49.01`, `83.02`
+  - `63.14.1` Host keys, fingerprints & known_hosts
+  - `63.14.2` Key exchange, session keys & rekeying
+  - `63.14.3` Authentication methods — password, publickey, keyboard-interactive
+  - `63.14.4` Key management — ssh-keygen, ssh-copy-id, file permissions
+  - `63.14.5` Port forwarding — local, remote, dynamic, jump host
+  - `63.14.6` File transfer — SCP, SFTP, rsync
+  - `63.14.7` Cisco IOS — crypto key generate rsa, ip ssh version 2
+  - `63.14.8` Huawei VRP — rsa local-key-pair create, stelnet server enable
+  - `63.14.9` Juniper Junos — set system services ssh
+  - `63.14.10` Linux OpenSSH — sshd_config directives
+  - `63.14.11` Windows OpenSSH Server — install & firewall
+  - `63.14.12` Troubleshooting — refused, timed out, publickey denied, no matching kex
 
 ### 64 · Endpoint & Data Security  `[A+]` `[MCSE]` `[Wemart]`
 

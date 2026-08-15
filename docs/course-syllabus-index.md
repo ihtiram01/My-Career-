@@ -340,7 +340,11 @@ A `→ 44` marker means the topic maps to master category 44.
   - User awareness
   - Training
   - Physical access control
-- **`5.3`** Configure and verify device access control using local passwords  →  `95`
+- **`5.3`** Configure and verify device access control using local passwords  →  `63`, `95`
+  - Local user accounts and privilege levels
+  - Console, VTY and AUX line access
+  - SSH — encrypted CLI access, host keys, key-based auth (63.14)
+  - Telnet — clear text, replaced by SSH
 - **`5.4`** Security password policy elements  →  `35`
   - Management
   - Complexity

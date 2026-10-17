@@ -635,6 +635,202 @@ document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
     return len(html.encode()) / 1024
 
 
+
+
+# ── hierarchical career portfolio ──────────────────────────────────────
+PORTFOLIO_CSS = r"""
+.port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
+.port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
+.port-top a,.port-top button,.port-link{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
+  text-decoration:none;cursor:pointer}
+.port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
+.port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
+.port-hero h1{font:700 clamp(34px,6vw,58px)/1.02 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7}
+.port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
+.port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
+.port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.port-tools{display:flex;gap:10px;align-items:center;margin:24px 0 18px}
+.port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
+.port-card{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel);border:1px solid var(--line);
+  border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent,#1B57C4)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent,#1B57C4)}
+.port-card h2{font:600 19px var(--disp);margin:4px 0 0;letter-spacing:-.02em}
+.port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
+.port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+.port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+.port-arrow{color:var(--accent,#1B57C4);font:600 12px var(--mono);margin-top:4px}
+.port-section{margin:30px 0}
+.port-section h2{font:600 20px var(--disp);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.port-detail{max-width:900px;margin:0 auto}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
+.port-detail .intro p{color:var(--dim);line-height:1.75;margin:8px 0}
+.port-detail h2{font:600 19px var(--disp);margin:28px 0 12px}
+.port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
+.port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
+.port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
+.port-detail li{font-size:13.5px;line-height:1.7;margin:5px 0}
+.port-detail .detail-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.port-detail .detail-row:last-child{border:0}
+.port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}.port-detail .detail-row{grid-template-columns:1fr;gap:3px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+"""
+
+def portfolio_shell(title, css, head, body, home_href):
+    script = """
+<script>
+(function(){
+ let theme='paper';
+ try { const saved=window.storage&&window.storage.get('kb-theme'); if(saved&&saved.value)theme=saved.value; } catch(e) {}
+ document.documentElement.dataset.theme=theme;
+ const btn=document.getElementById('themeBtn');
+ if(btn){btn.textContent=theme==='paper'?'Paper':'Ink';btn.addEventListener('click',function(){
+   theme=theme==='paper'?'ink':'paper';document.documentElement.dataset.theme=theme;btn.textContent=theme==='paper'?'Paper':'Ink';
+   try{if(window.storage)window.storage.set('kb-theme',theme);}catch(e){}
+ });}
+})();
+</script>
+"""
+    return (head.replace("__CSS__", css + PORTFOLIO_CSS)
+                .replace("__TITLETAG__", esc(title) + " — Ihtiram Ullah")
+            + body + script + "\n</body></html>")
+
+def portfolio_header(title, kicker, summary, back_href, home_href):
+    return f'''
+<div class="port-wrap">
+  <nav class="port-top" aria-label="Page navigation">
+    <a href="{esc(back_href)}">&larr; Back</a>
+    <button id="themeBtn" type="button">Paper</button>
+  </nav>
+  <header class="port-hero">
+    <div class="port-kicker">{esc(kicker)}</div>
+    <h1>{esc(title)}</h1>
+    <p>{esc(summary)}</p>
+  </header>
+'''
+
+def portfolio_card_content(card, knowledge_href):
+    rows = "".join(
+        f'<div class="detail-row"><b>{esc(r["k"])}</b><span>{esc(r["v"])}</span></div>'
+        for r in card.get("rows", []))
+    bullets = ("<ul>" + "".join(f"<li>{esc(x)}</li>" for x in card.get("bullets", [])) + "</ul>"
+               if card.get("bullets") else "")
+    refs = ""
+    if card.get("links"):
+        refs = '<div class="refs">' + "".join(
+            f'<a href="{esc(knowledge_href)}">&rarr; Knowledge {esc(x)}</a>'
+            for x in card["links"]) + "</div>"
+    meta = " · ".join(card.get("meta", []))
+    return (f'<article class="detail-card"><h3>{esc(card["title"])}</h3>'
+            + (f'<div class="port-meta">{esc(meta)}</div>' if meta else "")
+            + (f'<div>{rows}</div>' if rows else "") + bullets + refs + "</article>")
+
+def render_portfolio_page(md_path, cfg, css, head):
+    data = cards.parse_cards(md_path)
+    groups = data["groups"]
+    is_experience = cfg["page"] == "experience"
+    base_dir = ROOT / cfg["page"]
+    detail_count = 0
+
+    if is_experience:
+        tiles = []
+        for gi, group in enumerate(groups, 1):
+            key = re.sub(r"[^a-z0-9]+", "-", group["title"].lower()).strip("-") or f"experience-{gi}"
+            summary = group.get("info", {}).get("summary", "")
+            role = group.get("info", {}).get("role", "Professional experience")
+            meta = " · ".join(group.get("meta", []))
+            detail_count += len(group["cards"])
+            detail_body = portfolio_header(group["title"], "Professional experience", summary,
+                                            "../index.html", "../../index.html")
+            detail_body += f'<div class="port-detail"><div class="intro"><h2>{esc(role)}</h2><p>{esc(summary)}</p>'
+            if meta:
+                detail_body += f'<div class="port-meta">{esc(meta)}</div>'
+            detail_body += "</div><h2>Responsibilities & technical work</h2>"
+            detail_body += "".join(portfolio_card_content(c, "../../knowledge/index.html")
+                                   for c in group["cards"])
+            detail_body += "</div></div>"
+            detail_html = portfolio_shell(group["title"], css, head, detail_body, "../../index.html")
+            out = base_dir / key / "index.html"
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(detail_html, encoding="utf-8")
+            pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in group.get("meta", []))
+            tiles.append(f'''<a class="port-card" href="./{esc(key)}/index.html" data-search="{esc((group["title"]+" "+role+" "+summary+" "+meta).lower())}">
+              <div class="port-meta">{esc(role)}</div><h2>{esc(group["title"])}</h2><p>{esc(summary)}</p>
+              <div class="port-pills">{pills}<span class="port-pill">{len(group["cards"])} technical areas</span></div>
+              <span class="port-arrow">Explore experience &rarr;</span></a>''')
+        count_label = "employers & engagements"
+        dashboard_title = "Professional Experience"
+        dashboard_summary = cfg["summary"]
+        cards_html = "".join(tiles)
+        stats = [(len(groups), "experience entries"), (detail_count, "technical areas")]
+    else:
+        tiles = []
+        for group in groups:
+            for card in group["cards"]:
+                label = group["title"]
+                seed = card["title"] + "-" + label
+                key = re.sub(r"[^a-z0-9]+", "-", seed.lower()).strip("-")[:70] or "certification"
+                status = next((r["v"] for r in card.get("rows", []) if r["k"] == "status"), label)
+                summary = next((r["v"] for r in card.get("rows", []) if r["k"] in ("note", "blueprint")), "")
+                detail_body = portfolio_header(card["title"], "Certification & training", label,
+                                                "../index.html", "../../index.html")
+                detail_body += '<div class="port-detail"><div class="intro">'
+                if summary:
+                    detail_body += f'<p>{esc(summary)}</p>'
+                detail_body += "</div><h2>Credential record</h2>"
+                detail_body += portfolio_card_content(card, "../../knowledge/index.html")
+                detail_body += "</div></div>"
+                detail_html = portfolio_shell(card["title"], css, head, detail_body, "../../index.html")
+                out = base_dir / key / "index.html"
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_text(detail_html, encoding="utf-8")
+                detail_count += 1
+                meta = " · ".join(card.get("meta", []))
+                tiles.append(f'''<a class="port-card" href="./{esc(key)}/index.html" data-search="{esc((card["title"]+" "+label+" "+status+" "+summary+" "+meta).lower())}">
+                  <div class="port-meta">{esc(label)}</div><h2>{esc(card["title"])}</h2><p>{esc(summary or status)}</p>
+                  <div class="port-pills"><span class="port-pill">{esc(status)}</span>
+                    {''.join(f'<span class="port-pill">{esc(x)}</span>' for x in card.get("meta", []))}</div>
+                  <span class="port-arrow">View credential details &rarr;</span></a>''')
+        dashboard_title = "Certifications & Training"
+        dashboard_summary = cfg["summary"]
+        cards_html = "".join(tiles)
+        stats = [(detail_count, "credentials"), (len(groups), "status groups")]
+
+    stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(label)}</span></div>' for n,label in stats)
+    body = portfolio_header(dashboard_title, cfg["kicker"], dashboard_summary,
+                            "../index.html", "../index.html")
+    body += f'''<div class="port-stats">{stats_html}</div>
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search {esc(cfg.get("placeholder","this section"))}" aria-label="Search this section"></div>
+      <main class="port-grid" id="portfolioGrid">{cards_html}</main>
+      <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer","")}</footer>
+    </div>
+    <script>
+    (function(){const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
+    q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});empty.hidden=count!==0;});})();
+    </script>'''
+    html = portfolio_shell(dashboard_title, css, head, body, "../index.html")
+    out = base_dir / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(html, encoding="utf-8")
+    meta = data["meta"]
+    return {"groups": len(groups), "cards": detail_count if is_experience else detail_count,
+            "items": meta["items"]}, len(html.encode()) / 1024
+
+
+
 def main():
     fail = False
     css, head = shell()
@@ -670,6 +866,18 @@ def main():
                 fail = True
             tiles.append({**cfg, "nums": [(m["courses"], "courses"), (m["modules"], "modules"),
                                           (m["topics"], "topics"), (m["subs"], "subtopics")]})
+
+        elif cfg["page"] in ("experience", "exams"):
+            m, size = render_portfolio_page(md, cfg, css, head)
+            label = "employers" if cfg["page"] == "experience" else "credentials"
+            print(f"  {cfg['page']:<12} {m['groups']} groups · {m['cards']} detail pages · "
+                  f"{m['items']} details   {size:.0f} KB")
+            if m["cards"] < 1:
+                print("    ! no portfolio entries found — check the markdown format")
+                fail = True
+            tiles.append({**cfg, "nums": [(m["groups"], "groups"),
+                                          (m["cards"], label),
+                                          (m["items"], "details")]})
 
         else:
             m, size = render_card_page(md, cfg, css, head)

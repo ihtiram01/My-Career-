@@ -447,8 +447,7 @@ def contact_block(cfg):
         if not cfg.get(kind):
             continue
         href, label = contact_link(kind, cfg[kind])
-        if not href:
-            continue
+        if not href:            continue
         btns += (
             f'<a class="cbtn" href="{esc(href)}" style="--b:{BRAND[kind]}" '
             f'rel="noopener" aria-label="{LABELS[kind]}: {esc(label)}">'
@@ -827,7 +826,8 @@ def render_portfolio_page(md_path, cfg, css, head):
       <main class="port-grid" id="portfolioGrid">{cards_html}</main>
       <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
       <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer","")}</footer>
-    </div>
+    </div>"""
+    body += """
     <script>
     (function(){const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
     q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});empty.hidden=count!==0;});})();
@@ -897,8 +897,7 @@ def main():
             if m["cards"] < 1:
                 print("    ! no cards found — check the markdown format")
                 fail = True
-            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),
-                                          (m["cards"], cfg["unit_card"]),
+            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),                                          (m["cards"], cfg["unit_card"]),
                                           (m["items"], "details")]})
 
     files_list = list_files()

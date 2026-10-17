@@ -822,7 +822,7 @@ def render_portfolio_page(md_path, cfg, css, head):
     stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(label)}</span></div>' for n,label in stats)
     body = portfolio_header(dashboard_title, cfg["kicker"], dashboard_summary,
                             "../index.html", "../index.html")
-    body += f'''<div class="port-stats">{stats_html}</div>
+    body += f"""<div class="port-stats">{stats_html}</div>
       <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search {esc(cfg.get("placeholder","this section"))}" aria-label="Search this section"></div>
       <main class="port-grid" id="portfolioGrid">{cards_html}</main>
       <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
@@ -831,7 +831,7 @@ def render_portfolio_page(md_path, cfg, css, head):
     <script>
     (function(){const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
     q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});empty.hidden=count!==0;});})();
-    </script>'''
+    </script>"""
     html = portfolio_shell(dashboard_title, css, head, body, "../index.html")
     out = base_dir / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)

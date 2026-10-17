@@ -692,14 +692,25 @@ def portfolio_shell(title, css, head, body, home_href):
     script = """
 <script>
 (function(){
+ const palettes={paper:{tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
+                 ink:{tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
  let theme='paper';
- try { const saved=window.storage&&window.storage.get('kb-theme'); if(saved&&saved.value)theme=saved.value; } catch(e) {}
- document.documentElement.dataset.theme=theme;
+ function apply(t){
+   theme=t;document.documentElement.dataset.theme=t;
+   const p=palettes[t],root=document.documentElement.style;
+   root.setProperty('--tc',p.tc);root.setProperty('--tx',p.tx);
+   root.setProperty('--tt',p.tt);root.setProperty('--tr',p.tr);root.setProperty('--a40',p.a);
+   const btn=document.getElementById('themeBtn');if(btn)btn.textContent=t==='paper'?'Paper':'Ink';
+ }
  const btn=document.getElementById('themeBtn');
- if(btn){btn.textContent=theme==='paper'?'Paper':'Ink';btn.addEventListener('click',function(){
-   theme=theme==='paper'?'ink':'paper';document.documentElement.dataset.theme=theme;btn.textContent=theme==='paper'?'Paper':'Ink';
+ if(btn)btn.addEventListener('click',function(){
+   apply(theme==='paper'?'ink':'paper');
    try{if(window.storage)window.storage.set('kb-theme',theme);}catch(e){}
- });}
+ });
+ (async function(){
+   try{if(window.storage){const saved=await window.storage.get('kb-theme');if(saved&&saved.value==='ink')theme='ink';}}catch(e){}
+   apply(theme);
+ })();
 })();
 </script>
 """

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Career & Projects — Ihtiram Ullah</title>
+<title>Career &amp; Projects — Ihtiram Ullah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -268,130 +268,138 @@ footer b{color:var(--dim)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 :focus-visible{outline:2px solid var(--a40); outline-offset:2px; border-radius:4px}
 
-.tbar{display:flex;justify-content:space-between;gap:8px;margin-bottom:20px}
-.tbar .btn{text-decoration:none;display:inline-block}
-.grp{margin-top:44px;opacity:0;transform:translateY(14px);animation:rise .55s var(--ease) forwards}
-.grph{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.grph h2{font-family:var(--disp);font-weight:600;font-size:clamp(16px,3vw,21px);margin:0;letter-spacing:-.015em}
-.grph .gm{font-family:var(--mono);font-size:10px;color:var(--faint)}
-.grph .n{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:auto}
-.ginfo{font-size:13.5px;color:var(--dim);margin:11px 0 0;padding:10px 13px;border-radius:8px;
-  background:var(--panel);border-left:3px solid var(--c)}
-.ginfo b{color:var(--ink)}
-.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:13px;margin-top:15px}
-.kc{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px 17px;
-  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .24s var(--ease),border-color .2s}
-.kc::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:var(--kc,var(--c))}
-.kc:hover{transform:translateY(-3px);border-color:var(--kc,var(--c))}
-.kc h3{font-family:var(--disp);font-weight:600;font-size:15.5px;margin:5px 0 4px;letter-spacing:-.01em}
-.kc .cm{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-bottom:10px}
-.kc .rows2{display:flex;flex-direction:column;gap:5px;margin:10px 0}
-.kc .r2{display:flex;gap:9px;font-size:13px;align-items:baseline}
-.kc .r2 .k{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--faint);flex:none;width:64px;padding-top:2px}
-.kc .r2 .v{flex:1;color:var(--dim)}
-.kc .r2.status .v{color:var(--kc,var(--ink));font-weight:600}
-.kc .r2.action .v,.kc .r2.deadline .v{color:#C42A36;font-weight:500}
-[data-theme="ink"] .kc .r2.action .v,[data-theme="ink"] .kc .r2.deadline .v{color:#FF7B7B}
-.kc ul{margin:9px 0 0;padding-left:17px}
-.kc li{font-size:13.2px;color:var(--dim);margin-bottom:4px;line-height:1.5}
-.kc li::marker{color:var(--kc,var(--c))}
-.kc .lnk{display:flex;gap:4px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
-.kc .lnk a{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;text-decoration:none;
-  border:1px solid var(--line2);background:var(--panel2);color:var(--dim);transition:all .16s}
-.kc .lnk a:hover{background:var(--kc,var(--c));color:#fff;border-color:var(--kc,var(--c))}
-@media(max-width:640px){.cardgrid{grid-template-columns:1fr}.kc .r2 .k{width:56px}}
+.port-jump{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.port-jump a{display:flex;align-items:center;gap:10px;padding:11px 15px;border:1px solid var(--line2);border-radius:10px;
+  background:var(--panel);text-decoration:none;color:var(--ink);font:600 14px var(--disp)}
+.port-jump a:hover{border-color:var(--a40)}
+.port-jump b{font:700 11px var(--mono);color:var(--a40);padding:2px 7px;border-radius:20px;background:var(--panel2)}
+.port-group{margin:34px 0 0;scroll-margin-top:16px}
+.port-group-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:16px;
+  border-bottom:1px solid var(--line)}
+.port-group-head h2{font:700 clamp(21px,3.4vw,27px) var(--disp);letter-spacing:-.025em;margin:0}
+.port-group-head .n{font:11px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.port-group-head p{flex-basis:100%;margin:2px 0 0;color:var(--dim);font-size:13.5px}
+.port-hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;margin-top:8px}
+.hub-card{display:flex;flex-direction:column;gap:8px;padding:28px 28px 24px;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .22s,border-color .22s}
+.hub-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--accent)}
+.hub-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.hub-n{font:700 54px/1 var(--disp);color:var(--accent);letter-spacing:-.04em}
+.hub-unit{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:-2px}
+.hub-card h2{font:700 clamp(22px,3.4vw,28px)/1.15 var(--disp);letter-spacing:-.025em;margin:12px 0 0}
+.hub-card p{margin:0;color:var(--dim);font-size:14px;line-height:1.65}
+.hub-latest{margin-top:12px;padding:11px 13px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
+  font-size:13px;color:var(--ink)}
+.hub-latest small{display:block;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.hub-card .port-arrow{margin-top:14px;font-size:13px}
+
+.port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
+.port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
+  text-decoration:none;cursor:pointer}
+.port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
+.port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
+.port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
+.port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
+.port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.port-tools{margin:22px 0 18px}
+.port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
+  border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
+.port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
+.port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+.port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
+.port-detail{max-width:900px;margin:0 auto}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
+.port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
+.port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
+.port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
+.port-detail li{font-size:13.5px;line-height:1.7;margin:5px 0}
+.port-detail .detail-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.port-detail .detail-row:last-child{border:0}
+.port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
+.port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
+.port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-<header class="hero">
-  <div class="tbar"><a class="btn" href="../index.html">&larr; Home</a><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> Section 01 · career</div>
-  <h1>Career & Projects<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
-  <p class="lede">Roles and projects across metro transit, telecom IP core, enterprise IT and CCTV — the technologies actually touched in production.</p>
-  <div class="figs"><div class="fig"><b>8</b><span>roles</span></div><div class="fig"><b>23</b><span>projects</span></div><div class="fig"><b>59</b><span>details</span></div></div>
-</header>
-<div class="bar">
-  <div class="searchrow">
-    <label class="search">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Search — huawei, zabbix, eaps, cctv…" autocomplete="off" spellcheck="false">
-    </label>
-  </div>
-  <div class="chips" id="grpChips"><span class="chiplabel">Section</span></div>
-  <div class="stats"><span class="stat"><b id="sShown">0</b> shown</span></div>
-</div>
-<main id="root"></main>
-<div class="empty hide" id="empty"><h3>Nothing matches</h3><p>Clear the search or turn a section back on.</p></div>
-<footer><b>Interview rule</b> &nbsp; a story from here beats a topic from the index every time. Lead with what broke and what you did.</footer>
-</div>
+<div class="port-wrap">
+  <nav class="port-top" aria-label="Page navigation">
+    <a href="../index.html">&larr; Home</a>
+    <button id="themeBtn" type="button">Paper</button>
+  </nav>
+  <header class="port-hero">
+    <div class="port-kicker">Section 01 · career</div>
+    <h1>Career &amp; Projects</h1>
+    <p>Two parts, newest first — Company Experience for the employers on staff, Project Experience for contracts, freelance dispatches and site projects.</p>
+  </header>
+<main class="port-hub"><a class="hub-card" href="./company/index.html" style="--accent:#1B57C4"><span class="hub-n">4</span><span class="hub-unit">companies</span><h2>Company Experience</h2><p>Roles held on staff — the employers, in order.</p><div class="hub-latest"><small>Most recent</small>Wemart Arabia Trading Co. (WenChao Group) · Oct 2025 – Apr 2026</div><span class="port-arrow">View all companies &rarr;</span></a><a class="hub-card" href="./projects/index.html" style="--accent:#6E35C9"><span class="hub-n">7</span><span class="hub-unit">projects</span><h2>Project Experience</h2><p>Contracts, freelance dispatches and site projects — each delivered as its own engagement.</p><div class="hub-latest"><small>Most recent</small>ANMAT Operations — Ministry of Tourism Project · Aug 2026 – present</div><span class="port-arrow">View all projects &rarr;</span></a></main><footer style="margin-top:38px;color:var(--faint);font-size:12px">Each card opens the full record. The arrows at the bottom of a record step through its own section.</footer></div>
 <script>
-const D = {"meta":{"title":"Career & Projects","groups":8,"cards":23,"items":59},"groups":[{"title":"Wemart Arabia Trading Co. (WenChao Group)","meta":["Riyadh","until Apr 2026"],"info":{"role":"Network & IT Infrastructure Engineer","tag":"Wemart","summary":"Full Huawei enterprise stack plus a 237-camera CCTV estate. Your deepest production environment and the strongest source of interview material."},"cards":[{"title":"Huawei core switching","meta":[],"rows":[],"bullets":["CloudEngine S6730 core switch — VLAN design, inter-VLAN routing, uplinks","Eth-Trunk link aggregation","VRP CLI daily operation, config backup discipline"],"links":["28","41","42"],"tone":null},{"title":"Huawei firewall","meta":[],"rows":[],"bullets":["USG6000E — zones, security policies, NAT","IPsec site-to-site VPN in production"],"links":["61","62","36"],"tone":null},{"title":"Huawei wireless","meta":[],"rows":[],"bullets":["AirEngine 9700S-S WAC with 54+ access points","AP provisioning at scale, SSID and security policy"],"links":["52","53"],"tone":null},{"title":"Hikvision CCTV estate","meta":[],"rows":[],"bullets":["237 cameras across 4 NVRs","PoE budget planning, VLAN segmentation for cameras","Storage retention calculation, disk-full recovery incident","Media converter failure at basement run — fibre plus converter for distance","Camera placement corrections after coverage review"],"links":["90","91","92","93","94"],"tone":null},{"title":"Zabbix monitoring","meta":[],"rows":[],"bullets":["Huawei VRP SNMP template, host and item configuration","Triggers, severities, email alerting via AliMail","Printer and toner monitoring","Network topology map via the JSON-RPC API"],"links":["81","82"],"tone":null},{"title":"Windows infrastructure","meta":[],"rows":[],"bullets":["Active Directory, Group Policy, file shares","Backup and endpoint management"],"links":["22","23","24","25"],"tone":null}],"tone":0},{"title":"Leon Technology — GO-ZTE IPCORE","meta":["RIY1, Riyadh","project basis"],"info":{"role":"Deployment Engineer — physical layer","tag":"ZTE-RIY1","summary":"Carrier-grade IP core deployment. Physical and staging work, not routing configuration — be precise about that in interviews."},"cards":[{"title":"E-row cloud pod","meta":[],"rows":[],"bullets":["ZTE 5960M / 5960X leaf-spine fabric","R5300 G5 servers as Ceph storage nodes","Rack build, mounting, cable management"],"links":["12","13","40","73"],"tone":null},{"title":"J-row M6000 IP core","meta":[],"rows":[],"bullets":["Brownfield T8000 swap-out","Method of Procedure authoring and handover checklist"],"links":["13","86","89"],"tone":null},{"title":"Physical layer and staging","meta":[],"rows":[],"bullets":["Fibre and copper cross-connects, ODF work","Bench testing ZTE ZXR10 switches and R5300 G5 servers","iEPMS asset scanning","DC power: -48V plant, rectifiers, breakers"],"links":["10","11","14","89"],"tone":null}],"tone":1},{"title":"Riyadh Metro Line 3 — OCC-CTN","meta":["Riyadh"],"info":{"role":"Network engineering support","tag":"MetroL3","summary":"Extreme Networks EXOS environment. Live fault diagnosis on a transport network — strong troubleshooting evidence."},"cards":[{"title":"Extreme EXOS operations","meta":[],"rows":[],"bullets":["EXOS CLI, show commands, config management"],"links":["28"],"tone":null},{"title":"Layer 2 resilience","meta":[],"rows":[],"bullets":["EAPS ring protection — master and transit nodes, control VLAN","MLAG configuration and behaviour","Stack reconvergence diagnosis"],"links":["42"],"tone":null},{"title":"Fault diagnosis","meta":[],"rows":[],"bullets":["CRC and input error investigation — cable, SFP and duplex causes","Produced reference PDFs and troubleshooting cheat sheets for the team"],"links":["40","86","88"],"tone":null}],"tone":2},{"title":"AlmavivA IT","meta":["Mar 2024 – Oct 2025"],"info":{"role":"Network Engineer","tag":"AlmavivA","summary":"THIN RECORD. The stack here was never documented. This is the biggest gap in your evidence — 19 months with almost nothing written down."},"cards":[{"title":"Known coverage","meta":[],"rows":[],"bullets":["Active Directory environment","WLAN architecture"],"links":["22","52"],"tone":null},{"title":"Action","meta":[],"rows":[],"bullets":["Reconstruct this from memory. Vendors, protocols, projects, incidents.","Nineteen months is too long to have blank on a CV that a recruiter will probe."],"links":[],"tone":null}],"tone":3},{"title":"Express Publications","meta":["Jan 2023 – Feb 2024"],"info":{"role":"System Support Engineer","tag":"Express","summary":"Endpoint, print and desktop support with server-side exposure."},"cards":[{"title":"Support operations","meta":[],"rows":[],"bullets":["Windows client deployment and troubleshooting","Printer and peripheral support","User and permission administration"],"links":["15","20","22","88"],"tone":null}],"tone":4},{"title":"Veevo Tech","meta":["Peshawar","Apr 2021 – Dec 2022"],"info":{"role":"Trainee then NOC Engineer","tag":"Veevo","summary":"Your first NOC role. Linux, monitoring and SMS infrastructure — the origin of your Zabbix and Linux skills."},"cards":[{"title":"SMS infrastructure","meta":[],"rows":[],"bullets":["172.18.0.0/24 network","Asterisk telephony","Node.js services under PM2"],"links":["30","37","84"],"tone":null},{"title":"Monitoring and load balancing","meta":[],"rows":[],"bullets":["Zabbix server, agents and templates","HAProxy with Roxy-WI front end","Dell OpenManage for hardware health"],"links":["81","84"],"tone":null},{"title":"Linux and connectivity","meta":[],"rows":[],"bullets":["Ubuntu Server administration","Site-to-site VPN, Islamabad branch to Peshawar"],"links":["27","62"],"tone":null}],"tone":5},{"title":"UCT","meta":["freelance","Riyadh"],"info":{"role":"Consultant — end-to-end SMB deployment","tag":"UCT","summary":"Solo delivery of a two-office Windows environment. Collected SAR 2,000. Good evidence of independent scoping and delivery."},"cards":[{"title":"Windows Server 2022 build","meta":[],"rows":[],"bullets":["AD DS, uct.local domain from scratch","Group Policy: shared folders, drive mapping, USB block"],"links":["21","22","23","24"],"tone":null},{"title":"Delivery","meta":[],"rows":[],"bullets":["Client scoping and quoting","Two-site rollout and handover"],"links":["89"],"tone":null}],"tone":6},{"title":"Freelance and side work","meta":["Riyadh"],"info":{"role":"Independent","tag":"Self","summary":"Small paid jobs and self-directed builds."},"cards":[{"title":"Salam HomeFI / router sharing","meta":[],"rows":[],"bullets":["Digitech S1 5G router, shared-internet paid-access scenario","Reached the limits of locked ISP firmware","Identified MikroTik captive portal as the correct long-term solution"],"links":["53","36"],"tone":null},{"title":"Cisco 2960 PoE switch configuration","meta":[],"rows":[],"bullets":["Paid configuration work for a KSA client"],"links":["41","42"],"tone":null},{"title":"Content — @networkingwithmickey","meta":[],"rows":[],"bullets":["Field networking content on TikTok, 1,500+ followers","Fibre, Ethernet vs fibre, OSI model, CCTV incident reels","Python/PIL and FFmpeg rendering pipeline, CapCut workflow"],"links":["87"],"tone":null}],"tone":7}]};
-const G = D.groups;
-const ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'};
-const esc=s=>String(s).replace(/[&<>"]/g,m=>ESC[m]);
-const PAL=[['#8494AB','#56697F'],['#FF7A1A','#C55A0C'],['#34D399','#0B7D55'],['#22D3EE','#0C7F99'],
-           ['#4C8DFF','#1B57C4'],['#A97BFF','#6E35C9'],['#FF5A5F','#C42A36'],['#FF7AC6','#B8367F'],
-           ['#F5C542','#8A6800'],['#C98B5E','#7E5129']];
-const T={paper:{l:'Paper',tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
-         ink:{l:'Ink',tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
-let th='paper';
-function ap(t){th=t;document.documentElement.dataset.theme=t;const v=T[t],r=document.documentElement.style;
-  r.setProperty('--tc',v.tc);r.setProperty('--tx',v.tx);r.setProperty('--tt',v.tt);
-  r.setProperty('--tr',v.tr);r.setProperty('--a40',v.a);
-  document.getElementById('themeBtn').textContent=v.l;
-  document.querySelectorAll('[data-tone]').forEach(el=>el.style.setProperty('--c',PAL[+el.dataset.tone][t==='paper'?1:0]));
-  try{window.storage.set('kb-theme',t);}catch(e){}}
-document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
-
-const root=document.getElementById('root');
-G.forEach((g,gi)=>{
-  const sec=document.createElement('section');
-  sec.className='grp'; sec.dataset.tone=g.tone; sec.dataset.g=gi;
-  sec.style.animationDelay=(gi*55)+'ms';
-  const info=g.info&&Object.keys(g.info).length
-    ? `<div class="ginfo">${g.info.role?`<b>${esc(g.info.role)}</b><br>`:''}${esc(g.info.summary||'')}</div>` : '';
-  const cardsHtml=g.cards.map(c=>{
-    const rows=c.rows.map(r=>`<div class="r2 ${esc(r.k)}"><span class="k">${esc(r.k)}</span><span class="v">${esc(r.v)}</span></div>`).join('');
-    const bl=c.bullets.length?`<ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:'';
-    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Knowledge by Layer category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
-    const meta=c.meta.length?`<div class="cm">${c.meta.map(esc).join(' &nbsp;&middot;&nbsp; ')}</div>`:'';
-    const tone=c.tone?`style="--kc:${c.tone}"`:'';
-    const hay=esc((c.title+' '+c.meta.join(' ')+' '+c.rows.map(r=>r.k+' '+r.v).join(' ')+' '+c.bullets.join(' ')).toLowerCase());
-    return `<article class="kc" ${tone} data-s="${hay}"><h3>${esc(c.title)}</h3>${meta}
-      <div class="rows2">${rows}</div>${bl}${lk}</article>`;}).join('');
-  sec.innerHTML=`<div class="grph"><h2>${esc(g.title)}</h2>
-    ${g.meta.map(x=>`<span class="gm">${esc(x)}</span>`).join('')}
-    <span class="n">${g.cards.length}</span></div>${info}
-    <div class="cardgrid">${cardsHtml}</div>`;
-  root.appendChild(sec);
-});
-
-const chips=document.getElementById('grpChips');
-G.forEach((g,gi)=>{const b=document.createElement('button');b.className='chip';b.dataset.g=gi;
-  b.textContent=g.title.length>26?g.title.slice(0,24)+'\u2026':g.title;
-  b.onclick=()=>{b.classList.toggle('on');apply();};chips.appendChild(b);});
-
-const q=document.getElementById('q');
-let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(apply,110);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';apply();}
-  if(e.key==='/'&&document.activeElement.id!=='q'){e.preventDefault();q.focus();}});
-function apply(){
-  const term=q.value.trim().toLowerCase();
-  const on=[...document.querySelectorAll('#grpChips .chip.on')].map(c=>c.dataset.g);
-  let shown=0,any=false;
-  document.querySelectorAll('.grp').forEach(sec=>{
-    if(on.length&&!on.includes(sec.dataset.g)){sec.classList.add('hide');return;}
-    let has=false;
-    sec.querySelectorAll('.kc').forEach(c=>{
-      const ok=!term||c.dataset.s.includes(term);
-      c.classList.toggle('hide',!ok); if(ok){has=true;shown++;}});
-    sec.classList.toggle('hide',!has); if(has)any=true;});
-  document.getElementById('empty').classList.toggle('hide',any);
-  document.getElementById('sShown').textContent=shown;
-}
-(async()=>{try{const r=await window.storage.get('kb-theme');if(r&&r.value)th=r.value;}catch(e){}ap(th);apply();})();
+(function(){
+ const palettes={paper:{tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
+                 ink:{tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
+ let theme='paper';
+ function apply(t){
+   theme=t;document.documentElement.dataset.theme=t;
+   const p=palettes[t],root=document.documentElement.style;
+   root.setProperty('--tc',p.tc);root.setProperty('--tx',p.tx);
+   root.setProperty('--tt',p.tt);root.setProperty('--tr',p.tr);root.setProperty('--a40',p.a);
+   const btn=document.getElementById('themeBtn');if(btn)btn.textContent=t==='paper'?'Paper':'Ink';
+ }
+ const btn=document.getElementById('themeBtn');
+ if(btn)btn.addEventListener('click',function(){
+   apply(theme==='paper'?'ink':'paper');
+   try{if(window.storage)window.storage.set('kb-theme',theme);}catch(e){}
+ });
+ (async function(){
+   try{if(window.storage){const saved=await window.storage.get('kb-theme');if(saved&&saved.value==='ink')theme='ink';}}catch(e){}
+   apply(theme);
+ })();
+})();
 </script>
+
 </body></html>

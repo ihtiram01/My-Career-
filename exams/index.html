@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Certifications — Ihtiram Ullah</title>
+<title>Certifications &amp; Training — Ihtiram Ullah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -268,130 +268,151 @@ footer b{color:var(--dim)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 :focus-visible{outline:2px solid var(--a40); outline-offset:2px; border-radius:4px}
 
-.tbar{display:flex;justify-content:space-between;gap:8px;margin-bottom:20px}
-.tbar .btn{text-decoration:none;display:inline-block}
-.grp{margin-top:44px;opacity:0;transform:translateY(14px);animation:rise .55s var(--ease) forwards}
-.grph{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.grph h2{font-family:var(--disp);font-weight:600;font-size:clamp(16px,3vw,21px);margin:0;letter-spacing:-.015em}
-.grph .gm{font-family:var(--mono);font-size:10px;color:var(--faint)}
-.grph .n{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:auto}
-.ginfo{font-size:13.5px;color:var(--dim);margin:11px 0 0;padding:10px 13px;border-radius:8px;
-  background:var(--panel);border-left:3px solid var(--c)}
-.ginfo b{color:var(--ink)}
-.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:13px;margin-top:15px}
-.kc{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:16px 17px;
-  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .24s var(--ease),border-color .2s}
-.kc::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:var(--kc,var(--c))}
-.kc:hover{transform:translateY(-3px);border-color:var(--kc,var(--c))}
-.kc h3{font-family:var(--disp);font-weight:600;font-size:15.5px;margin:5px 0 4px;letter-spacing:-.01em}
-.kc .cm{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.04em;margin-bottom:10px}
-.kc .rows2{display:flex;flex-direction:column;gap:5px;margin:10px 0}
-.kc .r2{display:flex;gap:9px;font-size:13px;align-items:baseline}
-.kc .r2 .k{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--faint);flex:none;width:64px;padding-top:2px}
-.kc .r2 .v{flex:1;color:var(--dim)}
-.kc .r2.status .v{color:var(--kc,var(--ink));font-weight:600}
-.kc .r2.action .v,.kc .r2.deadline .v{color:#C42A36;font-weight:500}
-[data-theme="ink"] .kc .r2.action .v,[data-theme="ink"] .kc .r2.deadline .v{color:#FF7B7B}
-.kc ul{margin:9px 0 0;padding-left:17px}
-.kc li{font-size:13.2px;color:var(--dim);margin-bottom:4px;line-height:1.5}
-.kc li::marker{color:var(--kc,var(--c))}
-.kc .lnk{display:flex;gap:4px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
-.kc .lnk a{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;text-decoration:none;
-  border:1px solid var(--line2);background:var(--panel2);color:var(--dim);transition:all .16s}
-.kc .lnk a:hover{background:var(--kc,var(--c));color:#fff;border-color:var(--kc,var(--c))}
-@media(max-width:640px){.cardgrid{grid-template-columns:1fr}.kc .r2 .k{width:56px}}
+.port-jump{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.port-jump a{display:flex;align-items:center;gap:10px;padding:11px 15px;border:1px solid var(--line2);border-radius:10px;
+  background:var(--panel);text-decoration:none;color:var(--ink);font:600 14px var(--disp)}
+.port-jump a:hover{border-color:var(--a40)}
+.port-jump b{font:700 11px var(--mono);color:var(--a40);padding:2px 7px;border-radius:20px;background:var(--panel2)}
+.port-group{margin:34px 0 0;scroll-margin-top:16px}
+.port-group-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:16px;
+  border-bottom:1px solid var(--line)}
+.port-group-head h2{font:700 clamp(21px,3.4vw,27px) var(--disp);letter-spacing:-.025em;margin:0}
+.port-group-head .n{font:11px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.port-group-head p{flex-basis:100%;margin:2px 0 0;color:var(--dim);font-size:13.5px}
+.port-hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;margin-top:8px}
+.hub-card{display:flex;flex-direction:column;gap:8px;padding:28px 28px 24px;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .22s,border-color .22s}
+.hub-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--accent)}
+.hub-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.hub-n{font:700 54px/1 var(--disp);color:var(--accent);letter-spacing:-.04em}
+.hub-unit{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:-2px}
+.hub-card h2{font:700 clamp(22px,3.4vw,28px)/1.15 var(--disp);letter-spacing:-.025em;margin:12px 0 0}
+.hub-card p{margin:0;color:var(--dim);font-size:14px;line-height:1.65}
+.hub-latest{margin-top:12px;padding:11px 13px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
+  font-size:13px;color:var(--ink)}
+.hub-latest small{display:block;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.hub-card .port-arrow{margin-top:14px;font-size:13px}
+
+.port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
+.port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
+  text-decoration:none;cursor:pointer}
+.port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
+.port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
+.port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
+.port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
+.port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.port-tools{margin:22px 0 18px}
+.port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
+  border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
+.port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
+.port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+.port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
+.port-detail{max-width:900px;margin:0 auto}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
+.port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
+.port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
+.port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
+.port-detail li{font-size:13.5px;line-height:1.7;margin:5px 0}
+.port-detail .detail-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.port-detail .detail-row:last-child{border:0}
+.port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
+.port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
+.port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-<header class="hero">
-  <div class="tbar"><a class="btn" href="../index.html">&larr; Home</a><button class="btn" id="themeBtn">Paper</button></div>
-  <div class="eyebrow"><span class="dot"></span> Section 02 · what I hold</div>
-  <h1>Certifications<span class="thin">Ihtiram Ullah — Network &amp; IT Infrastructure Engineer</span></h1>
-  <p class="lede">What is passed and defensible on a CV, and what is training completed but not yet examined.</p>
-  <div class="figs"><div class="fig"><b>2</b><span>sections</span></div><div class="fig"><b>9</b><span>entries</span></div><div class="fig"><b>28</b><span>details</span></div></div>
-</header>
-<div class="bar">
-  <div class="searchrow">
-    <label class="search">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Search — ccna, encor, az-104, cost…" autocomplete="off" spellcheck="false">
-    </label>
-  </div>
-  <div class="chips" id="grpChips"><span class="chiplabel">Section</span></div>
-  <div class="stats"><span class="stat"><b id="sShown">0</b> shown</span></div>
-</div>
-<main id="root"></main>
-<div class="empty hide" id="empty"><h3>Nothing matches</h3><p>Clear the search or turn a section back on.</p></div>
-<footer><b>Claim rule</b> &nbsp; only PASSED belongs on a CV. Coursework is &ldquo;training completed&rdquo;, never &ldquo;certified&rdquo;. What to sit next is in <a href="../roadmap/index.html">Roadmap</a>.</footer>
-</div>
+<div class="port-wrap">
+  <nav class="port-top" aria-label="Page navigation">
+    <a href="../index.html">&larr; Home</a>
+    <button id="themeBtn" type="button">Paper</button>
+  </nav>
+  <header class="port-hero">
+    <div class="port-kicker">Section 02 · what I hold</div>
+    <h1>Certifications &amp; Training</h1>
+    <p>What is passed and defensible on a CV, and what is training completed but not yet examined.</p>
+  </header>
+<div class="port-stats"><div class="port-stat"><b>9</b><span>credentials</span></div><div class="port-stat"><b>2</b><span>status groups</span></div></div>
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search — ccna, encor, az-104, cost…" aria-label="Search this section"></div>
+      <div class="port-legend"><span><i style="background:#C42A36"></i>Record conflict</span><span><i style="background:#C55A0C"></i>Unconfirmed</span><span><i style="background:#C55A0C"></i>Coursework only</span><span><i style="background:#8A6800"></i>Course completed</span><span><i style="background:#0B7D55"></i>Passed</span></div>
+      <main class="port-grid" id="portfolioGrid"><a class="port-card" href="./ccna-200-301/index.html" style="--accent:#0B7D55" data-search="ccna 200-301 passed v1.0 (2021). current exam is v1.1 (2024) passed cisco corvit systems jan–apr 2021"><span class="port-seq">01</span><div class="port-meta">Passed</div><h2>CCNA 200-301</h2><p>v1.0 (2021). Current exam is v1.1 (2024)</p><div class="port-pills"><span class="port-pill lead">Passed</span><span class="port-pill">Cisco</span><span class="port-pill">Corvit Systems</span><span class="port-pill">Jan–Apr 2021</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./comptia-a/index.html" style="--accent:#0B7D55" data-search="comptia a+ passed earlier version. current is v15 (220-1201/1202, mar 2025) passed comptia corvit systems mar–may 2021"><span class="port-seq">02</span><div class="port-meta">Passed</div><h2>CompTIA A+</h2><p>earlier version. Current is V15 (220-1201/1202, Mar 2025)</p><div class="port-pills"><span class="port-pill lead">Passed</span><span class="port-pill">CompTIA</span><span class="port-pill">Corvit Systems</span><span class="port-pill">Mar–May 2021</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./cctv-operator/index.html" style="--accent:#0B7D55" data-search="cctv operator passed vendor-neutral operator certificate, hikvision-centric passed corvit systems jun–jul 2021"><span class="port-seq">03</span><div class="port-meta">Passed</div><h2>CCTV Operator</h2><p>vendor-neutral operator certificate, Hikvision-centric</p><div class="port-pills"><span class="port-pill lead">Passed</span><span class="port-pill">Corvit Systems</span><span class="port-pill">Jun–Jul 2021</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./az-900-azure-fundamentals/index.html" style="--accent:#0B7D55" data-search="az-900 azure fundamentals passed  passed microsoft udemy ending dec 2024"><span class="port-seq">04</span><div class="port-meta">Passed</div><h2>AZ-900 Azure Fundamentals</h2><div class="port-pills"><span class="port-pill lead">Passed</span><span class="port-pill">Microsoft</span><span class="port-pill">Udemy</span><span class="port-pill">ending Dec 2024</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./ccnp-encor-350-401/index.html" style="--accent:#C55A0C" data-search="ccnp encor 350-401 coursework only the cv must say &quot;training&quot;, not &quot;certified&quot;, until this is passed coursework only cisco corvit systems may–aug 2022"><span class="port-seq">05</span><div class="port-meta">Coursework Only</div><h2>CCNP ENCOR 350-401</h2><p>the CV must say &quot;training&quot;, not &quot;certified&quot;, until this is passed</p><div class="port-pills"><span class="port-pill lead">Coursework only</span><span class="port-pill">Cisco</span><span class="port-pill">Corvit Systems</span><span class="port-pill">May–Aug 2022</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./ccnp-enarsi-300-410/index.html" style="--accent:#C55A0C" data-search="ccnp enarsi 300-410 coursework only  coursework only cisco corvit systems sep–nov 2022"><span class="port-seq">06</span><div class="port-meta">Coursework Only</div><h2>CCNP ENARSI 300-410</h2><div class="port-pills"><span class="port-pill lead">Coursework only</span><span class="port-pill">Cisco</span><span class="port-pill">Corvit Systems</span><span class="port-pill">Sep–Nov 2022</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./az-104-azure-administrator/index.html" style="--accent:#C55A0C" data-search="az-104 azure administrator coursework only  unconfirmed microsoft technical guftgu aug–oct 2023"><span class="port-seq">07</span><div class="port-meta">Coursework Only</div><h2>AZ-104 Azure Administrator</h2><div class="port-pills"><span class="port-pill lead">Unconfirmed</span><span class="port-pill">Microsoft</span><span class="port-pill">Technical Guftgu</span><span class="port-pill">Aug–Oct 2023</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./mcse-server-2022/index.html" style="--accent:#C42A36" data-search="mcse &quot;server 2022&quot; coursework only the syllabus is windows server 2012 (70-410 to 70-414). microsoft retired those exams in january 2021, and no credential called &quot;mcse server 2022&quot; exists. record conflict microsoft corvit systems jan–apr 2022"><span class="port-seq">08</span><div class="port-meta">Coursework Only</div><h2>MCSE &quot;Server 2022&quot;</h2><p>the syllabus is Windows Server 2012 (70-410 to 70-414). Microsoft retired those exams in January 2021, and no credential called &quot;MCSE Server 2022&quot; exists.</p><div class="port-pills"><span class="port-pill lead">Record conflict</span><span class="port-pill">Microsoft</span><span class="port-pill">Corvit Systems</span><span class="port-pill">Jan–Apr 2022</span></div><span class="port-arrow">Open credential &rarr;</span></a><a class="port-card" href="./vmware-esxi-vcenter/index.html" style="--accent:#8A6800" data-search="vmware esxi / vcenter coursework only vcp requires a paid official course. expensive route. course completed vmware udemy jun–aug 2024"><span class="port-seq">09</span><div class="port-meta">Coursework Only</div><h2>VMware ESXi / vCenter</h2><p>VCP requires a paid official course. Expensive route.</p><div class="port-pills"><span class="port-pill lead">Course completed</span><span class="port-pill">VMware</span><span class="port-pill">Udemy</span><span class="port-pill">Jun–Aug 2024</span></div><span class="port-arrow">Open credential &rarr;</span></a></main>
+      <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px"><b>Claim rule</b> &nbsp; only PASSED belongs on a CV. Coursework is &ldquo;training completed&rdquo;, never &ldquo;certified&rdquo;. What to sit next is in <a href="../roadmap/index.html">Roadmap</a>.</footer>
+    </div>
+    <script>
+    (function(){const q=document.getElementById('portfolioSearch');if(!q)return;
+      const items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
+      q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;
+        items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});
+        empty.hidden=count!==0;});})();
+    </script>
 <script>
-const D = {"meta":{"title":"Certifications","groups":2,"cards":9,"items":28},"groups":[{"title":"PASSED · defensible on a CV","meta":[],"info":{},"cards":[{"title":"CCNA 200-301","meta":["Cisco","Corvit Systems","Jan–Apr 2021"],"rows":[{"k":"status","v":"Certified — exam passed"},{"k":"blueprint","v":"v1.0 (2021). Current exam is v1.1 (2024)"},{"k":"gap","v":"v1.1 adds root/loop guard, BPDU filter, AI/ML in netops, Ansible + Terraform"},{"k":"cost","v":"paid"}],"bullets":[],"links":["30","38","40","41","42","43","44"],"tone":"#0B7D55"},{"title":"CompTIA A+","meta":["CompTIA","Corvit Systems","Mar–May 2021"],"rows":[{"k":"status","v":"Certified — exam passed"},{"k":"blueprint","v":"earlier version. Current is V15 (220-1201/1202, Mar 2025)"},{"k":"cost","v":"paid"}],"bullets":[],"links":["12","15","20","88"],"tone":"#0B7D55"},{"title":"CCTV Operator","meta":["Corvit Systems","Jun–Jul 2021"],"rows":[{"k":"status","v":"Certified — exam passed"},{"k":"note","v":"vendor-neutral operator certificate, Hikvision-centric"},{"k":"cost","v":"paid"}],"bullets":[],"links":["90","91","92","93","94"],"tone":"#0B7D55"},{"title":"AZ-900 Azure Fundamentals","meta":["Microsoft","Udemy","ending Dec 2024"],"rows":[{"k":"status","v":"Passed"},{"k":"cost","v":"paid"}],"bullets":[],"links":["74"],"tone":"#0B7D55"}],"tone":2},{"title":"COURSEWORK ONLY · training done, exam NOT sat","meta":[],"info":{},"cards":[{"title":"CCNP ENCOR 350-401","meta":["Cisco","Corvit Systems","May–Aug 2022"],"rows":[{"k":"status","v":"Coursework complete — exam NOT sat"},{"k":"priority","v":"1 — highest. Core exam for CCNP Enterprise"},{"k":"cost","v":"USD 400 (approx PKR 113,760)"},{"k":"note","v":"the CV must say \"training\", not \"certified\", until this is passed"}],"bullets":[],"links":["40","42","44","46","48","52","61","87"],"tone":"#C55A0C"},{"title":"CCNP ENARSI 300-410","meta":["Cisco","Corvit Systems","Sep–Nov 2022"],"rows":[{"k":"status","v":"Coursework complete — exam NOT sat"},{"k":"priority","v":"3 — sit after ENCOR"},{"k":"cost","v":"USD 300 (approx PKR 85,320)"}],"bullets":[],"links":["44","45","46","47","48","62","63"],"tone":"#C55A0C"},{"title":"AZ-104 Azure Administrator","meta":["Microsoft","Technical Guftgu","Aug–Oct 2023"],"rows":[{"k":"status","v":"Coursework complete — pass status UNCONFIRMED"},{"k":"priority","v":"4 — confirm before claiming it anywhere"},{"k":"cost","v":"USD 165"},{"k":"action","v":"check the Microsoft Learn transcript. Five minutes."}],"bullets":[],"links":["75","76","77","78","79"],"tone":"#C55A0C"},{"title":"MCSE \"Server 2022\"","meta":["Microsoft","Corvit Systems","Jan–Apr 2022"],"rows":[{"k":"status","v":"RECORD CONFLICT"},{"k":"note","v":"the syllabus is Windows Server 2012 (70-410 to 70-414). Microsoft retired those exams in January 2021, and no credential called \"MCSE Server 2022\" exists."},{"k":"action","v":"describe it as \"Windows Server administration training (Corvit, 2022)\". The skills are real. The certification name is not."}],"bullets":[],"links":["21","22","23","24","72"],"tone":"#C42A36"},{"title":"VMware ESXi / vCenter","meta":["VMware","Udemy","Jun–Aug 2024"],"rows":[{"k":"status","v":"Course completed — no certification attempted"},{"k":"note","v":"VCP requires a paid official course. Expensive route."}],"bullets":[],"links":["70","71"],"tone":"#C55A0C"}],"tone":1}]};
-const G = D.groups;
-const ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'};
-const esc=s=>String(s).replace(/[&<>"]/g,m=>ESC[m]);
-const PAL=[['#8494AB','#56697F'],['#FF7A1A','#C55A0C'],['#34D399','#0B7D55'],['#22D3EE','#0C7F99'],
-           ['#4C8DFF','#1B57C4'],['#A97BFF','#6E35C9'],['#FF5A5F','#C42A36'],['#FF7AC6','#B8367F'],
-           ['#F5C542','#8A6800'],['#C98B5E','#7E5129']];
-const T={paper:{l:'Paper',tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
-         ink:{l:'Ink',tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
-let th='paper';
-function ap(t){th=t;document.documentElement.dataset.theme=t;const v=T[t],r=document.documentElement.style;
-  r.setProperty('--tc',v.tc);r.setProperty('--tx',v.tx);r.setProperty('--tt',v.tt);
-  r.setProperty('--tr',v.tr);r.setProperty('--a40',v.a);
-  document.getElementById('themeBtn').textContent=v.l;
-  document.querySelectorAll('[data-tone]').forEach(el=>el.style.setProperty('--c',PAL[+el.dataset.tone][t==='paper'?1:0]));
-  try{window.storage.set('kb-theme',t);}catch(e){}}
-document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
-
-const root=document.getElementById('root');
-G.forEach((g,gi)=>{
-  const sec=document.createElement('section');
-  sec.className='grp'; sec.dataset.tone=g.tone; sec.dataset.g=gi;
-  sec.style.animationDelay=(gi*55)+'ms';
-  const info=g.info&&Object.keys(g.info).length
-    ? `<div class="ginfo">${g.info.role?`<b>${esc(g.info.role)}</b><br>`:''}${esc(g.info.summary||'')}</div>` : '';
-  const cardsHtml=g.cards.map(c=>{
-    const rows=c.rows.map(r=>`<div class="r2 ${esc(r.k)}"><span class="k">${esc(r.k)}</span><span class="v">${esc(r.v)}</span></div>`).join('');
-    const bl=c.bullets.length?`<ul>${c.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:'';
-    const lk=c.links.length?`<div class="lnk">${c.links.map(x=>`<a href="../knowledge/index.html" title="Knowledge by Layer category ${esc(x)}">&rarr; ${esc(x)}</a>`).join('')}</div>`:'';
-    const meta=c.meta.length?`<div class="cm">${c.meta.map(esc).join(' &nbsp;&middot;&nbsp; ')}</div>`:'';
-    const tone=c.tone?`style="--kc:${c.tone}"`:'';
-    const hay=esc((c.title+' '+c.meta.join(' ')+' '+c.rows.map(r=>r.k+' '+r.v).join(' ')+' '+c.bullets.join(' ')).toLowerCase());
-    return `<article class="kc" ${tone} data-s="${hay}"><h3>${esc(c.title)}</h3>${meta}
-      <div class="rows2">${rows}</div>${bl}${lk}</article>`;}).join('');
-  sec.innerHTML=`<div class="grph"><h2>${esc(g.title)}</h2>
-    ${g.meta.map(x=>`<span class="gm">${esc(x)}</span>`).join('')}
-    <span class="n">${g.cards.length}</span></div>${info}
-    <div class="cardgrid">${cardsHtml}</div>`;
-  root.appendChild(sec);
-});
-
-const chips=document.getElementById('grpChips');
-G.forEach((g,gi)=>{const b=document.createElement('button');b.className='chip';b.dataset.g=gi;
-  b.textContent=g.title.length>26?g.title.slice(0,24)+'\u2026':g.title;
-  b.onclick=()=>{b.classList.toggle('on');apply();};chips.appendChild(b);});
-
-const q=document.getElementById('q');
-let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(apply,110);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){q.value='';apply();}
-  if(e.key==='/'&&document.activeElement.id!=='q'){e.preventDefault();q.focus();}});
-function apply(){
-  const term=q.value.trim().toLowerCase();
-  const on=[...document.querySelectorAll('#grpChips .chip.on')].map(c=>c.dataset.g);
-  let shown=0,any=false;
-  document.querySelectorAll('.grp').forEach(sec=>{
-    if(on.length&&!on.includes(sec.dataset.g)){sec.classList.add('hide');return;}
-    let has=false;
-    sec.querySelectorAll('.kc').forEach(c=>{
-      const ok=!term||c.dataset.s.includes(term);
-      c.classList.toggle('hide',!ok); if(ok){has=true;shown++;}});
-    sec.classList.toggle('hide',!has); if(has)any=true;});
-  document.getElementById('empty').classList.toggle('hide',any);
-  document.getElementById('sShown').textContent=shown;
-}
-(async()=>{try{const r=await window.storage.get('kb-theme');if(r&&r.value)th=r.value;}catch(e){}ap(th);apply();})();
+(function(){
+ const palettes={paper:{tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
+                 ink:{tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
+ let theme='paper';
+ function apply(t){
+   theme=t;document.documentElement.dataset.theme=t;
+   const p=palettes[t],root=document.documentElement.style;
+   root.setProperty('--tc',p.tc);root.setProperty('--tx',p.tx);
+   root.setProperty('--tt',p.tt);root.setProperty('--tr',p.tr);root.setProperty('--a40',p.a);
+   const btn=document.getElementById('themeBtn');if(btn)btn.textContent=t==='paper'?'Paper':'Ink';
+ }
+ const btn=document.getElementById('themeBtn');
+ if(btn)btn.addEventListener('click',function(){
+   apply(theme==='paper'?'ink':'paper');
+   try{if(window.storage)window.storage.set('kb-theme',theme);}catch(e){}
+ });
+ (async function(){
+   try{if(window.storage){const saved=await window.storage.get('kb-theme');if(saved&&saved.value==='ink')theme='ink';}}catch(e){}
+   apply(theme);
+ })();
+})();
 </script>
+
 </body></html>

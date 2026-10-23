@@ -102,7 +102,7 @@ def parse_cards(path):
 
         # group-level keys. `private:` is stored but never rendered;
         # `slug:` freezes the detail-page address; `cover:` is the dashboard photo.
-        km = re.match(r'^(role|tag|summary|type|slug|cover|private)\s*:\s*(.+)$', ln, re.I)
+        km = re.match(r'^(role|tag|summary|type|section|slug|cover|private)\s*:\s*(.+)$', ln, re.I)
         if km and grp is not None and card is None:
             grp['info'][km.group(1).lower()] = km.group(2).strip()
             continue

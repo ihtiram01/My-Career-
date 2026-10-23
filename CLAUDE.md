@@ -87,12 +87,20 @@ robots.txt              disallow all
 `docs/field-experience.md` and `docs/exam-tracker.md` render as a dashboard of
 numbered cards, each opening its own detail page with previous / next links.
 
+Career & Projects has **two sections**, matching the CV:
+
+- **Company Experience** — `type: Employment` (Wemart, AlmavivA, Express, Veevo)
+- **Project Experience** — every other type: Contract, Freelance, Project,
+  Independent (ANMAT, center3, Leon, MAMCO, UCT, Metro L3, freelance)
+- `section: company` or `section: projects` on a role overrides the rule.
+
 - **Order is the order in the file**, newest first. The 01, 02 … numbers are
-  added by the build. Re-sequence by moving a `##` block.
+  added by the build and **restart in each section**. Previous / next arrows on
+  a detail page stay inside that section. Re-sequence by moving a `##` block.
 - `slug:` on each `##` role freezes its address (`experience/wemart/`). Set it
   once, never change it. Certifications use the title alone (`exams/ccna-200-301/`)
   — never put status words in a slug, or passing an exam breaks the link.
-- `type:` (Employment · Contract · Freelance · Independent) sets the stripe
+- `type:` (Employment · Contract · Freelance · Project · Independent) sets the stripe
   colour on experience. Certification colour comes from `status:`.
 - `private:` on a role, or `- private:` inside a project, is a note for Mickey.
   It stays in the markdown and is **never rendered**. Coaching notes ("be precise

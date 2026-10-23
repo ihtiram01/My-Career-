@@ -377,6 +377,7 @@ UI = {
 STAT_WORDS = {
     "roles":      {"ar": "أدوار",    "ur": "کردار"},
     "projects":   {"ar": "مشاريع",   "ur": "پروجیکٹس"},
+    "companies":  {"ar": "شركات",    "ur": "کمپنیاں"},
     "courses":    {"ar": "دورات",    "ur": "کورسز"},
     "modules":    {"ar": "وحدات",    "ur": "ماڈیولز"},
     "topics":     {"ar": "مواضيع",   "ur": "موضوعات"},
@@ -718,6 +719,7 @@ TYPE_COLOUR = [
     ("employment", "#1B57C4", "Employment"),
     ("contract",   "#6E35C9", "Contract"),
     ("freelance",  "#0B7D55", "Freelance"),
+    ("project",    "#0C7F99", "Site project"),
     ("independent", "#7E5129", "Independent"),
 ]
 # Credential status -> accent. Order matters: first match wins.
@@ -868,6 +870,40 @@ def write_page(path, html):
     path.write_text(html, encoding="utf-8")
 
 
+# Career & Projects is split in two, the same way the CV is: employers on staff,
+# and project / contract work. `type: Employment` lands in Company Experience,
+# anything else in Project Experience; `section: company|projects` overrides.
+EXPERIENCE_SECTIONS = [
+    ("company",  "Company Experience", "Company",
+     "Roles held on staff — the employers, in order."),
+    ("projects", "Project Experience", "Project",
+     "Contracts, freelance dispatches and site projects — each delivered as its own engagement."),
+]
+
+PORTFOLIO_SECTION_CSS = r"""
+.port-jump{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.port-jump a{display:flex;align-items:center;gap:10px;padding:11px 15px;border:1px solid var(--line2);border-radius:10px;
+  background:var(--panel);text-decoration:none;color:var(--ink);font:600 14px var(--disp)}
+.port-jump a:hover{border-color:var(--a40)}
+.port-jump b{font:700 11px var(--mono);color:var(--a40);padding:2px 7px;border-radius:20px;background:var(--panel2)}
+.port-group{margin:34px 0 0;scroll-margin-top:16px}
+.port-group-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:16px;
+  border-bottom:1px solid var(--line)}
+.port-group-head h2{font:700 clamp(21px,3.4vw,27px) var(--disp);letter-spacing:-.025em;margin:0}
+.port-group-head .n{font:11px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.port-group-head p{flex-basis:100%;margin:2px 0 0;color:var(--dim);font-size:13.5px}
+"""
+
+
+def experience_section_key(info, kind):
+    explicit = (info.get("section") or "").strip().lower()
+    if explicit.startswith("comp") or explicit.startswith("employ"):
+        return "company"
+    if explicit.startswith("proj"):
+        return "projects"
+    return "company" if kind.lower() == "employment" else "projects"
+
+
 def render_portfolio_page(md_path, cfg, css, head):
     data = cards.parse_cards(md_path)
     groups = data["groups"]
@@ -876,7 +912,7 @@ def render_portfolio_page(md_path, cfg, css, head):
     problems, used, entries = [], set(), []
     total = 0
 
-    # 1. Build the ordered list of entries — one per detail page.
+    # 1. One entry per detail page, in file order.
     if is_experience:
         for g in groups:
             info = g.get("info", {})
@@ -887,7 +923,12 @@ def render_portfolio_page(md_path, cfg, css, head):
                 title=g["title"], meta=g.get("meta", []), info=info, cards=g["cards"],
                 summary=info.get("summary", ""), role=info.get("role", ""),
                 accent=colour, kind=kind, cover=cover, n_photos=len(photos),
+                section=experience_section_key(info, kind),
                 slug=unique_slug(info.get("slug") or slugify(g["title"]), used)))
+        sections = [dict(key=k, title=t, label=l, desc=d,
+                         entries=[e for e in entries if e["section"] == k])
+                    for k, t, l, d in EXPERIENCE_SECTIONS]
+        sections = [s for s in sections if s["entries"]]
     else:
         for g in groups:
             for c in g["cards"]:
@@ -900,13 +941,15 @@ def render_portfolio_page(md_path, cfg, css, head):
                     status=status, label=label, summary=summary, accent=colour,
                     cover=photos[0]["src"] if photos else "", n_photos=len(photos),
                     slug=unique_slug(slugify(c["title"]), used)))
+        sections = [dict(key="all", title="", label="Credential", desc="", entries=entries)]
 
-    width = max(2, len(str(len(entries))))
-    for i, e in enumerate(entries, 1):
-        e["seq"] = str(i).zfill(width)
+    # Numbering restarts in each section: Company 01–04, Project 01–07.
+    for s in sections:
+        width = max(2, len(str(len(s["entries"]))))
+        for i, e in enumerate(s["entries"], 1):
+            e["seq"] = str(i).zfill(width)
 
-    # Remove detail folders from earlier builds that no longer match an entry,
-    # so a renamed slug does not leave a stale duplicate page behind.
+    # Remove detail folders from earlier builds that no longer match an entry.
     keep = {e["slug"] for e in entries}
     if base_dir.exists():
         for d in base_dir.iterdir():
@@ -915,47 +958,50 @@ def render_portfolio_page(md_path, cfg, css, head):
                 (d / "index.html").unlink()
                 d.rmdir()
 
-    # 2. Detail pages.
+    # 2. Detail pages. Previous / next stays inside the entry's own section.
     prefix = "../../"
-    for i, e in enumerate(entries):
-        style = f' style="--accent:{e["accent"]}"'
-        if is_experience:
-            total += len(e["cards"])
-            for c in e["cards"]:
-                for ph in c.get("photos", []):
+    for s in sections:
+        seq_list = s["entries"]
+        last = seq_list[-1]["seq"]
+        for i, e in enumerate(seq_list):
+            style = f' style="--accent:{e["accent"]}"'
+            if is_experience:
+                total += len(e["cards"])
+                for c in e["cards"]:
+                    for ph in c.get("photos", []):
+                        check_photo(ph["src"], problems)
+                if e["info"].get("cover"):
+                    check_photo(e["info"]["cover"], problems)
+                kicker = f'{s["title"]} · {e["seq"]} of {last} · {e["kind"]}'
+                body = portfolio_header(e["title"], kicker, e["summary"],
+                                        f'../index.html#{s["key"]}', "All experience")
+                pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"])
+                body += f'<div class="port-detail"{style}><div class="intro">'
+                body += f'<h2>{esc(e["role"])}</h2>' if e["role"] else ""
+                body += f'<div class="port-pills"><span class="port-pill lead">{esc(e["kind"])}</span>{pills}</div></div>'
+                body += "<h2>Work &amp; technical scope</h2>"
+                body += "".join(portfolio_card_content(c, prefix + "knowledge/index.html", prefix)
+                                for c in e["cards"])
+            else:
+                total += 1
+                for ph in e["card"].get("photos", []):
                     check_photo(ph["src"], problems)
-            if e["info"].get("cover"):
-                check_photo(e["info"]["cover"], problems)
-            kicker = f'Experience {e["seq"]} of {entries[-1]["seq"]} · {e["kind"]}'
-            body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All experience")
-            pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"])
-            body += f'<div class="port-detail"{style}><div class="intro">'
-            body += f'<h2>{esc(e["role"])}</h2>' if e["role"] else ""
-            body += f'<div class="port-pills"><span class="port-pill lead">{esc(e["kind"])}</span>{pills}</div></div>'
-            body += "<h2>Projects &amp; technical work</h2>"
-            body += "".join(portfolio_card_content(c, prefix + "knowledge/index.html", prefix)
-                            for c in e["cards"])
-        else:
-            total += 1
-            for ph in e["card"].get("photos", []):
-                check_photo(ph["src"], problems)
-            kicker = f'Credential {e["seq"]} of {entries[-1]["seq"]} · {e["label"]}'
-            body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All credentials")
-            body += f'<div class="port-detail"{style}><h2>Credential record</h2>'
-            body += portfolio_card_content(e["card"], prefix + "knowledge/index.html", prefix)
-        body += pager_html(entries, i) + "</div></div>"
-        write_page(base_dir / e["slug"] / "index.html",
-                   portfolio_shell(e["title"], css, head, body))
+                kicker = f'Credential {e["seq"]} of {last} · {e["label"]}'
+                body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All credentials")
+                body += f'<div class="port-detail"{style}><h2>Credential record</h2>'
+                body += portfolio_card_content(e["card"], prefix + "knowledge/index.html", prefix)
+            body += pager_html(seq_list, i) + "</div></div>"
+            write_page(base_dir / e["slug"] / "index.html",
+                       portfolio_shell(e["title"], css, head, body))
 
-    # 3. Dashboard.
-    tiles = []
-    for e in entries:
+    # 3. Dashboard tiles.
+    def tile(e):
         cover = (f'<div class="cover"><img src="../{esc(e["cover"])}" alt="" loading="lazy"></div>'
                  if e["cover"] else "")
         if is_experience:
             lead, sub, n = e["kind"], e["role"], len(e["cards"])
-            extra = [f'{n} project{"s" if n != 1 else ""}']
-            arrow = "Open experience"
+            extra = [f'{n} work area{"s" if n != 1 else ""}']
+            arrow = "Open"
         else:
             lead, sub = e["label"], e["group"].split("·")[0].strip().title()
             extra, arrow = [], "Open credential"
@@ -964,20 +1010,33 @@ def render_portfolio_page(md_path, cfg, css, head):
         pills = (f'<span class="port-pill lead">{esc(lead)}</span>'
                  + "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"] + extra))
         hay = " ".join([e["title"], sub, e["summary"], lead, " ".join(e["meta"])]).lower()
-        tiles.append(
-            f'<a class="port-card" href="./{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
-            f'data-search="{esc(hay)}">{cover}<span class="port-seq">{esc(e["seq"])}</span>'
-            f'<div class="port-meta">{esc(sub)}</div><h2>{esc(e["title"])}</h2>'
-            + (f'<p>{esc(e["summary"])}</p>' if e["summary"] else "")
-            + f'<div class="port-pills">{pills}</div><span class="port-arrow">{arrow} &rarr;</span></a>')
+        return (f'<a class="port-card" href="./{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
+                f'data-search="{esc(hay)}">{cover}<span class="port-seq">{esc(e["seq"])}</span>'
+                f'<div class="port-meta">{esc(sub)}</div><h2>{esc(e["title"])}</h2>'
+                + (f'<p>{esc(e["summary"])}</p>' if e["summary"] else "")
+                + f'<div class="port-pills">{pills}</div><span class="port-arrow">{arrow} &rarr;</span></a>')
 
     if is_experience:
-        legend_src, title = TYPE_COLOUR, "Professional Experience"
-        stats = [(len(entries), cfg.get("unit_group", "roles")),
-                 (total, cfg.get("unit_card", "projects"))]
+        jump = '<nav class="port-jump" aria-label="Sections">' + "".join(
+            f'<a href="#{s["key"]}">{esc(s["title"])} <b>{len(s["entries"])}</b></a>'
+            for s in sections) + "</nav>"
+        grid = "".join(
+            f'<section class="port-group" id="{s["key"]}">'
+            f'<div class="port-group-head"><h2>{esc(s["title"])}</h2>'
+            f'<span class="n">{len(s["entries"])} {"role" if s["key"] == "company" else "engagement"}'
+            f'{"s" if len(s["entries"]) != 1 else ""}</span><p>{esc(s["desc"])}</p></div>'
+            f'<div class="port-grid">{"".join(tile(e) for e in s["entries"])}</div></section>'
+            for s in sections)
+        legend_src, title = TYPE_COLOUR, "Career & Projects"
+        n_company = sum(len(s["entries"]) for s in sections if s["key"] == "company")
+        n_projects = sum(len(s["entries"]) for s in sections if s["key"] == "projects")
+        stats = [(n_company, "companies"), (n_projects, "projects"), (total, "work areas")]
     else:
+        jump = ""
+        grid = f'<div class="port-grid">{"".join(tile(e) for e in entries)}</div>'
         legend_src, title = STATUS_ACCENT, "Certifications & Training"
         stats = [(len(entries), "credentials"), (len(groups), "status groups")]
+
     seen, legend = set(), ""
     for _, colour, label in legend_src:
         if label not in seen:
@@ -986,22 +1045,29 @@ def render_portfolio_page(md_path, cfg, css, head):
 
     stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(l)}</span></div>' for n, l in stats)
     body = portfolio_header(title, cfg["kicker"], cfg["summary"], "../index.html", "Home")
-    body += f"""<div class="port-stats">{stats_html}</div>
+    body += f"""<div class="port-stats">{stats_html}</div>{jump}
       <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="{esc(cfg.get("placeholder", "Search this section"))}" aria-label="Search this section"></div>
       <div class="port-legend">{legend}</div>
-      <main class="port-grid" id="portfolioGrid">{"".join(tiles)}</main>
+      <main id="portfolioGrid">{grid}</main>
       <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
       <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer>
     </div>
     <script>
-    (function(){{const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
-    q.addEventListener('input',function(){{const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;}});empty.hidden=count!==0;}});}})();
+    (function(){{const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],
+      groups=[...document.querySelectorAll('.port-group')],empty=document.getElementById('portfolioEmpty');
+    q.addEventListener('input',function(){{const term=q.value.trim().toLowerCase();let count=0;
+      items.forEach(x=>{{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;}});
+      groups.forEach(g=>{{g.hidden=![...g.querySelectorAll('.port-card')].some(x=>!x.hidden);}});
+      empty.hidden=count!==0;}});}})();
     </script>"""
-    html = portfolio_shell(title, css, head, body)
+    html = portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
     write_page(base_dir / "index.html", html)
-    return ({"groups": len(entries) if is_experience else len(groups),
-             "cards": total, "items": data["meta"]["items"], "problems": problems},
-            len(html.encode()) / 1024)
+    if is_experience:
+        result = {"groups": n_company, "cards": n_projects, "areas": total}
+    else:
+        result = {"groups": len(groups), "cards": total, "areas": total}
+    result.update(items=data["meta"]["items"], problems=problems)
+    return result, len(html.encode()) / 1024
 
 
 

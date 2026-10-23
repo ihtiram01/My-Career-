@@ -4,15 +4,15 @@ page: experience
 order: 1
 colour: violet
 kicker: Section 01 · career
-summary: Roles and projects across data centres, telecom IP core, building systems, enterprise IT and CCTV — newest first, with the technologies actually touched.
+summary: Two parts, newest first — Company Experience for the employers on staff, Project Experience for contracts, freelance dispatches and site projects.
 placeholder: Search — huawei, zte, bms, center3, zabbix, cctv…
-unit_group: roles
+unit_group: companies
 unit_card: projects
-footer: Newest first. Each card opens the full project record; use the arrows at the bottom of a project to step through the sequence.
+footer: Each card opens the full record. The arrows at the bottom of a record step through its own section.
 title_ar: المسيرة المهنية والمشاريع
 title_ur: کیریئر اور پروجیکٹس
-summary_ar: أدوار ومشاريع في مراكز البيانات، والشبكات الأساسية للاتصالات، وأنظمة المباني، وتقنية المعلومات للمؤسسات، وأنظمة المراقبة — الأحدث أولاً، مع التقنيات التي تم العمل عليها فعلياً.
-summary_ur: ڈیٹا سینٹرز، ٹیلی کام آئی پی کور، بلڈنگ سسٹمز، انٹرپرائز آئی ٹی اور سی سی ٹی وی میں کردار اور پروجیکٹس — تازہ ترین پہلے، ان ٹیکنالوجیز کے ساتھ جن پر عملی طور پر کام کیا گیا۔
+summary_ar: قسمان، الأحدث أولاً — الخبرة في الشركات للوظائف الثابتة، وخبرة المشاريع للعقود والمهام المستقلة ومشاريع المواقع.
+summary_ur: دو حصے، تازہ ترین پہلے — کمپنی کا تجربہ مستقل ملازمتوں کے لیے، اور پروجیکٹ کا تجربہ کنٹریکٹس، فری لانس اسائنمنٹس اور سائٹ پروجیکٹس کے لیے۔
 ---
 
 # FIELD EXPERIENCE & PROJECTS
@@ -21,11 +21,15 @@ summary_ur: ڈیٹا سینٹرز، ٹیلی کام آئی پی کور، بلڈ�
 HOW THIS FILE WORKS
 
   Order on the page = order in this file. Newest first. Move a `##` block to
-  re-sequence; the numbers 01, 02, 03 … are added by the build.
+  re-sequence; the numbers 01, 02, 03 … are added by the build and restart
+  in each section (Company 01–04, Project 01–07).
 
   ## Name | location | period        one role or engagement, gets its own page
   role:     job title
   type:     Employment · Contract · Freelance · Independent   (sets the colour)
+            Employment goes under Company Experience; every other type
+            goes under Project Experience.
+  section:  company | projects      (optional — overrides the rule above)
   slug:     the page address — set once, never change it
   summary:  one public sentence, shown on the card and the page
   cover:    img/experience/<slug>/cover.jpg   (optional dashboard photo)

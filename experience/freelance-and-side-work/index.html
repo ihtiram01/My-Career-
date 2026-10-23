@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Freelance and side work — Ihtiram Ullah</title>
+<title>Freelance and Side Work — Ihtiram Ullah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -270,38 +270,44 @@ footer b{color:var(--dim)}
 
 .port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
 .port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
-.port-top a,.port-top button,.port-link{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
   color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
   text-decoration:none;cursor:pointer}
 .port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
 .port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
-.port-hero h1{font:700 clamp(34px,6vw,58px)/1.02 var(--disp);letter-spacing:-.04em;margin:12px 0}
-.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
 .port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
 .port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
 .port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
 .port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.port-tools{display:flex;gap:10px;align-items:center;margin:24px 0 18px}
+.port-tools{margin:22px 0 18px}
 .port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
   background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
-.port-card{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel);border:1px solid var(--line);
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
   border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
   transition:transform .2s,border-color .2s}
-.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent,#1B57C4)}
-.port-card:hover{transform:translateY(-3px);border-color:var(--accent,#1B57C4)}
-.port-card h2{font:600 19px var(--disp);margin:4px 0 0;letter-spacing:-.02em}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
 .port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
 .port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
 .port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
-.port-arrow{color:var(--accent,#1B57C4);font:600 12px var(--mono);margin-top:4px}
-.port-section{margin:30px 0}
-.port-section h2{font:600 20px var(--disp);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
 .port-detail{max-width:900px;margin:0 auto}
-.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
-.port-detail .intro p{color:var(--dim);line-height:1.75;margin:8px 0}
-.port-detail h2{font:600 19px var(--disp);margin:28px 0 12px}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
 .port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
 .port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
 .port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
@@ -310,10 +316,26 @@ footer b{color:var(--dim)}
 .port-detail .detail-row:last-child{border:0}
 .port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
 .port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
 .port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
-@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}.port-detail .detail-row{grid-template-columns:1fr;gap:3px}}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -321,15 +343,15 @@ footer b{color:var(--dim)}
 
 <div class="port-wrap">
   <nav class="port-top" aria-label="Page navigation">
-    <a href="../index.html">&larr; Back</a>
+    <a href="../index.html">&larr; All experience</a>
     <button id="themeBtn" type="button">Paper</button>
   </nav>
   <header class="port-hero">
-    <div class="port-kicker">Professional experience</div>
-    <h1>Freelance and side work</h1>
-    <p>Small paid jobs and self-directed builds.</p>
+    <div class="port-kicker">Experience 11 of 11 · Independent</div>
+    <h1>Freelance and Side Work</h1>
+    <p>Small paid jobs, self-directed builds and networking education content.</p>
   </header>
-<div class="port-detail"><div class="intro"><h2>Independent</h2><p>Small paid jobs and self-directed builds.</p><div class="port-meta">Riyadh</div></div><h2>Responsibilities & technical work</h2><article class="detail-card"><h3>Salam HomeFI / router sharing</h3><ul><li>Digitech S1 5G router, shared-internet paid-access scenario</li><li>Reached the limits of locked ISP firmware</li><li>Identified MikroTik captive portal as the correct long-term solution</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 53</a><a href="../../knowledge/index.html">&rarr; Knowledge 36</a></div></article><article class="detail-card"><h3>Cisco 2960 PoE switch configuration</h3><ul><li>Paid configuration work for a KSA client</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 41</a><a href="../../knowledge/index.html">&rarr; Knowledge 42</a></div></article><article class="detail-card"><h3>Content — @networkingwithmickey</h3><ul><li>Field networking content on TikTok, 1,500+ followers</li><li>Fibre, Ethernet vs fibre, OSI model, CCTV incident reels</li><li>Python/PIL and FFmpeg rendering pipeline, CapCut workflow</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 87</a></div></article></div></div>
+<div class="port-detail" style="--accent:#7E5129"><div class="intro"><h2>Independent</h2><div class="port-pills"><span class="port-pill lead">Independent</span><span class="port-pill">Riyadh</span></div></div><h2>Projects &amp; technical work</h2><article class="detail-card"><h3>Shared-internet router build</h3><ul><li>Digitech S1 5G router for a shared, paid-access scenario</li><li>Reached the limits of locked ISP firmware</li><li>Identified a MikroTik captive portal as the right long-term design</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 53</a><a href="../../knowledge/index.html">&rarr; Knowledge 36</a></div></article><article class="detail-card"><h3>Cisco 2960 PoE switch configuration</h3><ul><li>Paid configuration work for a client in Saudi Arabia</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 41</a><a href="../../knowledge/index.html">&rarr; Knowledge 42</a></div></article><article class="detail-card"><h3>@gulf_networking</h3><ul><li>Networking education content on TikTok and LinkedIn (formerly @networkingwithmickey)</li><li>Fibre, Ethernet vs fibre, OSI model and CCTV incident reels</li><li>Python/PIL and FFmpeg rendering pipeline, CapCut workflow</li></ul><div class="refs"><a href="../../knowledge/index.html">&rarr; Knowledge 87</a></div></article><nav class="port-pager" aria-label="Sequence"><a class="prev" href="../veevo-tech/index.html"><small>&larr; 10</small><b>Veevo Tech (Pvt.) Ltd.</b></a></nav></div></div>
 <script>
 (function(){
  const palettes={paper:{tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},

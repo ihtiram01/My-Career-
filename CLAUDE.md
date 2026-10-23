@@ -82,6 +82,32 @@ robots.txt              disallow all
 
 ---
 
+## Career & Certifications pages (portfolio)
+
+`docs/field-experience.md` and `docs/exam-tracker.md` render as a dashboard of
+numbered cards, each opening its own detail page with previous / next links.
+
+- **Order is the order in the file**, newest first. The 01, 02 … numbers are
+  added by the build. Re-sequence by moving a `##` block.
+- `slug:` on each `##` role freezes its address (`experience/wemart/`). Set it
+  once, never change it. Certifications use the title alone (`exams/ccna-200-301/`)
+  — never put status words in a slug, or passing an exam breaks the link.
+- `type:` (Employment · Contract · Freelance · Independent) sets the stripe
+  colour on experience. Certification colour comes from `status:`.
+- `private:` on a role, or `- private:` inside a project, is a note for Mickey.
+  It stays in the markdown and is **never rendered**. Coaching notes ("be precise
+  in interviews", earnings, "do not claim day 3") belong there, not in `summary:`.
+- Photos: `- photo: img/experience/<slug>/01.jpg | caption` inside a project.
+  Optional `cover:` on the role sets the dashboard picture; otherwise the first
+  photo is used. A path that does not exist **fails the build**. Over 1.5 MB
+  warns; over 25 MB fails (Cloudflare limit).
+- Before adding any photo: blur badges, faces, rack labels, serial numbers,
+  hostnames and IPs. Client data halls (center3) and the Diriyah estate are
+  confidential sites.
+- `<!-- … -->` blocks are skipped by the parser — use them for editing notes.
+
+---
+
 ## The four axes (technology index)
 
 Every topic carries all four. Breaking one breaks the filters.
@@ -190,8 +216,10 @@ This file exists partly to stop a future edit from quietly undoing honesty work.
    `COURSEWORK ONLY` until he sits the exams.
 3. **ITIL is unverified.** Category `85` is tagged `[CV — unverified]`.
 4. **Only `L3+` belongs on a CV.** `L1`–`L2` is "familiar with, not in production".
-5. **AlmavivA is thin** — two categories tagged, because the stack there was never
-   documented. Do not invent coverage to make it look fuller.
+5. **AlmavivA is thin** in the knowledge index — two categories tagged. The
+   career page entry is filled from his own CV (Oct 2026). Do not invent coverage
+   beyond what he has stated.
+6. **center3 was two days of a three-day booking.** Day 3 scope is not his.
 
 ---
 

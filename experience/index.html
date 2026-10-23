@@ -270,38 +270,44 @@ footer b{color:var(--dim)}
 
 .port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
 .port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
-.port-top a,.port-top button,.port-link{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
   color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
   text-decoration:none;cursor:pointer}
 .port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
 .port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
-.port-hero h1{font:700 clamp(34px,6vw,58px)/1.02 var(--disp);letter-spacing:-.04em;margin:12px 0}
-.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
 .port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
 .port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
 .port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
 .port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.port-tools{display:flex;gap:10px;align-items:center;margin:24px 0 18px}
+.port-tools{margin:22px 0 18px}
 .port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
   background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
-.port-card{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel);border:1px solid var(--line);
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
   border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
   transition:transform .2s,border-color .2s}
-.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent,#1B57C4)}
-.port-card:hover{transform:translateY(-3px);border-color:var(--accent,#1B57C4)}
-.port-card h2{font:600 19px var(--disp);margin:4px 0 0;letter-spacing:-.02em}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
 .port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
 .port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
 .port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
-.port-arrow{color:var(--accent,#1B57C4);font:600 12px var(--mono);margin-top:4px}
-.port-section{margin:30px 0}
-.port-section h2{font:600 20px var(--disp);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
 .port-detail{max-width:900px;margin:0 auto}
-.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
-.port-detail .intro p{color:var(--dim);line-height:1.75;margin:8px 0}
-.port-detail h2{font:600 19px var(--disp);margin:28px 0 12px}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
 .port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
 .port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
 .port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
@@ -310,10 +316,26 @@ footer b{color:var(--dim)}
 .port-detail .detail-row:last-child{border:0}
 .port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
 .port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
 .port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
-@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}.port-detail .detail-row{grid-template-columns:1fr;gap:3px}}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -321,43 +343,20 @@ footer b{color:var(--dim)}
 
 <div class="port-wrap">
   <nav class="port-top" aria-label="Page navigation">
-    <a href="../index.html">&larr; Back</a>
+    <a href="../index.html">&larr; Home</a>
     <button id="themeBtn" type="button">Paper</button>
   </nav>
   <header class="port-hero">
     <div class="port-kicker">Section 01 · career</div>
     <h1>Professional Experience</h1>
-    <p>Roles and projects across metro transit, telecom IP core, enterprise IT and CCTV — the technologies actually touched in production.</p>
+    <p>Roles and projects across data centres, telecom IP core, building systems, enterprise IT and CCTV — newest first, with the technologies actually touched.</p>
   </header>
-<div class="port-stats"><div class="port-stat"><b>8</b><span>experience entries</span></div><div class="port-stat"><b>23</b><span>technical areas</span></div></div>
-      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search Search — huawei, zabbix, eaps, cctv…" aria-label="Search this section"></div>
-      <main class="port-grid" id="portfolioGrid"><a class="port-card" href="./wemart-arabia-trading-co-wenchao-group/index.html" data-search="wemart arabia trading co. (wenchao group) network &amp; it infrastructure engineer full huawei enterprise stack plus a 237-camera cctv estate. your deepest production environment and the strongest source of interview material. riyadh · until apr 2026">
-              <div class="port-meta">Network &amp; IT Infrastructure Engineer</div><h2>Wemart Arabia Trading Co. (WenChao Group)</h2><p>Full Huawei enterprise stack plus a 237-camera CCTV estate. Your deepest production environment and the strongest source of interview material.</p>
-              <div class="port-pills"><span class="port-pill">Riyadh</span><span class="port-pill">until Apr 2026</span><span class="port-pill">6 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./leon-technology-go-zte-ipcore/index.html" data-search="leon technology — go-zte ipcore deployment engineer — physical layer carrier-grade ip core deployment. physical and staging work, not routing configuration — be precise about that in interviews. riy1, riyadh · project basis">
-              <div class="port-meta">Deployment Engineer — physical layer</div><h2>Leon Technology — GO-ZTE IPCORE</h2><p>Carrier-grade IP core deployment. Physical and staging work, not routing configuration — be precise about that in interviews.</p>
-              <div class="port-pills"><span class="port-pill">RIY1, Riyadh</span><span class="port-pill">project basis</span><span class="port-pill">3 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./riyadh-metro-line-3-occ-ctn/index.html" data-search="riyadh metro line 3 — occ-ctn network engineering support extreme networks exos environment. live fault diagnosis on a transport network — strong troubleshooting evidence. riyadh">
-              <div class="port-meta">Network engineering support</div><h2>Riyadh Metro Line 3 — OCC-CTN</h2><p>Extreme Networks EXOS environment. Live fault diagnosis on a transport network — strong troubleshooting evidence.</p>
-              <div class="port-pills"><span class="port-pill">Riyadh</span><span class="port-pill">3 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./almaviva-it/index.html" data-search="almaviva it network engineer thin record. the stack here was never documented. this is the biggest gap in your evidence — 19 months with almost nothing written down. mar 2024 – oct 2025">
-              <div class="port-meta">Network Engineer</div><h2>AlmavivA IT</h2><p>THIN RECORD. The stack here was never documented. This is the biggest gap in your evidence — 19 months with almost nothing written down.</p>
-              <div class="port-pills"><span class="port-pill">Mar 2024 – Oct 2025</span><span class="port-pill">2 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./express-publications/index.html" data-search="express publications system support engineer endpoint, print and desktop support with server-side exposure. jan 2023 – feb 2024">
-              <div class="port-meta">System Support Engineer</div><h2>Express Publications</h2><p>Endpoint, print and desktop support with server-side exposure.</p>
-              <div class="port-pills"><span class="port-pill">Jan 2023 – Feb 2024</span><span class="port-pill">1 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./veevo-tech/index.html" data-search="veevo tech trainee then noc engineer your first noc role. linux, monitoring and sms infrastructure — the origin of your zabbix and linux skills. peshawar · apr 2021 – dec 2022">
-              <div class="port-meta">Trainee then NOC Engineer</div><h2>Veevo Tech</h2><p>Your first NOC role. Linux, monitoring and SMS infrastructure — the origin of your Zabbix and Linux skills.</p>
-              <div class="port-pills"><span class="port-pill">Peshawar</span><span class="port-pill">Apr 2021 – Dec 2022</span><span class="port-pill">3 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./uct/index.html" data-search="uct consultant — end-to-end smb deployment solo delivery of a two-office windows environment. collected sar 2,000. good evidence of independent scoping and delivery. freelance · riyadh">
-              <div class="port-meta">Consultant — end-to-end SMB deployment</div><h2>UCT</h2><p>Solo delivery of a two-office Windows environment. Collected SAR 2,000. Good evidence of independent scoping and delivery.</p>
-              <div class="port-pills"><span class="port-pill">freelance</span><span class="port-pill">Riyadh</span><span class="port-pill">2 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a><a class="port-card" href="./freelance-and-side-work/index.html" data-search="freelance and side work independent small paid jobs and self-directed builds. riyadh">
-              <div class="port-meta">Independent</div><h2>Freelance and side work</h2><p>Small paid jobs and self-directed builds.</p>
-              <div class="port-pills"><span class="port-pill">Riyadh</span><span class="port-pill">3 technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a></main>
+<div class="port-stats"><div class="port-stat"><b>11</b><span>roles</span></div><div class="port-stat"><b>41</b><span>projects</span></div></div>
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search — huawei, zte, bms, center3, zabbix, cctv…" aria-label="Search this section"></div>
+      <div class="port-legend"><span><i style="background:#1B57C4"></i>Employment</span><span><i style="background:#6E35C9"></i>Contract</span><span><i style="background:#0B7D55"></i>Freelance</span><span><i style="background:#7E5129"></i>Independent</span></div>
+      <main class="port-grid" id="portfolioGrid"><a class="port-card" href="./anmat-ministry-of-tourism/index.html" style="--accent:#6E35C9" data-search="anmat operations — ministry of tourism project bms controls &amp; low current engineer vav controller retrofit inside an occupied government building — replacing trend iqeco controllers with schneider spacelogic rp-v and preparing each device for the central bms. contract riyadh aug 2026 – present"><span class="port-seq">01</span><div class="port-meta">BMS Controls &amp; Low Current Engineer</div><h2>ANMAT Operations — Ministry of Tourism Project</h2><p>VAV controller retrofit inside an occupied government building — replacing Trend IQeco controllers with Schneider SpaceLogic RP-V and preparing each device for the central BMS.</p><div class="port-pills"><span class="port-pill lead">Contract</span><span class="port-pill">Riyadh</span><span class="port-pill">Aug 2026 – present</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./center3-ai-rack-deployment/index.html" style="--accent:#0B7D55" data-search="center3 riyadh — ai infrastructure rack deployment networking level 2 field engineer physical installation of a five-rack ai compute deployment in a colocation data hall, dispatched through radx global services for itarmi. freelance riyadh oct 2026"><span class="port-seq">02</span><div class="port-meta">Networking Level 2 Field Engineer</div><h2>center3 Riyadh — AI Infrastructure Rack Deployment</h2><p>Physical installation of a five-rack AI compute deployment in a colocation data hall, dispatched through RADX Global Services for ITARMI.</p><div class="port-pills"><span class="port-pill lead">Freelance</span><span class="port-pill">Riyadh</span><span class="port-pill">Oct 2026</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./leon-go-zte-ipcore/index.html" style="--accent:#6E35C9" data-search="leon technology — go-zte ipcore project data center deployment engineer physical deployment of go telecom's ip core across a 63-site rollout — zte carrier routing and switching, server staging, fibre and dc power. contract riyadh &amp; hail jun – aug 2026"><span class="port-seq">03</span><div class="port-meta">Data Center Deployment Engineer</div><h2>Leon Technology — GO-ZTE IPCORE Project</h2><p>Physical deployment of GO Telecom's IP core across a 63-site rollout — ZTE carrier routing and switching, server staging, fibre and DC power.</p><div class="port-pills"><span class="port-pill lead">Contract</span><span class="port-pill">Riyadh &amp; Hail</span><span class="port-pill">Jun – Aug 2026</span><span class="port-pill">5 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./mamco-diriyah-estate/index.html" style="--accent:#6E35C9" data-search="mamco — private estate ict maintenance ict maintenance engineer maintenance of an eleven-system ict and low-current estate — networks, iptv, av and cinema, telephony, access control and intercom — on a private residential development. contract diriyah may – aug 2026"><span class="port-seq">04</span><div class="port-meta">ICT Maintenance Engineer</div><h2>MAMCO — Private Estate ICT Maintenance</h2><p>Maintenance of an eleven-system ICT and low-current estate — networks, IPTV, AV and cinema, telephony, access control and intercom — on a private residential development.</p><div class="port-pills"><span class="port-pill lead">Contract</span><span class="port-pill">Diriyah</span><span class="port-pill">May – Aug 2026</span><span class="port-pill">4 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./uct/index.html" style="--accent:#0B7D55" data-search="uct — two-office smb deployment it infrastructure engineer end-to-end delivery of a two-office windows environment — scoped, built and handed over solo. freelance riyadh may 2026"><span class="port-seq">05</span><div class="port-meta">IT Infrastructure Engineer</div><h2>UCT — Two-Office SMB Deployment</h2><p>End-to-end delivery of a two-office Windows environment — scoped, built and handed over solo.</p><div class="port-pills"><span class="port-pill lead">Freelance</span><span class="port-pill">Riyadh</span><span class="port-pill">May 2026</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./wemart/index.html" style="--accent:#1B57C4" data-search="wemart arabia trading co. (wenchao group) it engineer full huawei enterprise stack across a retail and warehouse estate, with a 237-camera cctv system and zabbix monitoring. employment riyadh oct 2025 – apr 2026"><span class="port-seq">06</span><div class="port-meta">IT Engineer</div><h2>Wemart Arabia Trading Co. (WenChao Group)</h2><p>Full Huawei enterprise stack across a retail and warehouse estate, with a 237-camera CCTV system and Zabbix monitoring.</p><div class="port-pills"><span class="port-pill lead">Employment</span><span class="port-pill">Riyadh</span><span class="port-pill">Oct 2025 – Apr 2026</span><span class="port-pill">6 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./almaviva/index.html" style="--accent:#1B57C4" data-search="almaviva information technology network engineer enterprise network operations — cisco catalyst core, vmware virtualisation, wireless bridge links and site-to-site vpns under sla monitoring. employment riyadh mar 2024 – oct 2025"><span class="port-seq">07</span><div class="port-meta">Network Engineer</div><h2>AlmavivA Information Technology</h2><p>Enterprise network operations — Cisco Catalyst core, VMware virtualisation, wireless bridge links and site-to-site VPNs under SLA monitoring.</p><div class="port-pills"><span class="port-pill lead">Employment</span><span class="port-pill">Riyadh</span><span class="port-pill">Mar 2024 – Oct 2025</span><span class="port-pill">4 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./riyadh-metro-line-3/index.html" style="--accent:#1B57C4" data-search="riyadh metro line 3 — occ-ctn network engineering support extreme networks exos environment on a metro transit network — layer 2 ring resilience and live fault diagnosis. project riyadh"><span class="port-seq">08</span><div class="port-meta">Network engineering support</div><h2>Riyadh Metro Line 3 — OCC-CTN</h2><p>Extreme Networks EXOS environment on a metro transit network — Layer 2 ring resilience and live fault diagnosis.</p><div class="port-pills"><span class="port-pill lead">Project</span><span class="port-pill">Riyadh</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./express-publications/index.html" style="--accent:#1B57C4" data-search="express publications (pvt.) ltd. system support engineer systems and network support for a media house — 100+ endpoints on windows server, with cisco routing and switching, pfsense and esxi. employment peshawar jan 2023 – feb 2024"><span class="port-seq">09</span><div class="port-meta">System Support Engineer</div><h2>Express Publications (Pvt.) Ltd.</h2><p>Systems and network support for a media house — 100+ endpoints on Windows Server, with Cisco routing and switching, pfSense and ESXi.</p><div class="port-pills"><span class="port-pill lead">Employment</span><span class="port-pill">Peshawar</span><span class="port-pill">Jan 2023 – Feb 2024</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./veevo-tech/index.html" style="--accent:#1B57C4" data-search="veevo tech (pvt.) ltd. noc engineer — promoted from trainee a 24/7 noc role — monitoring, linux and sms platform operations. where the zabbix and linux skills started. employment peshawar apr 2021 – dec 2022"><span class="port-seq">10</span><div class="port-meta">NOC Engineer — promoted from Trainee</div><h2>Veevo Tech (Pvt.) Ltd.</h2><p>A 24/7 NOC role — monitoring, Linux and SMS platform operations. Where the Zabbix and Linux skills started.</p><div class="port-pills"><span class="port-pill lead">Employment</span><span class="port-pill">Peshawar</span><span class="port-pill">Apr 2021 – Dec 2022</span><span class="port-pill">4 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a><a class="port-card" href="./freelance-and-side-work/index.html" style="--accent:#7E5129" data-search="freelance and side work independent small paid jobs, self-directed builds and networking education content. independent riyadh"><span class="port-seq">11</span><div class="port-meta">Independent</div><h2>Freelance and Side Work</h2><p>Small paid jobs, self-directed builds and networking education content.</p><div class="port-pills"><span class="port-pill lead">Independent</span><span class="port-pill">Riyadh</span><span class="port-pill">3 projects</span></div><span class="port-arrow">Open experience &rarr;</span></a></main>
       <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
-      <footer style="margin-top:38px;color:var(--faint);font-size:12px"><b>Interview rule</b> &nbsp; a story from here beats a topic from the index every time. Lead with what broke and what you did.</footer>
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px">Newest first. Each card opens the full project record; use the arrows at the bottom of a project to step through the sequence.</footer>
     </div>
     <script>
     (function(){const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');

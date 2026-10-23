@@ -637,41 +637,51 @@ document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
 
 
 # ── hierarchical career portfolio ──────────────────────────────────────
+# Experience and Certifications render as a dashboard of numbered cards, each
+# opening its own detail page. Order on the page is the order in the markdown,
+# so the sequence is edited by moving a `##` block, never by touching code.
+
 PORTFOLIO_CSS = r"""
 .port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
 .port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
-.port-top a,.port-top button,.port-link{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
   color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
   text-decoration:none;cursor:pointer}
 .port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
 .port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
-.port-hero h1{font:700 clamp(34px,6vw,58px)/1.02 var(--disp);letter-spacing:-.04em;margin:12px 0}
-.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
 .port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
 .port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
 .port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
 .port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.port-tools{display:flex;gap:10px;align-items:center;margin:24px 0 18px}
+.port-tools{margin:22px 0 18px}
 .port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
   background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
-.port-card{display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--panel);border:1px solid var(--line);
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
   border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
   transition:transform .2s,border-color .2s}
-.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent,#1B57C4)}
-.port-card:hover{transform:translateY(-3px);border-color:var(--accent,#1B57C4)}
-.port-card h2{font:600 19px var(--disp);margin:4px 0 0;letter-spacing:-.02em}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
 .port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
 .port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
 .port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
-.port-arrow{color:var(--accent,#1B57C4);font:600 12px var(--mono);margin-top:4px}
-.port-section{margin:30px 0}
-.port-section h2{font:600 20px var(--disp);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
 .port-detail{max-width:900px;margin:0 auto}
-.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
-.port-detail .intro p{color:var(--dim);line-height:1.75;margin:8px 0}
-.port-detail h2{font:600 19px var(--disp);margin:28px 0 12px}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
 .port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
 .port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
 .port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
@@ -680,14 +690,93 @@ PORTFOLIO_CSS = r"""
 .port-detail .detail-row:last-child{border:0}
 .port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
 .port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
 .port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
-@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}.port-detail .detail-row{grid-template-columns:1fr;gap:3px}}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 """
 
-def portfolio_shell(title, css, head, body, home_href):
+# Engagement type -> accent. Shown as a coloured stripe and a legend.
+TYPE_COLOUR = [
+    ("employment", "#1B57C4", "Employment"),
+    ("contract",   "#6E35C9", "Contract"),
+    ("freelance",  "#0B7D55", "Freelance"),
+    ("independent", "#7E5129", "Independent"),
+]
+# Credential status -> accent. Order matters: first match wins.
+STATUS_ACCENT = [
+    ("record conflict", "#C42A36", "Record conflict"),
+    ("unconfirmed",     "#C55A0C", "Unconfirmed"),
+    ("coursework",      "#C55A0C", "Coursework only"),
+    ("course completed", "#8A6800", "Course completed"),
+    ("passed",          "#0B7D55", "Passed"),
+    ("certified",       "#0B7D55", "Passed"),
+]
+
+PHOTO_WARN_KB = 1500       # big photos slow phones down; still built
+PHOTO_MAX_MB = 25          # Cloudflare Pages hard limit per file
+
+
+def slugify(text, limit=60):
+    s = re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", " and ")).strip("-")
+    return s[:limit].rstrip("-")
+
+
+def unique_slug(base, used):
+    s, n = base, 2
+    while s in used:
+        s, n = f"{base}-{n}", n + 1
+    used.add(s)
+    return s
+
+
+def type_accent(kind):
+    k = (kind or "").lower()
+    for key, colour, label in TYPE_COLOUR:
+        if key in k:
+            return colour, label
+    return "#1B57C4", (kind or "Employment")
+
+
+def status_accent(status):
+    st = (status or "").lower()
+    for key, colour, label in STATUS_ACCENT:
+        if key in st:
+            return colour, label
+    return "#56697F", status or "Record"
+
+
+def check_photo(src, problems):
+    """Photos are paths from the repo root. Missing ones fail the build."""
+    f = ROOT / src
+    if not f.is_file():
+        problems.append(f"missing photo: {src}")
+        return
+    kb = f.stat().st_size / 1024
+    if kb > PHOTO_MAX_MB * 1024:
+        problems.append(f"photo over {PHOTO_MAX_MB} MB, Cloudflare will reject it: {src}")
+    elif kb > PHOTO_WARN_KB:
+        print(f"    · large photo ({kb / 1024:.1f} MB), consider resizing: {src}")
+
+
+def portfolio_shell(title, css, head, body):
     script = """
 <script>
 (function(){
@@ -717,23 +806,36 @@ def portfolio_shell(title, css, head, body, home_href):
                 .replace("__TITLETAG__", esc(title) + " — Ihtiram Ullah")
             + body + script + "\n</body></html>")
 
-def portfolio_header(title, kicker, summary, back_href, home_href):
+
+def portfolio_header(title, kicker, summary, back_href, back_label="Back"):
     return f'''
 <div class="port-wrap">
   <nav class="port-top" aria-label="Page navigation">
-    <a href="{esc(back_href)}">&larr; Back</a>
+    <a href="{esc(back_href)}">&larr; {esc(back_label)}</a>
     <button id="themeBtn" type="button">Paper</button>
   </nav>
   <header class="port-hero">
     <div class="port-kicker">{esc(kicker)}</div>
     <h1>{esc(title)}</h1>
-    <p>{esc(summary)}</p>
+    {f"<p>{esc(summary)}</p>" if summary else ""}
   </header>
 '''
 
-def portfolio_card_content(card, knowledge_href):
+
+def gallery_html(photos, prefix):
+    if not photos:
+        return ""
+    figs = "".join(
+        f'<figure><a href="{esc(prefix + ph["src"])}" target="_blank" rel="noopener">'
+        f'<img src="{esc(prefix + ph["src"])}" alt="{esc(ph["cap"] or "Project photo")}" loading="lazy"></a>'
+        + (f'<figcaption>{esc(ph["cap"])}</figcaption>' if ph["cap"] else "") + "</figure>"
+        for ph in photos)
+    return f'<div class="gallery">{figs}</div>'
+
+
+def portfolio_card_content(card, knowledge_href, prefix):
     rows = "".join(
-        f'<div class="detail-row"><b>{esc(r["k"])}</b><span>{esc(r["v"])}</span></div>'
+        f'<div class="detail-row {esc(r["k"])}"><b>{esc(r["k"])}</b><span>{esc(r["v"])}</span></div>'
         for r in card.get("rows", []))
     bullets = ("<ul>" + "".join(f"<li>{esc(x)}</li>" for x in card.get("bullets", [])) + "</ul>"
                if card.get("bullets") else "")
@@ -745,100 +847,161 @@ def portfolio_card_content(card, knowledge_href):
     meta = " · ".join(card.get("meta", []))
     return (f'<article class="detail-card"><h3>{esc(card["title"])}</h3>'
             + (f'<div class="port-meta">{esc(meta)}</div>' if meta else "")
-            + (f'<div>{rows}</div>' if rows else "") + bullets + refs + "</article>")
+            + (f'<div>{rows}</div>' if rows else "") + bullets
+            + gallery_html(card.get("photos", []), prefix) + refs + "</article>")
+
+
+def pager_html(entries, i):
+    """Previous / next links so the detail pages read as one sequence."""
+    out = []
+    if i > 0:
+        p = entries[i - 1]
+        out.append(f'<a class="prev" href="../{esc(p["slug"])}/index.html"><small>&larr; {esc(p["seq"])}</small><b>{esc(p["title"])}</b></a>')
+    if i < len(entries) - 1:
+        n = entries[i + 1]
+        out.append(f'<a class="next" href="../{esc(n["slug"])}/index.html"><small>{esc(n["seq"])} &rarr;</small><b>{esc(n["title"])}</b></a>')
+    return f'<nav class="port-pager" aria-label="Sequence">{"".join(out)}</nav>' if out else ""
+
+
+def write_page(path, html):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
+
 
 def render_portfolio_page(md_path, cfg, css, head):
     data = cards.parse_cards(md_path)
     groups = data["groups"]
     is_experience = cfg["page"] == "experience"
     base_dir = ROOT / cfg["page"]
-    detail_count = 0
+    problems, used, entries = [], set(), []
+    total = 0
+
+    # 1. Build the ordered list of entries — one per detail page.
+    if is_experience:
+        for g in groups:
+            info = g.get("info", {})
+            colour, kind = type_accent(info.get("type"))
+            photos = [ph for c in g["cards"] for ph in c.get("photos", [])]
+            cover = info.get("cover") or (photos[0]["src"] if photos else "")
+            entries.append(dict(
+                title=g["title"], meta=g.get("meta", []), info=info, cards=g["cards"],
+                summary=info.get("summary", ""), role=info.get("role", ""),
+                accent=colour, kind=kind, cover=cover, n_photos=len(photos),
+                slug=unique_slug(info.get("slug") or slugify(g["title"]), used)))
+    else:
+        for g in groups:
+            for c in g["cards"]:
+                status = next((r["v"] for r in c.get("rows", []) if r["k"] == "status"), g["title"])
+                colour, label = status_accent(status)
+                summary = next((r["v"] for r in c.get("rows", []) if r["k"] in ("note", "blueprint")), "")
+                photos = c.get("photos", [])
+                entries.append(dict(
+                    title=c["title"], meta=c.get("meta", []), card=c, group=g["title"],
+                    status=status, label=label, summary=summary, accent=colour,
+                    cover=photos[0]["src"] if photos else "", n_photos=len(photos),
+                    slug=unique_slug(slugify(c["title"]), used)))
+
+    width = max(2, len(str(len(entries))))
+    for i, e in enumerate(entries, 1):
+        e["seq"] = str(i).zfill(width)
+
+    # Remove detail folders from earlier builds that no longer match an entry,
+    # so a renamed slug does not leave a stale duplicate page behind.
+    keep = {e["slug"] for e in entries}
+    if base_dir.exists():
+        for d in base_dir.iterdir():
+            # only ever a folder this build made: exactly one generated index.html
+            if d.is_dir() and d.name not in keep and [f.name for f in d.iterdir()] == ["index.html"]:
+                (d / "index.html").unlink()
+                d.rmdir()
+
+    # 2. Detail pages.
+    prefix = "../../"
+    for i, e in enumerate(entries):
+        style = f' style="--accent:{e["accent"]}"'
+        if is_experience:
+            total += len(e["cards"])
+            for c in e["cards"]:
+                for ph in c.get("photos", []):
+                    check_photo(ph["src"], problems)
+            if e["info"].get("cover"):
+                check_photo(e["info"]["cover"], problems)
+            kicker = f'Experience {e["seq"]} of {entries[-1]["seq"]} · {e["kind"]}'
+            body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All experience")
+            pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"])
+            body += f'<div class="port-detail"{style}><div class="intro">'
+            body += f'<h2>{esc(e["role"])}</h2>' if e["role"] else ""
+            body += f'<div class="port-pills"><span class="port-pill lead">{esc(e["kind"])}</span>{pills}</div></div>'
+            body += "<h2>Projects &amp; technical work</h2>"
+            body += "".join(portfolio_card_content(c, prefix + "knowledge/index.html", prefix)
+                            for c in e["cards"])
+        else:
+            total += 1
+            for ph in e["card"].get("photos", []):
+                check_photo(ph["src"], problems)
+            kicker = f'Credential {e["seq"]} of {entries[-1]["seq"]} · {e["label"]}'
+            body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All credentials")
+            body += f'<div class="port-detail"{style}><h2>Credential record</h2>'
+            body += portfolio_card_content(e["card"], prefix + "knowledge/index.html", prefix)
+        body += pager_html(entries, i) + "</div></div>"
+        write_page(base_dir / e["slug"] / "index.html",
+                   portfolio_shell(e["title"], css, head, body))
+
+    # 3. Dashboard.
+    tiles = []
+    for e in entries:
+        cover = (f'<div class="cover"><img src="../{esc(e["cover"])}" alt="" loading="lazy"></div>'
+                 if e["cover"] else "")
+        if is_experience:
+            lead, sub, n = e["kind"], e["role"], len(e["cards"])
+            extra = [f'{n} project{"s" if n != 1 else ""}']
+            arrow = "Open experience"
+        else:
+            lead, sub = e["label"], e["group"].split("·")[0].strip().title()
+            extra, arrow = [], "Open credential"
+        if e["n_photos"]:
+            extra.append(f'{e["n_photos"]} photo{"s" if e["n_photos"] != 1 else ""}')
+        pills = (f'<span class="port-pill lead">{esc(lead)}</span>'
+                 + "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"] + extra))
+        hay = " ".join([e["title"], sub, e["summary"], lead, " ".join(e["meta"])]).lower()
+        tiles.append(
+            f'<a class="port-card" href="./{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
+            f'data-search="{esc(hay)}">{cover}<span class="port-seq">{esc(e["seq"])}</span>'
+            f'<div class="port-meta">{esc(sub)}</div><h2>{esc(e["title"])}</h2>'
+            + (f'<p>{esc(e["summary"])}</p>' if e["summary"] else "")
+            + f'<div class="port-pills">{pills}</div><span class="port-arrow">{arrow} &rarr;</span></a>')
 
     if is_experience:
-        tiles = []
-        for gi, group in enumerate(groups, 1):
-            key = re.sub(r"[^a-z0-9]+", "-", group["title"].lower()).strip("-") or f"experience-{gi}"
-            summary = group.get("info", {}).get("summary", "")
-            role = group.get("info", {}).get("role", "Professional experience")
-            meta = " · ".join(group.get("meta", []))
-            detail_count += len(group["cards"])
-            detail_body = portfolio_header(group["title"], "Professional experience", summary,
-                                            "../index.html", "../../index.html")
-            detail_body += f'<div class="port-detail"><div class="intro"><h2>{esc(role)}</h2><p>{esc(summary)}</p>'
-            if meta:
-                detail_body += f'<div class="port-meta">{esc(meta)}</div>'
-            detail_body += "</div><h2>Responsibilities & technical work</h2>"
-            detail_body += "".join(portfolio_card_content(c, "../../knowledge/index.html")
-                                   for c in group["cards"])
-            detail_body += "</div></div>"
-            detail_html = portfolio_shell(group["title"], css, head, detail_body, "../../index.html")
-            out = base_dir / key / "index.html"
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_text(detail_html, encoding="utf-8")
-            pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in group.get("meta", []))
-            tiles.append(f'''<a class="port-card" href="./{esc(key)}/index.html" data-search="{esc((group["title"]+" "+role+" "+summary+" "+meta).lower())}">
-              <div class="port-meta">{esc(role)}</div><h2>{esc(group["title"])}</h2><p>{esc(summary)}</p>
-              <div class="port-pills">{pills}<span class="port-pill">{len(group["cards"])} technical areas</span></div>
-              <span class="port-arrow">Explore experience &rarr;</span></a>''')
-        count_label = "employers & engagements"
-        dashboard_title = "Professional Experience"
-        dashboard_summary = cfg["summary"]
-        cards_html = "".join(tiles)
-        stats = [(len(groups), "experience entries"), (detail_count, "technical areas")]
+        legend_src, title = TYPE_COLOUR, "Professional Experience"
+        stats = [(len(entries), cfg.get("unit_group", "roles")),
+                 (total, cfg.get("unit_card", "projects"))]
     else:
-        tiles = []
-        for group in groups:
-            for card in group["cards"]:
-                label = group["title"]
-                seed = card["title"] + "-" + label
-                key = re.sub(r"[^a-z0-9]+", "-", seed.lower()).strip("-")[:70] or "certification"
-                status = next((r["v"] for r in card.get("rows", []) if r["k"] == "status"), label)
-                summary = next((r["v"] for r in card.get("rows", []) if r["k"] in ("note", "blueprint")), "")
-                detail_body = portfolio_header(card["title"], "Certification & training", label,
-                                                "../index.html", "../../index.html")
-                detail_body += '<div class="port-detail"><div class="intro">'
-                if summary:
-                    detail_body += f'<p>{esc(summary)}</p>'
-                detail_body += "</div><h2>Credential record</h2>"
-                detail_body += portfolio_card_content(card, "../../knowledge/index.html")
-                detail_body += "</div></div>"
-                detail_html = portfolio_shell(card["title"], css, head, detail_body, "../../index.html")
-                out = base_dir / key / "index.html"
-                out.parent.mkdir(parents=True, exist_ok=True)
-                out.write_text(detail_html, encoding="utf-8")
-                detail_count += 1
-                meta = " · ".join(card.get("meta", []))
-                tiles.append(f'''<a class="port-card" href="./{esc(key)}/index.html" data-search="{esc((card["title"]+" "+label+" "+status+" "+summary+" "+meta).lower())}">
-                  <div class="port-meta">{esc(label)}</div><h2>{esc(card["title"])}</h2><p>{esc(summary or status)}</p>
-                  <div class="port-pills"><span class="port-pill">{esc(status)}</span>
-                    {''.join(f'<span class="port-pill">{esc(x)}</span>' for x in card.get("meta", []))}</div>
-                  <span class="port-arrow">View credential details &rarr;</span></a>''')
-        dashboard_title = "Certifications & Training"
-        dashboard_summary = cfg["summary"]
-        cards_html = "".join(tiles)
-        stats = [(detail_count, "credentials"), (len(groups), "status groups")]
+        legend_src, title = STATUS_ACCENT, "Certifications & Training"
+        stats = [(len(entries), "credentials"), (len(groups), "status groups")]
+    seen, legend = set(), ""
+    for _, colour, label in legend_src:
+        if label not in seen:
+            seen.add(label)
+            legend += f'<span><i style="background:{colour}"></i>{esc(label)}</span>'
 
-    stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(label)}</span></div>' for n,label in stats)
-    body = portfolio_header(dashboard_title, cfg["kicker"], dashboard_summary,
-                            "../index.html", "../index.html")
+    stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(l)}</span></div>' for n, l in stats)
+    body = portfolio_header(title, cfg["kicker"], cfg["summary"], "../index.html", "Home")
     body += f"""<div class="port-stats">{stats_html}</div>
-      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="Search {esc(cfg.get("placeholder","this section"))}" aria-label="Search this section"></div>
-      <main class="port-grid" id="portfolioGrid">{cards_html}</main>
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="{esc(cfg.get("placeholder", "Search this section"))}" aria-label="Search this section"></div>
+      <div class="port-legend">{legend}</div>
+      <main class="port-grid" id="portfolioGrid">{"".join(tiles)}</main>
       <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
-      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer","")}</footer>
-    </div>"""
-    body += """
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer>
+    </div>
     <script>
-    (function(){const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
-    q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});empty.hidden=count!==0;});})();
+    (function(){{const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
+    q.addEventListener('input',function(){{const term=q.value.trim().toLowerCase();let count=0;items.forEach(x=>{{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;}});empty.hidden=count!==0;}});}})();
     </script>"""
-    html = portfolio_shell(dashboard_title, css, head, body, "../index.html")
-    out = base_dir / "index.html"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(html, encoding="utf-8")
-    meta = data["meta"]
-    return {"groups": len(groups), "cards": detail_count if is_experience else detail_count,
-            "items": meta["items"]}, len(html.encode()) / 1024
+    html = portfolio_shell(title, css, head, body)
+    write_page(base_dir / "index.html", html)
+    return ({"groups": len(entries) if is_experience else len(groups),
+             "cards": total, "items": data["meta"]["items"], "problems": problems},
+            len(html.encode()) / 1024)
 
 
 
@@ -880,14 +1043,18 @@ def main():
 
         elif cfg["page"] in ("experience", "exams"):
             m, size = render_portfolio_page(md, cfg, css, head)
-            label = "employers" if cfg["page"] == "experience" else "credentials"
-            print(f"  {cfg['page']:<12} {m['groups']} groups · {m['cards']} detail pages · "
-                  f"{m['items']} details   {size:.0f} KB")
+            print(f"  {cfg['page']:<12} {m['groups']} {cfg['unit_group']} · "
+                  f"{m['cards']} {cfg['unit_card']} · {m['items']} details   {size:.0f} KB")
             if m["cards"] < 1:
                 print("    ! no portfolio entries found — check the markdown format")
                 fail = True
-            tiles.append({**cfg, "nums": [(m["groups"], "groups"),
-                                          (m["cards"], label),
+            for prob in m["problems"]:
+                print(f"    ! {prob}")
+                fail = True
+            # Same labels as the page's own frontmatter, so the home page says
+            # "11 roles · 30 projects", never "30 employers".
+            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),
+                                          (m["cards"], cfg["unit_card"]),
                                           (m["items"], "details")]})
 
         else:
@@ -906,7 +1073,7 @@ def main():
           f"   {hb:.0f} KB")
 
     if fail:
-        print("\nBUILD FAILED — output written but something parsed short.")
+        print("\nBUILD FAILED — see the ! lines above. Output was written but is not safe to publish.")
         sys.exit(1)
     print("\nBuild OK.")
 

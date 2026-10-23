@@ -87,7 +87,18 @@ robots.txt              disallow all
 `docs/field-experience.md` and `docs/exam-tracker.md` render as a dashboard of
 numbered cards, each opening its own detail page with previous / next links.
 
-Career & Projects has **two sections**, matching the CV:
+Career & Projects is **three levels**:
+
+```
+experience/index.html            two heading cards only — Company / Project
+experience/company/index.html    every employer, numbered      (generated)
+experience/projects/index.html   every project, numbered       (generated)
+experience/<slug>/index.html     full details, back → its section list
+```
+
+`company` and `projects` are reserved — never use them as a role's `slug:`.
+
+The two sections match the CV:
 
 - **Company Experience** — `type: Employment` (Wemart, AlmavivA, Express, Veevo)
 - **Project Experience** — every other type: Contract, Freelance, Project,

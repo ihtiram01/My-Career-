@@ -892,6 +892,20 @@ PORTFOLIO_SECTION_CSS = r"""
 .port-group-head h2{font:700 clamp(21px,3.4vw,27px) var(--disp);letter-spacing:-.025em;margin:0}
 .port-group-head .n{font:11px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
 .port-group-head p{flex-basis:100%;margin:2px 0 0;color:var(--dim);font-size:13.5px}
+.port-hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;margin-top:8px}
+.hub-card{display:flex;flex-direction:column;gap:8px;padding:28px 28px 24px;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .22s,border-color .22s}
+.hub-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--accent)}
+.hub-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.hub-n{font:700 54px/1 var(--disp);color:var(--accent);letter-spacing:-.04em}
+.hub-unit{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:-2px}
+.hub-card h2{font:700 clamp(22px,3.4vw,28px)/1.15 var(--disp);letter-spacing:-.025em;margin:12px 0 0}
+.hub-card p{margin:0;color:var(--dim);font-size:14px;line-height:1.65}
+.hub-latest{margin-top:12px;padding:11px 13px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
+  font-size:13px;color:var(--ink)}
+.hub-latest small{display:block;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.hub-card .port-arrow{margin-top:14px;font-size:13px}
 """
 
 
@@ -911,6 +925,13 @@ def render_portfolio_page(md_path, cfg, css, head):
     base_dir = ROOT / cfg["page"]
     problems, used, entries = [], set(), []
     total = 0
+    if is_experience:
+        # The section pages own these two folders; a role slug may not take them.
+        reserved = {k for k, *_ in EXPERIENCE_SECTIONS}
+        for g in groups:
+            if (g.get("info", {}).get("slug") or "").strip().lower() in reserved:
+                problems.append(f'slug "{g["info"]["slug"]}" is reserved for a section page — pick another for {g["title"]}')
+        used |= reserved
 
     # 1. One entry per detail page, in file order.
     if is_experience:
@@ -950,7 +971,8 @@ def render_portfolio_page(md_path, cfg, css, head):
             e["seq"] = str(i).zfill(width)
 
     # Remove detail folders from earlier builds that no longer match an entry.
-    keep = {e["slug"] for e in entries}
+    # The two section pages (company/, projects/) are generated too, so keep them.
+    keep = {e["slug"] for e in entries} | {s["key"] for s in sections}
     if base_dir.exists():
         for d in base_dir.iterdir():
             # only ever a folder this build made: exactly one generated index.html
@@ -958,7 +980,8 @@ def render_portfolio_page(md_path, cfg, css, head):
                 (d / "index.html").unlink()
                 d.rmdir()
 
-    # 2. Detail pages. Previous / next stays inside the entry's own section.
+    # 2. Detail pages. Previous / next stays inside the entry's own section,
+    #    and "back" returns to that section's list, not to the top page.
     prefix = "../../"
     for s in sections:
         seq_list = s["entries"]
@@ -974,7 +997,7 @@ def render_portfolio_page(md_path, cfg, css, head):
                     check_photo(e["info"]["cover"], problems)
                 kicker = f'{s["title"]} · {e["seq"]} of {last} · {e["kind"]}'
                 body = portfolio_header(e["title"], kicker, e["summary"],
-                                        f'../index.html#{s["key"]}', "All experience")
+                                        f'../{s["key"]}/index.html', s["title"])
                 pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"])
                 body += f'<div class="port-detail"{style}><div class="intro">'
                 body += f'<h2>{esc(e["role"])}</h2>' if e["role"] else ""
@@ -994,14 +1017,15 @@ def render_portfolio_page(md_path, cfg, css, head):
             write_page(base_dir / e["slug"] / "index.html",
                        portfolio_shell(e["title"], css, head, body))
 
-    # 3. Dashboard tiles.
-    def tile(e):
-        cover = (f'<div class="cover"><img src="../{esc(e["cover"])}" alt="" loading="lazy"></div>'
+    # 3. Cards. `link` and `img` are the relative prefixes from the page the
+    #    card sits on back to the entry folder and to the repo root.
+    def tile(e, link, img):
+        cover = (f'<div class="cover"><img src="{img}{esc(e["cover"])}" alt="" loading="lazy"></div>'
                  if e["cover"] else "")
         if is_experience:
             lead, sub, n = e["kind"], e["role"], len(e["cards"])
             extra = [f'{n} work area{"s" if n != 1 else ""}']
-            arrow = "Open"
+            arrow = "Full details"
         else:
             lead, sub = e["label"], e["group"].split("·")[0].strip().title()
             extra, arrow = [], "Open credential"
@@ -1010,65 +1034,99 @@ def render_portfolio_page(md_path, cfg, css, head):
         pills = (f'<span class="port-pill lead">{esc(lead)}</span>'
                  + "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"] + extra))
         hay = " ".join([e["title"], sub, e["summary"], lead, " ".join(e["meta"])]).lower()
-        return (f'<a class="port-card" href="./{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
+        return (f'<a class="port-card" href="{link}{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
                 f'data-search="{esc(hay)}">{cover}<span class="port-seq">{esc(e["seq"])}</span>'
                 f'<div class="port-meta">{esc(sub)}</div><h2>{esc(e["title"])}</h2>'
                 + (f'<p>{esc(e["summary"])}</p>' if e["summary"] else "")
                 + f'<div class="port-pills">{pills}</div><span class="port-arrow">{arrow} &rarr;</span></a>')
 
+    def legend_for(source, present=None):
+        seen, out = set(), ""
+        for _, colour, label in source:
+            if label in seen or (present is not None and label not in present):
+                continue
+            seen.add(label)
+            out += f'<span><i style="background:{colour}"></i>{esc(label)}</span>'
+        return out
+
+    def stats_block(stats):
+        return '<div class="port-stats">' + "".join(
+            f'<div class="port-stat"><b>{n}</b><span>{esc(l)}</span></div>' for n, l in stats) + "</div>"
+
+    SEARCH_JS = """
+    <script>
+    (function(){const q=document.getElementById('portfolioSearch');if(!q)return;
+      const items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
+      q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;
+        items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});
+        empty.hidden=count!==0;});})();
+    </script>"""
+
+    def listing_page(title, kicker, summary, back, back_label, stats, tiles, legend):
+        body = portfolio_header(title, kicker, summary, back, back_label)
+        body += f"""{stats_block(stats)}
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="{esc(cfg.get("placeholder", "Search this section"))}" aria-label="Search this section"></div>
+      <div class="port-legend">{legend}</div>
+      <main class="port-grid" id="portfolioGrid">{tiles}</main>
+      <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer>
+    </div>""" + SEARCH_JS
+        return portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
+
     if is_experience:
-        jump = '<nav class="port-jump" aria-label="Sections">' + "".join(
-            f'<a href="#{s["key"]}">{esc(s["title"])} <b>{len(s["entries"])}</b></a>'
-            for s in sections) + "</nav>"
-        grid = "".join(
-            f'<section class="port-group" id="{s["key"]}">'
-            f'<div class="port-group-head"><h2>{esc(s["title"])}</h2>'
-            f'<span class="n">{len(s["entries"])} {"role" if s["key"] == "company" else "engagement"}'
-            f'{"s" if len(s["entries"]) != 1 else ""}</span><p>{esc(s["desc"])}</p></div>'
-            f'<div class="port-grid">{"".join(tile(e) for e in s["entries"])}</div></section>'
-            for s in sections)
-        legend_src, title = TYPE_COLOUR, "Career & Projects"
+        # 3a. One page per section: experience/company/, experience/projects/
+        unit = {"company": ("companies", "company"), "projects": ("projects", "project")}
+        for s in sections:
+            many, one = unit.get(s["key"], ("entries", "entry"))
+            n = len(s["entries"])
+            areas = sum(len(e["cards"]) for e in s["entries"])
+            photos = sum(e["n_photos"] for e in s["entries"])
+            stats = [(n, many if n != 1 else one), (areas, "work areas")]
+            if photos:
+                stats.append((photos, "photos"))
+            tiles = "".join(tile(e, "../", "../../") for e in s["entries"])
+            legend = legend_for(TYPE_COLOUR, {e["kind"] for e in s["entries"]})
+            write_page(base_dir / s["key"] / "index.html",
+                       listing_page(s["title"], f'Career & Projects · {s["title"]}', s["desc"],
+                                    "../index.html", "Career & Projects", stats, tiles, legend))
+
+        # 3b. The top page: only the two headings. Each opens its section page.
+        title = "Career & Projects"
         n_company = sum(len(s["entries"]) for s in sections if s["key"] == "company")
         n_projects = sum(len(s["entries"]) for s in sections if s["key"] == "projects")
         stats = [(n_company, "companies"), (n_projects, "projects"), (total, "work areas")]
-    else:
-        jump = ""
-        grid = f'<div class="port-grid">{"".join(tile(e) for e in entries)}</div>'
-        legend_src, title = STATUS_ACCENT, "Certifications & Training"
-        stats = [(len(entries), "credentials"), (len(groups), "status groups")]
-
-    seen, legend = set(), ""
-    for _, colour, label in legend_src:
-        if label not in seen:
-            seen.add(label)
-            legend += f'<span><i style="background:{colour}"></i>{esc(label)}</span>'
-
-    stats_html = "".join(f'<div class="port-stat"><b>{n}</b><span>{esc(l)}</span></div>' for n, l in stats)
-    body = portfolio_header(title, cfg["kicker"], cfg["summary"], "../index.html", "Home")
-    body += f"""<div class="port-stats">{stats_html}</div>{jump}
-      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="{esc(cfg.get("placeholder", "Search this section"))}" aria-label="Search this section"></div>
-      <div class="port-legend">{legend}</div>
-      <main id="portfolioGrid">{grid}</main>
-      <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
-      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer>
-    </div>
-    <script>
-    (function(){{const q=document.getElementById('portfolioSearch'),items=[...document.querySelectorAll('.port-card')],
-      groups=[...document.querySelectorAll('.port-group')],empty=document.getElementById('portfolioEmpty');
-    q.addEventListener('input',function(){{const term=q.value.trim().toLowerCase();let count=0;
-      items.forEach(x=>{{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;}});
-      groups.forEach(g=>{{g.hidden=![...g.querySelectorAll('.port-card')].some(x=>!x.hidden);}});
-      empty.hidden=count!==0;}});}})();
-    </script>"""
-    html = portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
-    write_page(base_dir / "index.html", html)
-    if is_experience:
+        hub_colour = {"company": "#1B57C4", "projects": "#6E35C9"}
+        hubs = ""
+        for s in sections:
+            many, one = unit.get(s["key"], ("entries", "entry"))
+            n = len(s["entries"])
+            latest = s["entries"][0]
+            dates = [x for x in latest["meta"] if re.search(r"\d{4}", x)]
+            latest_line = latest["title"] + (f' · {dates[0]}' if dates else "")
+            hubs += (f'<a class="hub-card" href="./{s["key"]}/index.html" '
+                     f'style="--accent:{hub_colour.get(s["key"], "#1B57C4")}">'
+                     f'<span class="hub-n">{n}</span>'
+                     f'<span class="hub-unit">{esc(many if n != 1 else one)}</span>'
+                     f'<h2>{esc(s["title"])}</h2><p>{esc(s["desc"])}</p>'
+                     f'<div class="hub-latest"><small>Most recent</small>{esc(latest_line)}</div>'
+                     f'<span class="port-arrow">View all {esc(many)} &rarr;</span></a>')
+        body = portfolio_header(title, cfg["kicker"], cfg["summary"], "../index.html", "Home")
+        # No figure strip here — the two heading cards already carry the counts.
+        body += (f'<main class="port-hub">{hubs}</main>'
+                 f'<footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer></div>')
+        html = portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
+        write_page(base_dir / "index.html", html)
         result = {"groups": n_company, "cards": n_projects, "areas": total}
     else:
+        stats = [(len(entries), "credentials"), (len(groups), "status groups")]
+        tiles = "".join(tile(e, "./", "../") for e in entries)
+        html = listing_page("Certifications & Training", cfg["kicker"], cfg["summary"],
+                            "../index.html", "Home", stats, tiles, legend_for(STATUS_ACCENT))
+        write_page(base_dir / "index.html", html)
         result = {"groups": len(groups), "cards": total, "areas": total}
+
     result.update(items=data["meta"]["items"], problems=problems)
     return result, len(html.encode()) / 1024
-
 
 
 def main():

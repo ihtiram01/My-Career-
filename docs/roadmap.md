@@ -5,7 +5,7 @@ order: 3
 colour: yellow
 kicker: Section 03 · what's next
 summary: What to sit, what to build and what to fix — in priority order, including the blockers that are not exams at all.
-placeholder: Search — az-800, bgp, sce, deadline…
+placeholder: Search — az-802, bgp, encor, gap…
 unit_group: tracks
 unit_card: actions
 footer: <b>Ordering</b> &nbsp; priority is by what unlocks the most, not by what is easiest. Full detail on each exam lives in <a href="../exams/index.html">Certifications</a>; each lab in <a href="../labs/index.html">Labs &amp; Practice</a>.
@@ -20,12 +20,11 @@ summary_ur: کون سا امتحان دینا ہے، کیا بنانا ہے او
 ## Exams to sit | in priority order
 summary: The queue. Priorities 1, 3 and 4 are exams for training already completed — those are listed under Certifications, because the coursework is done and only the exam is outstanding.
 
-### AZ-800 Windows Server Hybrid Administrator | Microsoft
-- status: NOT STARTED
-- priority: 2 — URGENT
-- deadline: exam retires September 2026
-- cost: USD 165
-- note: the Windows Server training maps well. This is the one with a clock on it.
+### AZ-802 Administering Windows Server | Microsoft
+- status: Not started
+- priority: 2 — replaces the AZ-800 target
+- note: AZ-800 and AZ-801 retired on 30 September 2026. AZ-802 is the single replacement exam, for Microsoft Certified: Windows Server Administrator. The Windows Server 2022 training at Corvit maps well to it.
+- action: confirm the exam is out of beta and its price on Microsoft Learn before booking
 - master: 21, 22, 23, 24, 72, 73
 
 ### CCNP SCOR 350-701 | Cisco
@@ -84,18 +83,19 @@ summary: Non-exam blockers. These are slow and run in parallel with study, not a
 - note: there is physical-layer carrier experience at RIY1, but not routing configuration in production
 - master: 44, 46
 
-### ITIL
-- status: UNVERIFIED — appears on the CV
-- action: either produce the certificate or remove it
+### ITIL 4 Foundation exam
+- status: Training complete (Jan 2022) — exam not sat
+- priority: 10 — optional. Useful for NOC and service-desk roles
+- note: listed under Certifications as "training complete". Sitting the PeopleCert exam would turn it into a certificate.
 - master: 85
 
 ## Record and documentation gaps
 summary: Not skills to learn — evidence that exists but was never written down, and index work left unfinished.
 
-### AlmavivA IT — undocumented stack
-- status: Gap
-- note: 19 months of work with almost nothing recorded. The thinnest entry in Career &amp; Projects despite being one of the longest tenures.
-- action: reconstruct what the stack was while it is still recallable
+### AlmavivA — Riyadh Metro project
+- status: Partly closed (Nov 2026)
+- note: the CV now records the stack: Cisco Catalyst 4510 core, VMware vCenter and ESXi, MOXA wireless bridges with RF surveys and VSWR testing, IPsec VPNs, NMS KPI and SLA reporting, and ITIL change, incident and problem processes, across stations and depots. Career &amp; Projects carries all of it.
+- action: add photos, configs and an experience letter when they are available
 
 ### Knowledge index — unfinished categories
 - status: Gap

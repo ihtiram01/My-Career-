@@ -1,16 +1,17 @@
 ---
 name: Ihtiram Ullah
-role: Network & IT Infrastructure Engineer
+role: Network & Systems Engineer
 location: Riyadh, Kingdom of Saudi Arabia
 tagline: Networks, infrastructure and surveillance systems — studied, built and documented.
 email: ihtirammmd01@gmail.com
 whatsapp: +966 50 881 7993
 linkedin: https://www.linkedin.com/in/ihtiram-ullah-1978532a8
 tiktok: @gulf_networking
+instagram: @gulf_networking
 youtube:
 phone:
-role_ar: مهندس شبكات وبنية تحتية لتقنية المعلومات
-role_ur: نیٹ ورک اور آئی ٹی انفراسٹرکچر انجینئر
+role_ar: مهندس شبكات وأنظمة
+role_ur: نیٹ ورک اور سسٹمز انجینئر
 location_ar: الرياض، المملكة العربية السعودية
 location_ur: ریاض، سعودی عرب
 tagline_ar: شبكات وبنية تحتية وأنظمة مراقبة — دراسة وتنفيذ وتوثيق.
@@ -41,6 +42,9 @@ Any of these forms works:
                                         full https:// URL
 
     tiktok:   @gulf_networking          handle with or without the @,
+                                        or the full https:// URL
+
+    instagram: @gulf_networking         handle with or without the @,
                                         or the full https:// URL
 
     youtube:  @yourchannel              handle, /channel/UC…, /c/…, a

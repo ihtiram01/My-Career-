@@ -19,14 +19,35 @@ because the next build silently discards your changes.
 
 Pure standard library. Python 3.8+.
 """
-import re, json, sys, datetime
+import re, json, sys, datetime, subprocess
 from pathlib import Path
+
+
+def _source_date():
+    """Date of the last commit that touched docs/ or build/.
+
+    Using today's date made every build differ from the last one, so the
+    repo always looked dirty. The source date only moves when content does.
+    Falls back to today outside git, or with uncommitted source changes.
+    """
+    root = Path(__file__).resolve().parent.parent
+    try:
+        dirty = subprocess.run(["git", "status", "--porcelain", "--", "docs", "build"],
+                               cwd=root, capture_output=True, text=True, timeout=10)
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "docs", "build"],
+                             cwd=root, capture_output=True, text=True, timeout=10)
+        if dirty.returncode == 0 and not dirty.stdout.strip() and out.stdout.strip():
+            return out.stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return datetime.date.today().isoformat()
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cards
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
+BUILD_DATE = _source_date()
 BUILD = Path(__file__).resolve().parent
 FILES = ROOT / "files"
 
@@ -143,7 +164,7 @@ def parse_knowledge(path):
             "topics": sum(len(c["topics"]) for a in areas for c in a["cats"]),
             "subs": sum(len(t["subs"]) for a in areas for c in a["cats"] for t in c["topics"]),
             "refs": sum(len(t["refs"]) for a in areas for c in a["cats"] for t in c["topics"]),
-            "generated": datetime.date.today().isoformat()}
+            "generated": BUILD_DATE}
     return {"meta": meta, "areas": areas, "index": idx}
 
 
@@ -234,7 +255,7 @@ def parse_courses(path):
             "modules": sum(c["counts"]["modules"] for c in courses),
             "topics": sum(c["counts"]["topics"] for c in courses),
             "subs": sum(c["counts"]["subs"] for c in courses),
-            "generated": datetime.date.today().isoformat()}
+            "generated": BUILD_DATE}
     return {"meta": meta, "courses": courses}
 
 
@@ -336,8 +357,9 @@ def esc(s):
 
 
 # Order here is the order the buttons appear in.
-CONTACT_FIELDS = ("whatsapp", "linkedin", "tiktok", "youtube", "email", "phone")
+CONTACT_FIELDS = ("whatsapp", "linkedin", "tiktok", "instagram", "youtube", "email", "phone")
 LABELS = {"whatsapp": "WhatsApp", "linkedin": "LinkedIn", "tiktok": "TikTok",
+          "instagram": "Instagram",
           "youtube": "YouTube", "email": "Email", "phone": "Phone"}
 
 # Inline SVG only — the site has to work with no network, so no icon font
@@ -346,11 +368,13 @@ ICONS = {
     "whatsapp": "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z",
     "linkedin": "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
     "tiktok": "M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z",
+    "instagram": "M7.5 1.5H16.5A6 6 0 0 1 22.5 7.5V16.5A6 6 0 0 1 16.5 22.5H7.5A6 6 0 0 1 1.5 16.5V7.5A6 6 0 0 1 7.5 1.5ZM8.0 3.5H16.0A4.5 4.5 0 0 1 20.5 8.0V16.0A4.5 4.5 0 0 1 16.0 20.5H8.0A4.5 4.5 0 0 1 3.5 16.0V8.0A4.5 4.5 0 0 1 8.0 3.5ZM6.8 12A5.2 5.2 0 1 0 17.2 12A5.2 5.2 0 1 0 6.8 12ZM8.8 12A3.2 3.2 0 1 0 15.2 12A3.2 3.2 0 1 0 8.8 12ZM16.3 6.4A1.3 1.3 0 1 0 18.900000000000002 6.4A1.3 1.3 0 1 0 16.3 6.4Z",
     "youtube": "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
     "email": "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z",
     "phone": "M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z",
 }
 BRAND = {"whatsapp": "#25D366", "linkedin": "#0A66C2", "tiktok": "#EE1D52",
+         "instagram": "#E4405F",
          "youtube": "#FF0000", "email": "#C5221F", "phone": "#0B7D55"}
 
 # ── languages ───────────────────────────────────────────────────────────
@@ -423,6 +447,7 @@ def contact_link(kind, value):
     bare = re.sub(r"^https?://", "", v, flags=re.I)
     bare = re.sub(r"^(www|m|[a-z]{2})\.", "", bare, flags=re.I)
     domain = {"linkedin": r"linkedin\.com/", "tiktok": r"tiktok\.com/",
+              "instagram": r"instagram\.com/",
               "youtube": r"(youtube\.com/|youtu\.be/)"}[kind]
     bare = re.sub(rf"^{domain}", "", bare, flags=re.I).strip("/")
     if not bare:
@@ -431,6 +456,9 @@ def contact_link(kind, value):
     if kind == "linkedin":
         path = bare if bare.startswith(("in/", "company/")) else "in/" + bare.lstrip("@")
         return f"https://www.linkedin.com/{path}", f"linkedin.com/{path}"
+    if kind == "instagram":
+        handle = bare.lstrip("@").split("/")[0]
+        return f"https://www.instagram.com/{handle}/", f"instagram.com/{handle}"
     if kind == "tiktok":
         return (f"https://www.tiktok.com/@{bare.lstrip('@')}",
                 f"tiktok.com/@{bare.lstrip('@')}")
@@ -449,11 +477,12 @@ def contact_block(cfg):
             continue
         href, label = contact_link(kind, cfg[kind])
         if not href:            continue
+        rule = ' fill-rule="evenodd"' if kind == "instagram" else ""
         btns += (
             f'<a class="cbtn" href="{esc(href)}" style="--b:{BRAND[kind]}" '
             f'rel="noopener" aria-label="{LABELS[kind]}: {esc(label)}">'
             f'<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" '
-            f'aria-hidden="true"><path d="{ICONS[kind]}"/></svg>'
+            f'aria-hidden="true"><path{rule} d="{ICONS[kind]}"/></svg>'
             f'<span>{LABELS[kind]}</span></a>')
     if not btns:
         return ""
@@ -726,6 +755,8 @@ TYPE_COLOUR = [
 STATUS_ACCENT = [
     ("record conflict", "#C42A36", "Record conflict"),
     ("unconfirmed",     "#C55A0C", "Unconfirmed"),
+    ("not confirmed",   "#C55A0C", "Training complete"),
+    ("training",        "#8A6800", "Training complete"),
     ("coursework",      "#C55A0C", "Coursework only"),
     ("course completed", "#8A6800", "Course completed"),
     ("passed",          "#0B7D55", "Passed"),

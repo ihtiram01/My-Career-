@@ -1,6 +1,6 @@
 # Knowledge Base — project instructions
 
-Personal knowledge base for **Ihtiram Ullah (Mickey)**, Network & IT Infrastructure
+Personal knowledge base for **Ihtiram Ullah (Mickey)**, Network & Systems
 Engineer, Riyadh. Two indexes over the same body of knowledge: one organised by
 technology, one by course.
 
@@ -102,7 +102,7 @@ The two sections match the CV:
 
 - **Company Experience** — `type: Employment` (Wemart, AlmavivA, Express, Veevo)
 - **Project Experience** — every other type: Contract, Freelance, Project,
-  Independent (ANMAT, center3, Leon, MAMCO, UCT, Metro L3, freelance)
+  Independent (center3 Viasat, center3 SambaNova, ANMAT, Leon, MAMCO, UCT, freelance)
 - `section: company` or `section: projects` on a role overrides the rule.
 
 - **Order is the order in the file**, newest first. The 01, 02 … numbers are
@@ -229,16 +229,25 @@ This file exists partly to stop a future edit from quietly undoing honesty work.
 
 1. **MCSE is a record conflict.** The syllabus is Windows Server **2012**
    (70-410 → 70-414); Microsoft retired those exams in January 2021. There is no
-   credential called "MCSE Server 2022". The status stays `⚠ RECORD CONFLICT`
-   until Mickey decides how to describe it. Do not quietly relabel it.
+   credential called "MCSE Server 2022". The course index keeps `⚠ RECORD CONFLICT`
+   for the syllabus mismatch. Everywhere else it is described as
+   "Windows Server 2022 Administration (MCSE track) — training complete" (Nov 2026,
+   matching the README). Never present it as a Microsoft certificate.
 2. **CCNP ENCOR and ENARSI are coursework, not passes.** Status stays
-   `COURSEWORK ONLY` until he sits the exams.
-3. **ITIL is unverified.** Category `85` is tagged `[CV — unverified]`.
+   `COURSEWORK ONLY` until he sits the exams. ENCOR is listed under
+   Certifications at his request, labelled "training complete — exam in preparation".
+3. **ITIL is training only** (Jan 2022, confirmed by him, Nov 2026). No PeopleCert
+   exam. Category `85` is tagged `[ITIL]`. Never call it certified.
 4. **Only `L3+` belongs on a CV.** `L1`–`L2` is "familiar with, not in production".
-5. **AlmavivA is thin** in the knowledge index — two categories tagged. The
-   career page entry is filled from his own CV (Oct 2026). Do not invent coverage
-   beyond what he has stated.
-6. **center3 was two days of a three-day booking.** Day 3 scope is not his.
+5. **AlmavivA was the Riyadh Metro transport project.** Its career entry and its
+   category tags come from his CV (July 2026). The former separate "Riyadh Metro
+   Line 3" entry is merged into it; the old slug redirects via `_redirects`.
+   Do not invent coverage beyond what he has stated.
+6. **center3 SambaNova was two days of a three-day booking.** Day 3 scope is not his.
+7. **Source of truth for dates and titles is his latest CV.** Where an older
+   record disagreed (CCTV Operator 2021 "certified" vs CV May 2023 training;
+   AZ-104 provider; AZ-900 "passed" but not on the CV), the CV wins and the
+   unconfirmed item says so. Title: Network & Systems Engineer.
 
 ---
 

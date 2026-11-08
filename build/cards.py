@@ -35,9 +35,19 @@ def parse_cards(path):
     lines = path.read_text(encoding='utf-8').split('\n')
     title, groups, grp, card = '', [], None, None
     in_fm = False
+    in_comment = False
 
     for raw in lines:
         ln = raw.rstrip()
+        # <!-- … --> blocks are notes for whoever edits the file; skip them,
+        # otherwise an example "## Name | …" inside one becomes a real entry.
+        if in_comment:
+            if '-->' in ln:
+                in_comment = False
+            continue
+        if ln.lstrip().startswith('<!--'):
+            in_comment = '-->' not in ln
+            continue
         if ln.strip() == '---':
             in_fm = not in_fm
             continue
@@ -61,13 +71,23 @@ def parse_cards(path):
 
         if ln.startswith('### ') and grp is not None:
             parts = [p.strip() for p in ln[4:].split('|')]
-            card = {'title': parts[0], 'meta': parts[1:], 'rows': [], 'bullets': [], 'links': []}
+            card = {'title': parts[0], 'meta': parts[1:], 'rows': [], 'bullets': [],
+                    'links': [], 'photos': []}
             grp['cards'].append(card)
             continue
 
         m = re.match(r'^-\s+(.+)$', ln)
         if m and card is not None:
             body = m.group(1).strip()
+            # - photo: img/experience/<slug>/01.jpg | optional caption
+            pm = re.match(r'^photo\s*:\s*(.+)$', body, re.I)
+            if pm:
+                src, _, cap = pm.group(1).partition('|')
+                card['photos'].append({'src': src.strip(), 'cap': cap.strip()})
+                continue
+            # - private: a note for you only — kept in the markdown, never rendered
+            if re.match(r'^private\s*:', body, re.I):
+                continue
             km = re.match(r'^(status|priority|cost|deadline|note|action|blueprint|gap|process|master)\s*:\s*(.+)$',
                           body, re.I)
             if km:
@@ -80,7 +100,9 @@ def parse_cards(path):
                 card['bullets'].append(body)
             continue
 
-        km = re.match(r'^(role|tag|summary)\s*:\s*(.+)$', ln, re.I)
+        # group-level keys. `private:` is stored but never rendered;
+        # `slug:` freezes the detail-page address; `cover:` is the dashboard photo.
+        km = re.match(r'^(role|tag|summary|type|section|slug|cover|private)\s*:\s*(.+)$', ln, re.I)
         if km and grp is not None and card is None:
             grp['info'][km.group(1).lower()] = km.group(2).strip()
             continue

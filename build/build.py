@@ -377,6 +377,7 @@ UI = {
 STAT_WORDS = {
     "roles":      {"ar": "أدوار",    "ur": "کردار"},
     "projects":   {"ar": "مشاريع",   "ur": "پروجیکٹس"},
+    "companies":  {"ar": "شركات",    "ur": "کمپنیاں"},
     "courses":    {"ar": "دورات",    "ur": "کورسز"},
     "modules":    {"ar": "وحدات",    "ur": "ماڈیولز"},
     "topics":     {"ar": "مواضيع",   "ur": "موضوعات"},
@@ -447,8 +448,7 @@ def contact_block(cfg):
         if not cfg.get(kind):
             continue
         href, label = contact_link(kind, cfg[kind])
-        if not href:
-            continue
+        if not href:            continue
         btns += (
             f'<a class="cbtn" href="{esc(href)}" style="--b:{BRAND[kind]}" '
             f'rel="noopener" aria-label="{LABELS[kind]}: {esc(label)}">'
@@ -635,6 +635,500 @@ document.getElementById('themeBtn').onclick=()=>ap(th==='paper'?'ink':'paper');
     return len(html.encode()) / 1024
 
 
+
+
+# ── hierarchical career portfolio ──────────────────────────────────────
+# Experience and Certifications render as a dashboard of numbered cards, each
+# opening its own detail page. Order on the page is the order in the markdown,
+# so the sequence is edited by moving a `##` block, never by touching code.
+
+PORTFOLIO_CSS = r"""
+.port-wrap{max-width:1120px;margin:0 auto;padding:28px 18px 100px;position:relative;z-index:1}
+.port-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:34px}
+.port-top a,.port-top button{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--dim);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:10px 13px;
+  text-decoration:none;cursor:pointer}
+.port-hero{padding:30px 0 28px;border-bottom:1px solid var(--line)}
+.port-kicker{font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--a40)}
+.port-hero h1{font:700 clamp(32px,6vw,56px)/1.04 var(--disp);letter-spacing:-.04em;margin:12px 0}
+.port-hero p{max-width:68ch;color:var(--dim);font-size:15px;line-height:1.7;margin:0}
+.port-stats{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.port-stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px;min-width:110px}
+.port-stat b{display:block;font:700 23px var(--disp);color:var(--ink)}
+.port-stat span{font:9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.port-tools{margin:22px 0 18px}
+.port-tools input{width:100%;min-width:0;padding:12px 14px;border-radius:9px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--ink);font:14px var(--body)}
+.port-legend{display:flex;gap:14px;flex-wrap:wrap;margin:-4px 0 18px;font:10px var(--mono);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase}
+.port-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:15px}
+.port-card{display:flex;flex-direction:column;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);
+  border-radius:13px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s}
+.port-card:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:var(--accent)}
+.port-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.port-card .cover{margin:-20px -20px 6px;aspect-ratio:16/9;background:var(--panel2);overflow:hidden}
+.port-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.port-seq{font:700 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.port-card h2{font:600 19px/1.25 var(--disp);margin:0;letter-spacing:-.02em}
+.port-card p{color:var(--dim);font-size:13px;line-height:1.65;margin:0}
+.port-meta{font:10px var(--mono);letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+.port-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.port-pill{font:10px var(--mono);padding:5px 8px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+.port-pill.lead{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);font-weight:700}
+.port-arrow{color:var(--accent);font:600 12px var(--mono);margin-top:4px}
+.port-detail{max-width:900px;margin:0 auto}
+.port-detail .intro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin:22px 0}
+.port-detail .intro h2{font:600 18px var(--disp);margin:0 0 10px}
+.port-detail > h2{font:600 19px var(--disp);margin:30px 0 12px}
+.port-detail h3{font:600 16px var(--disp);margin:0 0 8px}
+.port-detail .detail-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:17px 19px;margin:12px 0}
+.port-detail ul{padding-left:20px;margin:9px 0;color:var(--dim)}
+.port-detail li{font-size:13.5px;line-height:1.7;margin:5px 0}
+.port-detail .detail-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.port-detail .detail-row:last-child{border:0}
+.port-detail .detail-row b{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.port-detail .detail-row span{font-size:13.5px;color:var(--dim)}
+.port-detail .detail-row.status span{color:var(--accent);font-weight:600}
+.port-detail .refs{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.port-detail .refs a{font:10px var(--mono);color:var(--a40);text-decoration:none;border:1px solid var(--line2);border-radius:6px;padding:5px 8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;margin:14px 0 4px}
+.gallery figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.gallery a{display:block;aspect-ratio:4/3;overflow:hidden}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gallery a:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:12px;color:var(--dim);padding:7px 10px;line-height:1.45}
+.port-pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:38px 0 0}
+.port-pager a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--panel);
+  text-decoration:none;color:inherit}
+.port-pager a:hover{border-color:var(--a40)}
+.port-pager small{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.port-pager b{font:600 14px var(--disp)}
+.port-pager .next{text-align:right;grid-column:2}
+.port-empty{padding:24px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}
+@media(max-width:600px){.port-wrap{padding:18px 14px 70px}.port-hero{padding-top:18px}
+  .port-detail .detail-row{grid-template-columns:1fr;gap:3px}
+  .port-pager{grid-template-columns:1fr}.port-pager .next{grid-column:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+"""
+
+# Engagement type -> accent. Shown as a coloured stripe and a legend.
+TYPE_COLOUR = [
+    ("employment", "#1B57C4", "Employment"),
+    ("contract",   "#6E35C9", "Contract"),
+    ("freelance",  "#0B7D55", "Freelance"),
+    ("project",    "#0C7F99", "Site project"),
+    ("independent", "#7E5129", "Independent"),
+]
+# Credential status -> accent. Order matters: first match wins.
+STATUS_ACCENT = [
+    ("record conflict", "#C42A36", "Record conflict"),
+    ("unconfirmed",     "#C55A0C", "Unconfirmed"),
+    ("coursework",      "#C55A0C", "Coursework only"),
+    ("course completed", "#8A6800", "Course completed"),
+    ("passed",          "#0B7D55", "Passed"),
+    ("certified",       "#0B7D55", "Passed"),
+]
+
+PHOTO_WARN_KB = 1500       # big photos slow phones down; still built
+PHOTO_MAX_MB = 25          # Cloudflare Pages hard limit per file
+
+
+def slugify(text, limit=60):
+    s = re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", " and ")).strip("-")
+    return s[:limit].rstrip("-")
+
+
+def unique_slug(base, used):
+    s, n = base, 2
+    while s in used:
+        s, n = f"{base}-{n}", n + 1
+    used.add(s)
+    return s
+
+
+def type_accent(kind):
+    k = (kind or "").lower()
+    for key, colour, label in TYPE_COLOUR:
+        if key in k:
+            return colour, label
+    return "#1B57C4", (kind or "Employment")
+
+
+def status_accent(status):
+    st = (status or "").lower()
+    for key, colour, label in STATUS_ACCENT:
+        if key in st:
+            return colour, label
+    return "#56697F", status or "Record"
+
+
+def check_photo(src, problems):
+    """Photos are paths from the repo root. Missing ones fail the build."""
+    f = ROOT / src
+    if not f.is_file():
+        problems.append(f"missing photo: {src}")
+        return
+    kb = f.stat().st_size / 1024
+    if kb > PHOTO_MAX_MB * 1024:
+        problems.append(f"photo over {PHOTO_MAX_MB} MB, Cloudflare will reject it: {src}")
+    elif kb > PHOTO_WARN_KB:
+        print(f"    · large photo ({kb / 1024:.1f} MB), consider resizing: {src}")
+
+
+def portfolio_shell(title, css, head, body):
+    script = """
+<script>
+(function(){
+ const palettes={paper:{tc:'#2F6FD0',tx:'#0E7A54',tt:'#C2660C',tr:'#7040C4',a:'#1B57C4'},
+                 ink:{tc:'#7FA8E8',tx:'#5FD6A4',tt:'#FFAE5C',tr:'#B79BE8',a:'#4C8DFF'}};
+ let theme='paper';
+ function apply(t){
+   theme=t;document.documentElement.dataset.theme=t;
+   const p=palettes[t],root=document.documentElement.style;
+   root.setProperty('--tc',p.tc);root.setProperty('--tx',p.tx);
+   root.setProperty('--tt',p.tt);root.setProperty('--tr',p.tr);root.setProperty('--a40',p.a);
+   const btn=document.getElementById('themeBtn');if(btn)btn.textContent=t==='paper'?'Paper':'Ink';
+ }
+ const btn=document.getElementById('themeBtn');
+ if(btn)btn.addEventListener('click',function(){
+   apply(theme==='paper'?'ink':'paper');
+   try{if(window.storage)window.storage.set('kb-theme',theme);}catch(e){}
+ });
+ (async function(){
+   try{if(window.storage){const saved=await window.storage.get('kb-theme');if(saved&&saved.value==='ink')theme='ink';}}catch(e){}
+   apply(theme);
+ })();
+})();
+</script>
+"""
+    return (head.replace("__CSS__", css + PORTFOLIO_CSS)
+                .replace("__TITLETAG__", esc(title) + " — Ihtiram Ullah")
+            + body + script + "\n</body></html>")
+
+
+def portfolio_header(title, kicker, summary, back_href, back_label="Back"):
+    return f'''
+<div class="port-wrap">
+  <nav class="port-top" aria-label="Page navigation">
+    <a href="{esc(back_href)}">&larr; {esc(back_label)}</a>
+    <button id="themeBtn" type="button">Paper</button>
+  </nav>
+  <header class="port-hero">
+    <div class="port-kicker">{esc(kicker)}</div>
+    <h1>{esc(title)}</h1>
+    {f"<p>{esc(summary)}</p>" if summary else ""}
+  </header>
+'''
+
+
+def gallery_html(photos, prefix):
+    if not photos:
+        return ""
+    figs = "".join(
+        f'<figure><a href="{esc(prefix + ph["src"])}" target="_blank" rel="noopener">'
+        f'<img src="{esc(prefix + ph["src"])}" alt="{esc(ph["cap"] or "Project photo")}" loading="lazy"></a>'
+        + (f'<figcaption>{esc(ph["cap"])}</figcaption>' if ph["cap"] else "") + "</figure>"
+        for ph in photos)
+    return f'<div class="gallery">{figs}</div>'
+
+
+def portfolio_card_content(card, knowledge_href, prefix):
+    rows = "".join(
+        f'<div class="detail-row {esc(r["k"])}"><b>{esc(r["k"])}</b><span>{esc(r["v"])}</span></div>'
+        for r in card.get("rows", []))
+    bullets = ("<ul>" + "".join(f"<li>{esc(x)}</li>" for x in card.get("bullets", [])) + "</ul>"
+               if card.get("bullets") else "")
+    refs = ""
+    if card.get("links"):
+        refs = '<div class="refs">' + "".join(
+            f'<a href="{esc(knowledge_href)}">&rarr; Knowledge {esc(x)}</a>'
+            for x in card["links"]) + "</div>"
+    meta = " · ".join(card.get("meta", []))
+    return (f'<article class="detail-card"><h3>{esc(card["title"])}</h3>'
+            + (f'<div class="port-meta">{esc(meta)}</div>' if meta else "")
+            + (f'<div>{rows}</div>' if rows else "") + bullets
+            + gallery_html(card.get("photos", []), prefix) + refs + "</article>")
+
+
+def pager_html(entries, i):
+    """Previous / next links so the detail pages read as one sequence."""
+    out = []
+    if i > 0:
+        p = entries[i - 1]
+        out.append(f'<a class="prev" href="../{esc(p["slug"])}/index.html"><small>&larr; {esc(p["seq"])}</small><b>{esc(p["title"])}</b></a>')
+    if i < len(entries) - 1:
+        n = entries[i + 1]
+        out.append(f'<a class="next" href="../{esc(n["slug"])}/index.html"><small>{esc(n["seq"])} &rarr;</small><b>{esc(n["title"])}</b></a>')
+    return f'<nav class="port-pager" aria-label="Sequence">{"".join(out)}</nav>' if out else ""
+
+
+def write_page(path, html):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
+
+
+# Career & Projects is split in two, the same way the CV is: employers on staff,
+# and project / contract work. `type: Employment` lands in Company Experience,
+# anything else in Project Experience; `section: company|projects` overrides.
+EXPERIENCE_SECTIONS = [
+    ("company",  "Company Experience", "Company",
+     "Roles held on staff — the employers, in order."),
+    ("projects", "Project Experience", "Project",
+     "Contracts, freelance dispatches and site projects — each delivered as its own engagement."),
+]
+
+PORTFOLIO_SECTION_CSS = r"""
+.port-jump{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 6px}
+.port-jump a{display:flex;align-items:center;gap:10px;padding:11px 15px;border:1px solid var(--line2);border-radius:10px;
+  background:var(--panel);text-decoration:none;color:var(--ink);font:600 14px var(--disp)}
+.port-jump a:hover{border-color:var(--a40)}
+.port-jump b{font:700 11px var(--mono);color:var(--a40);padding:2px 7px;border-radius:20px;background:var(--panel2)}
+.port-group{margin:34px 0 0;scroll-margin-top:16px}
+.port-group-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:16px;
+  border-bottom:1px solid var(--line)}
+.port-group-head h2{font:700 clamp(21px,3.4vw,27px) var(--disp);letter-spacing:-.025em;margin:0}
+.port-group-head .n{font:11px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.port-group-head p{flex-basis:100%;margin:2px 0 0;color:var(--dim);font-size:13.5px}
+.port-hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px;margin-top:8px}
+.hub-card{display:flex;flex-direction:column;gap:8px;padding:28px 28px 24px;background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;text-decoration:none;color:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .22s,border-color .22s}
+.hub-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--accent)}
+.hub-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.hub-n{font:700 54px/1 var(--disp);color:var(--accent);letter-spacing:-.04em}
+.hub-unit{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:-2px}
+.hub-card h2{font:700 clamp(22px,3.4vw,28px)/1.15 var(--disp);letter-spacing:-.025em;margin:12px 0 0}
+.hub-card p{margin:0;color:var(--dim);font-size:14px;line-height:1.65}
+.hub-latest{margin-top:12px;padding:11px 13px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
+  font-size:13px;color:var(--ink)}
+.hub-latest small{display:block;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.hub-card .port-arrow{margin-top:14px;font-size:13px}
+"""
+
+
+def experience_section_key(info, kind):
+    explicit = (info.get("section") or "").strip().lower()
+    if explicit.startswith("comp") or explicit.startswith("employ"):
+        return "company"
+    if explicit.startswith("proj"):
+        return "projects"
+    return "company" if kind.lower() == "employment" else "projects"
+
+
+def render_portfolio_page(md_path, cfg, css, head):
+    data = cards.parse_cards(md_path)
+    groups = data["groups"]
+    is_experience = cfg["page"] == "experience"
+    base_dir = ROOT / cfg["page"]
+    problems, used, entries = [], set(), []
+    total = 0
+    if is_experience:
+        # The section pages own these two folders; a role slug may not take them.
+        reserved = {k for k, *_ in EXPERIENCE_SECTIONS}
+        for g in groups:
+            if (g.get("info", {}).get("slug") or "").strip().lower() in reserved:
+                problems.append(f'slug "{g["info"]["slug"]}" is reserved for a section page — pick another for {g["title"]}')
+        used |= reserved
+
+    # 1. One entry per detail page, in file order.
+    if is_experience:
+        for g in groups:
+            info = g.get("info", {})
+            colour, kind = type_accent(info.get("type"))
+            photos = [ph for c in g["cards"] for ph in c.get("photos", [])]
+            cover = info.get("cover") or (photos[0]["src"] if photos else "")
+            entries.append(dict(
+                title=g["title"], meta=g.get("meta", []), info=info, cards=g["cards"],
+                summary=info.get("summary", ""), role=info.get("role", ""),
+                accent=colour, kind=kind, cover=cover, n_photos=len(photos),
+                section=experience_section_key(info, kind),
+                slug=unique_slug(info.get("slug") or slugify(g["title"]), used)))
+        sections = [dict(key=k, title=t, label=l, desc=d,
+                         entries=[e for e in entries if e["section"] == k])
+                    for k, t, l, d in EXPERIENCE_SECTIONS]
+        sections = [s for s in sections if s["entries"]]
+    else:
+        for g in groups:
+            for c in g["cards"]:
+                status = next((r["v"] for r in c.get("rows", []) if r["k"] == "status"), g["title"])
+                colour, label = status_accent(status)
+                summary = next((r["v"] for r in c.get("rows", []) if r["k"] in ("note", "blueprint")), "")
+                photos = c.get("photos", [])
+                entries.append(dict(
+                    title=c["title"], meta=c.get("meta", []), card=c, group=g["title"],
+                    status=status, label=label, summary=summary, accent=colour,
+                    cover=photos[0]["src"] if photos else "", n_photos=len(photos),
+                    slug=unique_slug(slugify(c["title"]), used)))
+        sections = [dict(key="all", title="", label="Credential", desc="", entries=entries)]
+
+    # Numbering restarts in each section: Company 01–04, Project 01–07.
+    for s in sections:
+        width = max(2, len(str(len(s["entries"]))))
+        for i, e in enumerate(s["entries"], 1):
+            e["seq"] = str(i).zfill(width)
+
+    # Remove detail folders from earlier builds that no longer match an entry.
+    # The two section pages (company/, projects/) are generated too, so keep them.
+    keep = {e["slug"] for e in entries} | {s["key"] for s in sections}
+    if base_dir.exists():
+        for d in base_dir.iterdir():
+            # only ever a folder this build made: exactly one generated index.html
+            if d.is_dir() and d.name not in keep and [f.name for f in d.iterdir()] == ["index.html"]:
+                (d / "index.html").unlink()
+                d.rmdir()
+
+    # 2. Detail pages. Previous / next stays inside the entry's own section,
+    #    and "back" returns to that section's list, not to the top page.
+    prefix = "../../"
+    for s in sections:
+        seq_list = s["entries"]
+        last = seq_list[-1]["seq"]
+        for i, e in enumerate(seq_list):
+            style = f' style="--accent:{e["accent"]}"'
+            if is_experience:
+                total += len(e["cards"])
+                for c in e["cards"]:
+                    for ph in c.get("photos", []):
+                        check_photo(ph["src"], problems)
+                if e["info"].get("cover"):
+                    check_photo(e["info"]["cover"], problems)
+                kicker = f'{s["title"]} · {e["seq"]} of {last} · {e["kind"]}'
+                body = portfolio_header(e["title"], kicker, e["summary"],
+                                        f'../{s["key"]}/index.html', s["title"])
+                pills = "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"])
+                body += f'<div class="port-detail"{style}><div class="intro">'
+                body += f'<h2>{esc(e["role"])}</h2>' if e["role"] else ""
+                body += f'<div class="port-pills"><span class="port-pill lead">{esc(e["kind"])}</span>{pills}</div></div>'
+                body += "<h2>Work &amp; technical scope</h2>"
+                body += "".join(portfolio_card_content(c, prefix + "knowledge/index.html", prefix)
+                                for c in e["cards"])
+            else:
+                total += 1
+                for ph in e["card"].get("photos", []):
+                    check_photo(ph["src"], problems)
+                kicker = f'Credential {e["seq"]} of {last} · {e["label"]}'
+                body = portfolio_header(e["title"], kicker, e["summary"], "../index.html", "All credentials")
+                body += f'<div class="port-detail"{style}><h2>Credential record</h2>'
+                body += portfolio_card_content(e["card"], prefix + "knowledge/index.html", prefix)
+            body += pager_html(seq_list, i) + "</div></div>"
+            write_page(base_dir / e["slug"] / "index.html",
+                       portfolio_shell(e["title"], css, head, body))
+
+    # 3. Cards. `link` and `img` are the relative prefixes from the page the
+    #    card sits on back to the entry folder and to the repo root.
+    def tile(e, link, img):
+        cover = (f'<div class="cover"><img src="{img}{esc(e["cover"])}" alt="" loading="lazy"></div>'
+                 if e["cover"] else "")
+        if is_experience:
+            lead, sub, n = e["kind"], e["role"], len(e["cards"])
+            extra = [f'{n} work area{"s" if n != 1 else ""}']
+            arrow = "Full details"
+        else:
+            lead, sub = e["label"], e["group"].split("·")[0].strip().title()
+            extra, arrow = [], "Open credential"
+        if e["n_photos"]:
+            extra.append(f'{e["n_photos"]} photo{"s" if e["n_photos"] != 1 else ""}')
+        pills = (f'<span class="port-pill lead">{esc(lead)}</span>'
+                 + "".join(f'<span class="port-pill">{esc(x)}</span>' for x in e["meta"] + extra))
+        hay = " ".join([e["title"], sub, e["summary"], lead, " ".join(e["meta"])]).lower()
+        return (f'<a class="port-card" href="{link}{esc(e["slug"])}/index.html" style="--accent:{e["accent"]}" '
+                f'data-search="{esc(hay)}">{cover}<span class="port-seq">{esc(e["seq"])}</span>'
+                f'<div class="port-meta">{esc(sub)}</div><h2>{esc(e["title"])}</h2>'
+                + (f'<p>{esc(e["summary"])}</p>' if e["summary"] else "")
+                + f'<div class="port-pills">{pills}</div><span class="port-arrow">{arrow} &rarr;</span></a>')
+
+    def legend_for(source, present=None):
+        seen, out = set(), ""
+        for _, colour, label in source:
+            if label in seen or (present is not None and label not in present):
+                continue
+            seen.add(label)
+            out += f'<span><i style="background:{colour}"></i>{esc(label)}</span>'
+        return out
+
+    def stats_block(stats):
+        return '<div class="port-stats">' + "".join(
+            f'<div class="port-stat"><b>{n}</b><span>{esc(l)}</span></div>' for n, l in stats) + "</div>"
+
+    SEARCH_JS = """
+    <script>
+    (function(){const q=document.getElementById('portfolioSearch');if(!q)return;
+      const items=[...document.querySelectorAll('.port-card')],empty=document.getElementById('portfolioEmpty');
+      q.addEventListener('input',function(){const term=q.value.trim().toLowerCase();let count=0;
+        items.forEach(x=>{const ok=!term||x.dataset.search.includes(term);x.hidden=!ok;if(ok)count++;});
+        empty.hidden=count!==0;});})();
+    </script>"""
+
+    def listing_page(title, kicker, summary, back, back_label, stats, tiles, legend):
+        body = portfolio_header(title, kicker, summary, back, back_label)
+        body += f"""{stats_block(stats)}
+      <div class="port-tools"><input id="portfolioSearch" type="search" placeholder="{esc(cfg.get("placeholder", "Search this section"))}" aria-label="Search this section"></div>
+      <div class="port-legend">{legend}</div>
+      <main class="port-grid" id="portfolioGrid">{tiles}</main>
+      <p class="port-empty" id="portfolioEmpty" hidden>No matching entries. Try another search.</p>
+      <footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer>
+    </div>""" + SEARCH_JS
+        return portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
+
+    if is_experience:
+        # 3a. One page per section: experience/company/, experience/projects/
+        unit = {"company": ("companies", "company"), "projects": ("projects", "project")}
+        for s in sections:
+            many, one = unit.get(s["key"], ("entries", "entry"))
+            n = len(s["entries"])
+            areas = sum(len(e["cards"]) for e in s["entries"])
+            photos = sum(e["n_photos"] for e in s["entries"])
+            stats = [(n, many if n != 1 else one), (areas, "work areas")]
+            if photos:
+                stats.append((photos, "photos"))
+            tiles = "".join(tile(e, "../", "../../") for e in s["entries"])
+            legend = legend_for(TYPE_COLOUR, {e["kind"] for e in s["entries"]})
+            write_page(base_dir / s["key"] / "index.html",
+                       listing_page(s["title"], f'Career & Projects · {s["title"]}', s["desc"],
+                                    "../index.html", "Career & Projects", stats, tiles, legend))
+
+        # 3b. The top page: only the two headings. Each opens its section page.
+        title = "Career & Projects"
+        n_company = sum(len(s["entries"]) for s in sections if s["key"] == "company")
+        n_projects = sum(len(s["entries"]) for s in sections if s["key"] == "projects")
+        stats = [(n_company, "companies"), (n_projects, "projects"), (total, "work areas")]
+        hub_colour = {"company": "#1B57C4", "projects": "#6E35C9"}
+        hubs = ""
+        for s in sections:
+            many, one = unit.get(s["key"], ("entries", "entry"))
+            n = len(s["entries"])
+            latest = s["entries"][0]
+            dates = [x for x in latest["meta"] if re.search(r"\d{4}", x)]
+            latest_line = latest["title"] + (f' · {dates[0]}' if dates else "")
+            hubs += (f'<a class="hub-card" href="./{s["key"]}/index.html" '
+                     f'style="--accent:{hub_colour.get(s["key"], "#1B57C4")}">'
+                     f'<span class="hub-n">{n}</span>'
+                     f'<span class="hub-unit">{esc(many if n != 1 else one)}</span>'
+                     f'<h2>{esc(s["title"])}</h2><p>{esc(s["desc"])}</p>'
+                     f'<div class="hub-latest"><small>Most recent</small>{esc(latest_line)}</div>'
+                     f'<span class="port-arrow">View all {esc(many)} &rarr;</span></a>')
+        body = portfolio_header(title, cfg["kicker"], cfg["summary"], "../index.html", "Home")
+        # No figure strip here — the two heading cards already carry the counts.
+        body += (f'<main class="port-hub">{hubs}</main>'
+                 f'<footer style="margin-top:38px;color:var(--faint);font-size:12px">{cfg.get("footer", "")}</footer></div>')
+        html = portfolio_shell(title, css + PORTFOLIO_SECTION_CSS, head, body)
+        write_page(base_dir / "index.html", html)
+        result = {"groups": n_company, "cards": n_projects, "areas": total}
+    else:
+        stats = [(len(entries), "credentials"), (len(groups), "status groups")]
+        tiles = "".join(tile(e, "./", "../") for e in entries)
+        html = listing_page("Certifications & Training", cfg["kicker"], cfg["summary"],
+                            "../index.html", "Home", stats, tiles, legend_for(STATUS_ACCENT))
+        write_page(base_dir / "index.html", html)
+        result = {"groups": len(groups), "cards": total, "areas": total}
+
+    result.update(items=data["meta"]["items"], problems=problems)
+    return result, len(html.encode()) / 1024
+
+
 def main():
     fail = False
     css, head = shell()
@@ -671,6 +1165,22 @@ def main():
             tiles.append({**cfg, "nums": [(m["courses"], "courses"), (m["modules"], "modules"),
                                           (m["topics"], "topics"), (m["subs"], "subtopics")]})
 
+        elif cfg["page"] in ("experience", "exams"):
+            m, size = render_portfolio_page(md, cfg, css, head)
+            print(f"  {cfg['page']:<12} {m['groups']} {cfg['unit_group']} · "
+                  f"{m['cards']} {cfg['unit_card']} · {m['items']} details   {size:.0f} KB")
+            if m["cards"] < 1:
+                print("    ! no portfolio entries found — check the markdown format")
+                fail = True
+            for prob in m["problems"]:
+                print(f"    ! {prob}")
+                fail = True
+            # Same labels as the page's own frontmatter, so the home page says
+            # "11 roles · 30 projects", never "30 employers".
+            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),
+                                          (m["cards"], cfg["unit_card"]),
+                                          (m["items"], "details")]})
+
         else:
             m, size = render_card_page(md, cfg, css, head)
             print(f"  {cfg['page']:<12} {m['groups']} {cfg['unit_group']} · "
@@ -678,8 +1188,7 @@ def main():
             if m["cards"] < 1:
                 print("    ! no cards found — check the markdown format")
                 fail = True
-            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),
-                                          (m["cards"], cfg["unit_card"]),
+            tiles.append({**cfg, "nums": [(m["groups"], cfg["unit_group"]),                                          (m["cards"], cfg["unit_card"]),
                                           (m["items"], "details")]})
 
     files_list = list_files()
@@ -688,7 +1197,7 @@ def main():
           f"   {hb:.0f} KB")
 
     if fail:
-        print("\nBUILD FAILED — output written but something parsed short.")
+        print("\nBUILD FAILED — see the ! lines above. Output was written but is not safe to publish.")
         sys.exit(1)
     print("\nBuild OK.")
 

@@ -69,11 +69,11 @@ Which categories carry each tag — use this to bound revision instead of readin
 | `Veevo` <sub>**field**</sub> | `27` `61` `80` `81` `82` `83` `84` |
 | `MetroL3` <sub>**field**</sub> | `28` `40` `42` `44` `86` `89` |
 | `AZ900` <sub>course</sub> | `70` `74` |
-| `AlmavivA` <sub>**field**</sub> | `22` `52` |
+| `AlmavivA` <sub>**field**</sub> | `22` `40` `41` `42` `50` `52` `54` `62` `71` `80` `85` `86` |
 | `UCT` <sub>**field**</sub> | `23` `89` |
 | `VMware` <sub>course</sub> | `70` `71` |
 | `CV` <sub>course</sub> | `84` |
-| `CV — unverified` <sub>course</sub> | `85` |
+| `ITIL` <sub>course</sub> | `85` |
 | `Field` <sub>**field**</sub> | `88` |
 | `YT` <sub>course</sub> | `27` |
 
@@ -92,10 +92,10 @@ Which categories carry each tag — use this to bound revision instead of readin
 
 - **`01.01`** ENCOR 350-401 — coursework done, exam NOT sat  `R`  `L:_`
 - **`01.02`** ENARSI 300-410 — coursework done, exam NOT sat  `R`  `L:_`
-- **`01.03`** AZ-800 — RETIRES SEP 2026, urgent  `R`  `L:_`
-- **`01.04`** AZ-104 — confirm pass status  `R`  `L:_`
-- **`01.05`** AZ-900 — passed  `R`  `L:_`
-- **`01.06`** CCNA / A+ / CCTV-OP / MCSE — status per certificate  `R`  `L:_`
+- **`01.03`** AZ-802 — replaces AZ-800 / AZ-801 (retired 30 Sep 2026)  `R`  `L:_`
+- **`01.04`** AZ-104 — Corvit training Oct 2023, exam not confirmed  `R`  `L:_`
+- **`01.05`** AZ-900 — course done, exam not confirmed (not on CV)  `R`  `L:_`
+- **`01.06`** CCNA / A+ certified · CCTV-OP / MCSE-track / ITIL training only  `R`  `L:_`
 - **`01.07`** SCE registration (Saudi Council of Engineers)  `R`  `L:_`
 - **`01.08`** Degree attestation chain: HEC → MoFA → Saudi Embassy  `R`  `L:_`
 
@@ -622,7 +622,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 
 <sub>Blue strand · 10 categories · 125 topics</sub>
 
-### 40 · Switching Fundamentals & Design  `[CCNA]` `[ENCOR]` `[MetroL3]`
+### 40 · Switching Fundamentals & Design  `[CCNA]` `[ENCOR]` `[MetroL3]` `[AlmavivA]`
 
 - **`40.01`** MAC table: learning, flooding, forwarding, aging  `C`  `L:_`
 - **`40.02`** Collision vs broadcast domains  `C`  `L:_`
@@ -636,7 +636,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`40.10`** Spine-leaf architecture  `C`  `L:_`
 - **`40.11`** Oversubscription & uplink sizing  `C`  `L:_`
 
-### 41 · VLANs & Trunking  `[CCNA]` `[ENCOR]` `[Wemart]`
+### 41 · VLANs & Trunking  `[CCNA]` `[ENCOR]` `[Wemart]` `[AlmavivA]`
 
 - **`41.01`** VLAN concept & benefits  `C`  `L:_`
 - **`41.02`** Access, trunk, hybrid ports  `C`  `L:_`
@@ -665,7 +665,7 @@ Which categories carry each tag — use this to bound revision instead of readin
   - `41.12.4` VLAN not created on the transit switch
   - `41.12.5` show interface trunk is the first command
 
-### 42 · STP, Aggregation & L2 Redundancy  `[CCNA]` `[ENCOR]` `[MetroL3]` `[Wemart]`
+### 42 · STP, Aggregation & L2 Redundancy  `[CCNA]` `[ENCOR]` `[MetroL3]` `[Wemart]` `[AlmavivA]`
 
 - **`42.01`** STP 802.1D: BPDU, root election, port states  `C`  `L:_`  →  `41.03`
   - `42.01.1` Lowest bridge ID wins root
@@ -908,7 +908,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 
 <sub>Violet strand · 5 categories · 45 topics</sub>
 
-### 50 · RF Fundamentals  `[CCNA]` `[ENCOR]` `[Wemart]`
+### 50 · RF Fundamentals  `[CCNA]` `[ENCOR]` `[Wemart]` `[AlmavivA]`
 
 - **`50.01`** Frequency, wavelength, amplitude, phase  `C`  `L:_`
 - **`50.02`** Bands: 2.4 / 5 / 6 GHz — characteristics  `C`  `L:_`
@@ -997,7 +997,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`53.07`** Rogue AP detection, WIPS  `C`  `L:_`
 - **`53.08`** Client isolation  `X`  `L:_`
 
-### 54 · WLAN Design & Troubleshooting  `[ENCOR]` `[Wemart]`
+### 54 · WLAN Design & Troubleshooting  `[ENCOR]` `[Wemart]` `[AlmavivA]`
 
 - **`54.01`** Coverage vs capacity design  `C`  `L:_`
 - **`54.02`** AP placement & mounting  `X`  `L:_`  →  `52.02`
@@ -1062,7 +1062,7 @@ Which categories carry each tag — use this to bound revision instead of readin
   - `61.11.4` Route exists back out
   - `61.11.5` Asymmetric routing breaks stateful inspection
 
-### 62 · VPN Technologies  `[Wemart]` `[ENARSI]` `[ENCOR]` `[MCSE]`
+### 62 · VPN Technologies  `[Wemart]` `[ENARSI]` `[ENCOR]` `[MCSE]` `[AlmavivA]`
 
 - **`62.01`** IPsec architecture: ESP vs AH  `C`  `L:_`
 - **`62.02`** IKEv1 vs IKEv2, phase 1 & phase 2  `C`  `L:_`
@@ -1158,7 +1158,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`70.05`** Containers vs VMs  `C`  `L:_`
 - **`70.06`** Consolidation ratio & sizing  `C`  `L:_`
 
-### 71 · VMware vSphere  `[VMware]`
+### 71 · VMware vSphere  `[VMware]` `[AlmavivA]`
 
 - **`71.01`** ESXi installation & DCUI  `X`  `L:_`  →  `70.01`
 - **`71.02`** vCenter (VCSA) deployment  `X`  `L:_`
@@ -1373,7 +1373,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 
 <sub>Yellow strand · 10 categories · 92 topics</sub>
 
-### 80 · Monitoring Fundamentals  `[Veevo]` `[Wemart]`
+### 80 · Monitoring Fundamentals  `[Veevo]` `[Wemart]` `[AlmavivA]`
 
 - **`80.01`** Metrics vs logs vs traces  `C`  `L:_`
 - **`80.02`** Baselines & thresholds  `C`  `L:_`
@@ -1467,7 +1467,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`84.09`** Huawei eSight / iMaster NCE  `C`  `L:_`
 - **`84.10`** Cisco DNA Center concept  `C`  `L:_`
 
-### 85 · Service Management & ITIL  `[CV — unverified]`
+### 85 · Service Management & ITIL  `[ITIL]` `[AlmavivA]`
 
 - **`85.01`** Incident management  `C`  `L:_`
 - **`85.02`** Problem management & RCA  `C`  `L:_`
@@ -1484,7 +1484,7 @@ Which categories carry each tag — use this to bound revision instead of readin
 - **`85.08`** Ticketing workflow & escalation  `X`  `L:_`
 - **`85.09`** Post-incident review  `C`  `L:_`
 
-### 86 · Documentation  `[ZTE-RIY1]` `[MetroL3]` `[Wemart]`
+### 86 · Documentation  `[ZTE-RIY1]` `[MetroL3]` `[Wemart]` `[AlmavivA]`
 
 - **`86.01`** Logical vs physical topology diagrams  `X`  `L:_`
 - **`86.02`** IPAM & address registers  `X`  `L:_`

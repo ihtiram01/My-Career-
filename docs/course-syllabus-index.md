@@ -1433,7 +1433,7 @@ A `→ 44` marker means the topic maps to master category 44.
 
 `AZ-104` · Microsoft · **COURSEWORK ONLY**
 
-> Coursework via Technical Guftgu, Aug–Oct 2023. Exam pass status still unconfirmed.
+> Training at Corvit Systems, Aug–Oct 2023 (per the CV). Syllabus content below is from the Technical Guftgu course. Exam pass status still unconfirmed — check the Microsoft Learn transcript.
 
 <sub>Sources merged: Technical Guftgu course content</sub>
 
@@ -1567,7 +1567,7 @@ A `→ 44` marker means the topic maps to master category 44.
 
 `70-410 → 70-414` · Microsoft · **⚠ RECORD CONFLICT**
 
-> CONFLICT: this syllabus is Windows Server 2012 and these exams retired January 2021. Your records say "MCSE Server 2022", which is not a Microsoft credential. See the merge report.
+> CONFLICT: this syllabus is Windows Server 2012 and these exams retired January 2021. The training (Corvit, Apr 2022) was on Windows Server 2022, and "MCSE Server 2022" is not a Microsoft credential. It is now described everywhere as "Windows Server 2022 Administration (MCSE track) — training complete". See the merge report.
 
 <sub>Sources merged: Sansbound MCSE Server Infrastructure syllabus</sub>
 
